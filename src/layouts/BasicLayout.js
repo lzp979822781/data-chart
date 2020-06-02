@@ -158,7 +158,7 @@ class BasicLayout extends React.PureComponent {
         const routerConfig = this.getRouterAuthority(pathname, routes);
         const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
         const layout = (
-            <Layout className = {styles.layout}>
+            <Layout className = {`${styles.layout} ${styles.bg}`}>
                 {/* {isTop && !isMobile ? null : (
                   <SiderMenu
                       logo = {logo}
@@ -173,7 +173,7 @@ class BasicLayout extends React.PureComponent {
                     style = {{
                         ...this.getLayoutStyle(),
                         minHeight: "100vh",
-                        background: "#fff",
+                        background: "transparent",
                     }}
                 >
                     {/* <Header
