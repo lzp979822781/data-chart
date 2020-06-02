@@ -22,7 +22,6 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        // window.addEventListener('dbclick', this.changeScale)
     }
 
     dbclickFullScreen = e => {
@@ -35,34 +34,6 @@ class Home extends Component {
                 fullScreen();
             }
         })
-
-    }
-
-
-
-    changeScale = () => {
-        const w = this.ref.clientWidth;
-        const h = this.ref.clientHeight;
-        const $d = this.ref.current;
-        // contain效果
-        let scale = 1;
-        const translate = {
-            x: 0,
-            y: 0,
-        }
-        if (w / h > 1920 / 1080) {
-            scale = h / 1080;
-            translate.x = `${((w - 1920 * scale) / 2) / scale }px`;
-        } else {
-            scale = w / 1920;
-            translate.y = `${((h - 1080 * scale) / 2) / scale }px`;
-        }
-        if($d) {
-            $d.style.transform = `scale(${scale}) translate(${translate.x},${translate.y})`;
-            setTimeout(() => {
-                $d.style.opacity = 1;
-            }, 500);
-        }
 
     }
 
@@ -288,7 +259,7 @@ class Home extends Component {
 
     render() {
         return (
-            <div className = {styles.home} ref = {this.ref} onDoubleClick = {this.dbclickFullScreen}>
+            <div className = {styles.home} ref = {this.ref}>
                 { this.renderTitle()}
                 <div className = {styles['home-chart-container']}>
                     { this.renderApp()}

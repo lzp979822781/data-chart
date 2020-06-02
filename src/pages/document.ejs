@@ -46,6 +46,7 @@
   <div id="root" class="bodyBg pr"></div>
   <!-- <script src="http://gallery.echartsjs.com/dep/echarts/map/js/china.js"></script> -->
   <script>
+      let isFullScreen = false;
     function changeScale() {
         let w = document.body.clientWidth;
         let h = document.body.clientHeight;
@@ -72,6 +73,45 @@
     window.addEventListener('resize', function () {
         changeScale();
     })
+
+    function fullScreen() {
+        const docElm = document.documentElement;
+        if(docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        } else if(docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        } else if(docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+        } else if(docElm.msRequestFullscreen) {
+            docElm.msRequestFullscreen();
+        }
+    }
+
+    function exitScreen() {
+        if(document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if(document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if(document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        } else if(document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+
+    window.addEventListener("dblclick", function(){
+        if(isFullScreen) {
+            exitScreen();
+        } else {
+            fullScreen();
+        }
+        isFullScreen = !isFullScreen;
+    })
+
+    window.onload = function() {
+        isFullScreen = false;
+    }
+
 </script>
 </body>
 </html>
