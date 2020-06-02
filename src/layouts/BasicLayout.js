@@ -12,9 +12,9 @@ import Media from "react-media";
 import Authorized from "@/utils/Authorized";
 // import logo from '../assets/logo.svg';
 // import Header from './Header';
+import PageLoading from "@/components/PageLoading";
 import Context from "./MenuContext";
 import Exception403 from "../pages/Exception/403";
-import PageLoading from "@/components/PageLoading";
 // import SiderMenu from '@/components/SiderMenu';
 import { title } from "../defaultSettings";
 import styles from "./BasicLayout.less";
@@ -197,7 +197,7 @@ class BasicLayout extends React.PureComponent {
                     <ContainerQuery query = {query}>
                         {params => (
                             <Context.Provider value = {this.getContext()}>
-                                <div className = {classNames(params)}>{layout}</div>
+                                <div className = {classNames(params, styles.bg)}>{layout}</div>
                             </Context.Provider>
                         )}
                     </ContainerQuery>

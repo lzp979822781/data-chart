@@ -6,12 +6,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
   <title>Big Drug Store</title>
   <link rel="icon" href="/favicon.png" type="image/x-icon">
+  <style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    body{
+        background: url('https://img10.360buyimg.com/imagetools/jfs/t1/121910/30/3664/2312512/5ed4749dE06be24e9/2cd1ce41c508f9d3.png') no-repeat;
+        background-size: cover;
+    }
+    html,body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .pr {
+        position: relative;
+    }
+
+    .bodyBg {
+        /* background-color: #014179; */
+        transform-origin: left top;
+        width: 1920px;
+        height: 1080px;
+        min-height: 1080px;
+        overflow: hidden;
+        transition: all 0.4s;
+        box-sizing: border-box;
+        opacity: 0;
+    }
+
+</style>
   <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.9.6/dist/data-set.min.js"></script>
   <!-- <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script> -->
 </head>
 <body>
   <noscript>Sorry, we need js to run correctly!</noscript>
-  <div id="root"></div>
+  <div id="root" class="bodyBg pr"></div>
   <!-- <script src="http://gallery.echartsjs.com/dep/echarts/map/js/china.js"></script> -->
+  <script>
+    function changeScale() {
+        let w = document.body.clientWidth;
+        let h = document.body.clientHeight;
+        let $d = document.querySelector('.bodyBg');
+        //contain效果
+        let scale = 1;
+        let translate = {
+            x: 0,
+            y: 0,
+        }
+        if (w / h > 1920 / 1080) {
+            scale = h / 1080;
+            translate.x = ((w - 1920 * scale) / 2) / scale + 'px';
+        } else {
+            scale = w / 1920;
+            translate.y = ((h - 1080 * scale) / 2) / scale + 'px';
+        }
+        $d.style.transform = `scale(${scale}) translate(${translate.x},${translate.y})`;
+        let s = setTimeout(() => {
+            $d.style.opacity = 1;
+        }, 500);
+    }
+    changeScale();
+    window.addEventListener('resize', function () {
+        changeScale();
+    })
+</script>
 </body>
 </html>
