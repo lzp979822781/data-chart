@@ -7,20 +7,38 @@ import {
     comTitle, comLegend, comGrid, barLegend,
     drugRealLineStyle, drugAreaStyle, drugQuantityGrid, drugQuantityBar,
     hospitalRealLineStyle, hospitalAreaStyle, hospitalQuantityBar,
-    urgentRealLineStyle, urgentAreaStyle, urgentQuantityBar
+    urgentRealLineStyle, urgentAreaStyle, urgentQuantityBar,
+    fullScreen, exitScreen
 } from './templateData';
 import styles from './index.less';
 
 class Home extends Component {
     constructor(props) {
         super(props);
-        this.state = { };
+        this.state = {
+            isFullScreen: false
+        };
         this.ref = React.createRef();
     }
 
     componentDidMount() {
-        // window.addEventListener('resize', this.changeScale)
+        // window.addEventListener('dbclick', this.changeScale)
     }
+
+    dbclickFullScreen = e => {
+        e.preventDefault();
+        const { isFullScreen } = this.state;
+        this.setState({ isFullScreen: !isFullScreen }, () => {
+            if(isFullScreen) {
+                exitScreen();
+            } else {
+                fullScreen();
+            }
+        })
+
+    }
+
+
 
     changeScale = () => {
         const w = this.ref.clientWidth;
@@ -204,6 +222,8 @@ class Home extends Component {
                 fontSize: 14,
                 lineHeight: 22,
             },
+            itemWidth: 32,
+            itemHeight: 14,
             // icon: 'image://../../../../assets/image/appLegend.png'
         };
 
@@ -268,7 +288,7 @@ class Home extends Component {
 
     render() {
         return (
-            <div className = {styles.home} ref = {this.ref}>
+            <div className = {styles.home} ref = {this.ref} onDoubleClick = {this.dbclickFullScreen}>
                 { this.renderTitle()}
                 <div className = {styles['home-chart-container']}>
                     { this.renderApp()}
