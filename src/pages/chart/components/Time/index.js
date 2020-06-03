@@ -37,7 +37,7 @@ class Time extends Component {
         }, 100);
     }
 
-    formatTime = () => {
+    formatTime = async () => {
         const currDate = moment();
         /* const year = moment.year();
         const months = moment.months();
