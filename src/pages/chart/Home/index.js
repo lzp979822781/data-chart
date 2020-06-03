@@ -45,15 +45,15 @@ class Home extends Component {
             />
             <TotalCard
                 title = '互联网医院'
-                url = 'DrugStoreTotal'
+                url = 'InterTotal'
             />
             <TotalCard
                 title = '药急送'
-                url = 'DrugStoreTotal'
+                url = 'UrgentTotal'
             />
             <TotalCard
                 title = '药京采'
-                url = 'DrugStoreTotal'
+                url = 'AppTotal'
             />
         </div>
     );

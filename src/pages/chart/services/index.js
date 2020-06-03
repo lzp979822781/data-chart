@@ -11,7 +11,7 @@ const URL = {
 
     UrgentRealTimeTrend: `/ds/order/latelyMinutes`, // 药急送下单量实时趋势
     UrgentQuantityTrend: `/ds/order/latelyDays`, // 药急送近n天每天总量
-    UrgentTotal: `ds/order/todayTotal`, // 药急送当天订单量和订单金额
+    UrgentTotal: `/ds/order/todayTotal`, // 药急送当天订单量和订单金额
 
     YjcStoreRealTimeTrend: `/btb/order/latelyMinutes`, // 药京采下单量实时趋势
     YjcQuantityTrend: `/btb/order/latelyDays`, // 药京采大促期间单量趋势

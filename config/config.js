@@ -103,6 +103,11 @@ export default {
             secure: false,
             changeOrigin: true,
         },
+        "/ump": {
+            target: "http://yao-databoard.jd.com/",
+            secure: false,
+            changeOrigin: true,
+        },
     },
     ignoreMomentLocale: true,
     lessLoaderOptions: {
