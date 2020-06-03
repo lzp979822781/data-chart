@@ -1,4 +1,4 @@
-@common: 42px;
+@common: 48px;
 .font(@fontSize, @color, @fontFamily) {
     font-size: @fontSize;
     line-height: @fontSize;
@@ -8,18 +8,18 @@
 
 .current {
     &-date {
-        .font(30px, #558DFF, 'DIN-Medium');
+        .font(36px, #558DFF, 'DIN-Medium');
     }
 
     &-desc {
-        .font(24px, #FFFFFF, 'PingFangSC-Light');
+        .font(32px, #FFFFFF, 'PingFangSC-Light');
         font-weight: lighter;
         line-height: 36px;
         padding: 0 4px;
     }
 
     &-week {
-        .font(24px, #FFFFFF, 'PingFangSC-Light');
+        .font(28px, #FFFFFF, 'PingFangSC-Light');
         line-height: 36px;
         padding: 0 20px;
     }
@@ -29,14 +29,14 @@
         width: @common;
         height: @common;
         background-color: #003B7A;
-        .font(30px, #FFFFFF, 'DIN-Medium');
+        .font(36px, #FFFFFF, 'DIN-Medium');
         line-height: @common;
         text-align: center;
         background: linear-gradient( 180deg, rgba(0,113,215, .5037), rgba(0,43,130, .5037));
 
         &-sign {
             height: @common;
-            .font(30px, #FFFFFF, 'DIN-Medium');
+            .font(32px, #FFFFFF, 'DIN-Medium');
             padding: 0 3px;
         }
     }
