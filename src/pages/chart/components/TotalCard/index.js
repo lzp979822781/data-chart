@@ -18,7 +18,7 @@ class TotalCard extends Component {
 
     componentDidMount() {
         this.getData();
-        // this.initInterVal();
+        this.initInterVal();
     }
 
     componentWillUnmount() {

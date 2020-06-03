@@ -34,7 +34,7 @@ class OrderQuantityTrend extends Component {
     componentDidMount() {
         this.initMap();
         this.initResize();
-        // this.initInterval();
+        this.initInterval();
         this.getData();
     }
 

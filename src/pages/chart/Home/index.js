@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import titleDecorate from '@/assets/titleDecorate.svg'
 import echarts from "echarts";
+import titleDecorate from '@/assets/titleDecorate.svg';
 import { RealTimeTrend, OrderQuantityTrend, Time, TotalCard, HealthAppCard } from '../components';
 import {
     appQuatityBar, appQuatitylegend,
@@ -23,7 +23,7 @@ class Home extends Component {
 
     componentDidMount() {
         this.getPvData();
-        // this.initInterval();
+        this.initInterval();
     }
 
     componentWillUnmount() {
