@@ -126,7 +126,8 @@ class RealTimeTrend extends Component {
                     formatter: value => {
                         const year = moment().format('YYYY/MM/DD');
                         return `${value}\n${year}`;
-                    }
+                    },
+                    interval: 3
                 }
             },
             grid: gridConfig || {

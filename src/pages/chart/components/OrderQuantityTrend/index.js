@@ -115,8 +115,9 @@ class OrderQuantityTrend extends Component {
                         color: '#fff',
                         fontSize: 12,
                         fontFamily: 'SFProText-Light'
-                    }
-                }
+                    },
+                    interval: 3
+                },
             },
             yAxis: {
                 type: 'value',
