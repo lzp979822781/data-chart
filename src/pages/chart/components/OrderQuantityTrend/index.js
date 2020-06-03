@@ -212,7 +212,9 @@ class OrderQuantityTrend extends Component {
             this.handleData(data);
         } else {
             clearInterval(this.timeInterval);
-            this.initInterval();
+            if(typeof this.initInterVal === 'function') {
+                this.initInterval();
+            }
         }
     }
 

@@ -8,33 +8,30 @@ import {
     drugRealLineStyle, drugAreaStyle, drugQuantityGrid, drugQuantityBar,
     hospitalRealLineStyle, hospitalAreaStyle, hospitalQuantityBar, hospitalLabelConfig,
     urgentRealLineStyle, urgentAreaStyle, urgentQuantityBar, urgentlLabelConfig,
-    fullScreen, exitScreen
 } from './templateData';
+import { post } from '../services';
 import styles from './index.less';
 
 class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isFullScreen: false
+            // pvObj: {}
         };
         this.ref = React.createRef();
     }
 
     componentDidMount() {
+        this.getPvData();
     }
 
-    dbclickFullScreen = e => {
-        e.preventDefault();
-        const { isFullScreen } = this.state;
-        this.setState({ isFullScreen: !isFullScreen }, () => {
-            if(isFullScreen) {
-                exitScreen();
-            } else {
-                fullScreen();
-            }
-        })
-
+    getPvData = async () => {
+        const reqParm = {
+            url: "TodayPv",
+            data: {}
+        };
+        const res = await post(reqParm);
+        console.log("res", res);
     }
 
     renderTotalCard = () => (
@@ -115,7 +112,6 @@ class Home extends Component {
                 lineStyle = {hospitalRealLineStyle}
                 areaStyle = {hospitalAreaStyle}
                 gridConfig = {comGrid}
-                labelConfig = {hospitalLabelConfig}
             />
             <OrderQuantityTrend
                 title = '互联网大促期间问诊下单量趋势'
@@ -229,7 +225,7 @@ class Home extends Component {
                 <div>
                     <HealthAppCard
                         title = '京东健康app'
-                        url = 'DrugStoreTotal'
+                        url = 'AppTotal'
                     />
                     <div className = {styles['home-chart-app-container']}>
                         <RealTimeTrend

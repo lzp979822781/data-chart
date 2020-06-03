@@ -165,7 +165,7 @@ class RealTimeTrend extends Component {
                 lineStyle,
                 areaStyle,
                 itemStyle: {
-                    borderWidth: 0
+                    borderWidth: 0,
                 }
             }]
         };
@@ -214,7 +214,9 @@ class RealTimeTrend extends Component {
             this.handleData(data);
         } else {
             clearInterval(this.timeInterval);
-            this.initInterval();
+            if(typeof this.initInterVal === 'function') {
+                this.initInterval();
+            }
         }
     }
 

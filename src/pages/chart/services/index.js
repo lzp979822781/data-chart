@@ -18,8 +18,10 @@ const URL = {
     YjcTotal: `/btb/order/todayTotal`, // 药京采当日累积PV、累计下单量
 
     AppRealTimeTrend: `/app/order/latelyMinutes`, // 京东健康app实时趋势
-    AppQuantityTrend: `/app/order/latelyDays?num=10`, // 京东健康app大促期间单量趋势
+    AppQuantityTrend: `/app/order/latelyDays`, // 京东健康app大促期间单量趋势
     AppTotal: `/app/order/todayTotal`, // 京东健康app当天订单量和订单金额
+
+    TodayPv: `/ump/todayPV`
 };
 
 /**
