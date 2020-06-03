@@ -70,7 +70,7 @@
         }, 500);
     }
     changeScale();
-    window.addEventListener('resize', function () {
+    document.addEventListener('resize', function () {
         changeScale();
     })
 
@@ -88,16 +88,27 @@
     }
 
     function exitScreen() {
-        if(document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if(document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if(document.webkitCancelFullScreen) {
-            document.webkitCancelFullScreen();
-        } else if(document.msExitFullscreen) {
-            document.msExitFullscreen();
+        const ele = getFullscreenElement();
+        if(ele.exitFullscreen) {
+            ele.exitFullscreen();
+        } else if(ele.mozCancelFullScreen) {
+            ele.mozCancelFullScreen();
+        } else if(ele.webkitCancelFullScreen) {
+            ele.webkitCancelFullScreen();
+        } else if(ele.msExitFullscreen) {
+            ele.msExitFullscreen();
         }
     }
+
+    function getFullscreenElement() {
+        return (        
+            document.fullscreenElement ||
+            document.mozFullScreenElement ||
+            document.msFullScreenElement ||
+            document.webkitFullscreenElement||null
+        );
+    }
+
 
     window.addEventListener("dblclick", function(){
         if(isFullScreen) {
