@@ -42,6 +42,9 @@ class RealTimeTrend extends Component {
         if(this.myChart) {
             this.myChart.dispose();
         }
+        if(this.timeInterval) {
+            clearInterval(this.timeInterval);
+        }
         window.onresize = null;
     }
 

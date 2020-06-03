@@ -70,7 +70,7 @@
         }, 500);
     }
     changeScale();
-    document.addEventListener('resize', function () {
+    window.addEventListener('resize', function () {
         changeScale();
     })
 
@@ -88,15 +88,15 @@
     }
 
     function exitScreen() {
-        const ele = getFullscreenElement();
-        if(ele.exitFullscreen) {
-            ele.exitFullscreen();
-        } else if(ele.mozCancelFullScreen) {
-            ele.mozCancelFullScreen();
-        } else if(ele.webkitCancelFullScreen) {
-            ele.webkitCancelFullScreen();
-        } else if(ele.msExitFullscreen) {
-            ele.msExitFullscreen();
+        if(!document) return;
+        if(document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if(document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if(document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        } else if(document.msExitFullscreen) {
+            document.msExitFullscreen();
         }
     }
 

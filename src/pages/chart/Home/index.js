@@ -16,13 +16,26 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // pvObj: {}
+            pvObj: {}
         };
         this.ref = React.createRef();
     }
 
     componentDidMount() {
         this.getPvData();
+        this.initInterval();
+    }
+
+    componentWillUnmount() {
+        if(this.timeInterval) {
+            clearInterval(this.timeInterval);
+        }
+    }
+
+    initInterval = () => {
+        this.timeInterval = setInterval(() => {
+            this.getPvData();
+        }, 5000)
     }
 
     getPvData = async () => {
@@ -30,30 +43,44 @@ class Home extends Component {
             url: "TodayPv",
             data: {}
         };
-        const res = await post(reqParm);
-        console.log("res", res);
+        const { data = {}, success } = await post(reqParm);
+        if(success) {
+            this.setState({ pvObj: data });
+        } else {
+            clearInterval(this.timeInterval);
+            if(typeof this.initInterVal === 'function') {
+                this.initInterval();
+            }
+        }
     }
 
-    renderTotalCard = () => (
-        <div className = {styles['home-chart-right-total']}>
-            <TotalCard
-                title = '大药房'
-                url = 'DrugStoreTotal'
-            />
-            <TotalCard
-                title = '互联网医院'
-                url = 'InterTotal'
-            />
-            <TotalCard
-                title = '药急送'
-                url = 'UrgentTotal'
-            />
-            <TotalCard
-                title = '药京采'
-                url = 'AppTotal'
-            />
-        </div>
-    );
+    renderTotalCard = () => {
+        const { pvObj: { yjc, pharmacy, hospital, urgentSend } } = this.state;
+        return (
+            <div className = {styles['home-chart-right-total']}>
+                <TotalCard
+                    title = '大药房'
+                    url = 'DrugStoreTotal'
+                    pvData = {pharmacy}
+                />
+                <TotalCard
+                    title = '互联网医院'
+                    url = 'InterTotal'
+                    pvData = {hospital}
+                />
+                <TotalCard
+                    title = '药急送'
+                    url = 'UrgentTotal'
+                    pvData = {urgentSend}
+                />
+                <TotalCard
+                    title = '药京采'
+                    url = 'AppTotal'
+                    pvData = {yjc}
+                />
+            </div>
+        )
+    };
 
     /**
      * 右下角图片容器
@@ -174,6 +201,7 @@ class Home extends Component {
      * @returns
      */
     renderApp = () => {
+        const { pvObj: { healthApp } } = this.state;
         const titleConfig = {
             textStyle: {
                 color: '#fff',
@@ -226,6 +254,7 @@ class Home extends Component {
                     <HealthAppCard
                         title = '京东健康app'
                         url = 'AppTotal'
+                        pvData = {healthApp}
                     />
                     <div className = {styles['home-chart-app-container']}>
                         <RealTimeTrend

@@ -8,7 +8,8 @@ import styles from './index.less';
 
 const defaultProps = {
     timeInterval: 5000,
-    numFormat: [0, '', ',']
+    numFormat: [0, '', ','],
+    pvData: 0
 }
 
 class HealthAppCard extends Component {
@@ -61,10 +62,9 @@ class HealthAppCard extends Component {
      * @param {*} data
      */
     handleData = data => {
-        const { orderCount, orderSumMoney } = data;
+        const { orderCount } = data;
         this.setState({
             orderCount,
-            orderSumMoney
         })
     }
 
@@ -80,8 +80,8 @@ class HealthAppCard extends Component {
     }
 
     renderPV = () => {
-        const { orderSumMoney } = this.state;
-        const data = this.formatData(orderSumMoney);
+        const { pvData } = this.props;
+        const data = this.formatData(pvData);
         return (
             <div className = {styles['health-app-pv']}>
                 <div className = {styles['health-app-pv-title']}>当日累积PV</div>

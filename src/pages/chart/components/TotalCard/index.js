@@ -6,7 +6,8 @@ import styles from './index.less';
 
 const defaultProps = {
     title: '大药房',
-    timeInterval: 5000
+    timeInterval: 5000,
+    pvData: 0
 }
 
 class TotalCard extends Component {
@@ -59,23 +60,22 @@ class TotalCard extends Component {
      * @param {*} data
      */
     handleData = data => {
-        const { orderCount, orderSumMoney } = data;
+        const { orderCount } = data;
         this.setState({
             orderCount,
-            orderSumMoney
         })
     }
 
     render() {
-        const { title } = this.props;
-        const { orderSumMoney, orderCount } = this.state;
+        const { title, pvData } = this.props;
+        const { orderCount } = this.state;
 
         return (
             <div className = {styles['total-card']}>
                 <span className = {styles['total-card-title']}>{title}</span>
                 <div className = {styles['total-card-pv']}>当日累计PV</div>
                 <FormatNum
-                    data = {orderSumMoney}
+                    data = {pvData}
                     numFormat = {[ 0, '', ', ']}
                     className = {styles['total-card-pv-num']}
                 />
