@@ -93,7 +93,7 @@ class RealTimeTrend extends Component {
     }
 
     genOption = () => {
-        const { legend, lineStyle = {}, areaStyle = {}, gridConfig } = this.props;
+        const { legend, lineStyle = {}, areaStyle = {}, gridConfig, labelConfig = {} } = this.props;
         const option = {
             title: this.getTitleConfig(),
             legend: this.getLegendConfig(),
@@ -155,13 +155,13 @@ class RealTimeTrend extends Component {
                 symbolSize: 8,
                 name: legend[0],
                 // 显示数值
-                label: {
+                label: Object.assign({}, {
                     show: true,
                     position: 'top',
                     color: '#fff',
-                    rotate: 60,
-                    offset: [0, -10]
-                },
+                    /* rotate: 60,
+                    offset: [0, -10] */
+                }, labelConfig ),
                 lineStyle,
                 areaStyle,
                 itemStyle: {

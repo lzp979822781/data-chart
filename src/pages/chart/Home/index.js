@@ -6,8 +6,8 @@ import {
     appQuatityBar, appQuatitylegend,
     comTitle, comLegend, comGrid, barLegend,
     drugRealLineStyle, drugAreaStyle, drugQuantityGrid, drugQuantityBar,
-    hospitalRealLineStyle, hospitalAreaStyle, hospitalQuantityBar,
-    urgentRealLineStyle, urgentAreaStyle, urgentQuantityBar,
+    hospitalRealLineStyle, hospitalAreaStyle, hospitalQuantityBar, hospitalLabelConfig,
+    urgentRealLineStyle, urgentAreaStyle, urgentQuantityBar, urgentlLabelConfig,
     fullScreen, exitScreen
 } from './templateData';
 import styles from './index.less';
@@ -115,6 +115,7 @@ class Home extends Component {
                 lineStyle = {hospitalRealLineStyle}
                 areaStyle = {hospitalAreaStyle}
                 gridConfig = {comGrid}
+                labelConfig = {hospitalLabelConfig}
             />
             <OrderQuantityTrend
                 title = '互联网大促期间问诊下单量趋势'
@@ -126,6 +127,7 @@ class Home extends Component {
                 gridConfig = {drugQuantityGrid}
                 itemStyle = {hospitalQuantityBar}
                 className = {styles['home-chart-right-drugStore-bar']}
+                labelConfig = {hospitalLabelConfig}
             />
         </div>
     )
@@ -156,6 +158,7 @@ class Home extends Component {
                 gridConfig = {drugQuantityGrid}
                 itemStyle = {urgentQuantityBar}
                 className = {styles['home-chart-right-drugStore-bar']}
+                labelConfig = {urgentlLabelConfig}
             />
         </div>
     )

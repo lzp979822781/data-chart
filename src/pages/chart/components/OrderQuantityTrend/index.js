@@ -79,7 +79,7 @@ class OrderQuantityTrend extends Component {
     }
 
     genOption = () => {
-        const { legend, lineStyle = {}, areaStyle = {}, itemStyle, legendConfig, gridConfig } = this.props;
+        const { legend, lineStyle = {}, areaStyle = {}, itemStyle, legendConfig, gridConfig, labelConfig = {} } = this.props;
         const option = {
             title: this.getTitleConfig(),
             legend: legendConfig || {
@@ -146,13 +146,11 @@ class OrderQuantityTrend extends Component {
                 smooth: true,
                 symbolSize: 8,
                 name: legend[0],
-                label: {
+                label: Object.assign({}, {
                     show: true,
                     position: 'top',
                     color: '#fff',
-                    rotate: 60,
-                    offset: [0, -10]
-                },
+                }, labelConfig),
                 lineStyle,
                 areaStyle,
                 itemStyle: itemStyle || {

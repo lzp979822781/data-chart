@@ -148,7 +148,12 @@ const hospitalQuantityBar = {
     barBorderRadius: [ 4, 4, 0, 0], // 设置柱状图
 }
 
-export { hospitalRealLineStyle, hospitalAreaStyle, hospitalQuantityBar };
+const hospitalLabelConfig = {
+    rotate: 60,
+    ffset: [0, -10]
+}
+
+export { hospitalRealLineStyle, hospitalAreaStyle, hospitalQuantityBar, hospitalLabelConfig };
 
 const urgentRealLineStyle = {
     color: new echarts.graphic.LinearGradient(
@@ -184,7 +189,12 @@ const urgentQuantityBar = {
     barBorderRadius: [ 4, 4, 0, 0], // 设置柱状图
 }
 
-export { urgentRealLineStyle, urgentAreaStyle, urgentQuantityBar };
+const urgentlLabelConfig = {
+    rotate: 60,
+    ffset: [0, -10]
+}
+
+export { urgentRealLineStyle, urgentAreaStyle, urgentQuantityBar, urgentlLabelConfig };
 
 function fullScreen() {
     const docElm = document.documentElement;
