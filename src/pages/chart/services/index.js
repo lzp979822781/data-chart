@@ -21,7 +21,7 @@ const URL = {
     AppQuantityTrend: `/app/order/latelyDays`, // 京东健康app大促期间单量趋势
     AppTotal: `/app/order/todayTotal`, // 京东健康app当天订单量和订单金额
 
-    TodayPv: `/ump/todayPV`
+    TodayPv: `/ump/todayPV`,
 };
 
 /**
@@ -33,7 +33,7 @@ export function get(param) {
     /* const {data: {id} = {}} = param;
     let url =  URL[param.url];
     if(dynamicUrl) url = `${url}/${id}`; */
-    const res = request(URL[param.url], {
+    const res = request(`//yao-databoard.jd.com/${URL[param.url]}`, {
         method: "GET",
         params: param.data,
     });
@@ -41,15 +41,17 @@ export function get(param) {
 }
 
 export function post(param) {
-    return new Promise((resolve) => {
-        request(URL[param.url], {
+    return new Promise(resolve => {
+        request(`//yao-databoard.jd.com/${URL[param.url]}`, {
             method: "POST",
             data: param.data,
-        }).then(res => {
-            const { success, data, errorMsg } = res;
-            resolve({ success, data, error: errorMsg });
-        }).catch(error => resolve({ success: false, error }))
-    })
+        })
+            .then(res => {
+                const { success, data, errorMsg } = res;
+                resolve({ success, data, error: errorMsg });
+            })
+            .catch(error => resolve({ success: false, error }));
+    });
 }
 
 export function queryDetail(param) {

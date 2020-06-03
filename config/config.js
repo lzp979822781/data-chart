@@ -71,12 +71,10 @@ export default {
     externals: {
         "@antv/data-set": "DataSet",
     },
-    // history: 'hash',
-    base: "/scm/",
-    // hash: false,
-    // publicPath: "//yaostatic.jd.com/yao_static/react/big/",
+    history: "hash",
+    base: "",
     hash: true,
-    publicPath: "//static.360buyimg.com/yao_static/react/big/",
+    publicPath: "./",
     proxy: {
         "/api": {
             target: "http://yao.jd.com/",
