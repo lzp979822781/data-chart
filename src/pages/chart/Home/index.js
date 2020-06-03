@@ -23,7 +23,7 @@ class Home extends Component {
 
     componentDidMount() {
         this.getPvData();
-        this.initInterval();
+        // this.initInterval();
     }
 
     componentWillUnmount() {
@@ -75,7 +75,7 @@ class Home extends Component {
                 />
                 <TotalCard
                     title = '药京采'
-                    url = 'AppTotal'
+                    url = 'YjcTotal'
                     pvData = {yjc}
                 />
             </div>
