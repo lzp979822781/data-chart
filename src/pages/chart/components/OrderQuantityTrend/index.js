@@ -99,7 +99,7 @@ class OrderQuantityTrend extends Component {
             },
             xAxis: {
                 type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                data: [],
                 axisTick: {
                     show: false, // 刻度线的显示
                 },
@@ -141,7 +141,7 @@ class OrderQuantityTrend extends Component {
                 right: 0
             },
             series: [{
-                data: [120, 200, 150, 80, 70, 110, 130],
+                data: [],
                 type: 'bar',
                 smooth: true,
                 symbolSize: 8,
@@ -149,7 +149,9 @@ class OrderQuantityTrend extends Component {
                 label: {
                     show: true,
                     position: 'top',
-                    color: '#fff'
+                    color: '#fff',
+                    rotate: 60,
+                    offset: [0, -10]
                 },
                 lineStyle,
                 areaStyle,

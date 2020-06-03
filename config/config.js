@@ -88,6 +88,21 @@ export default {
             secure: false,
             changeOrigin: true,
         },
+        "/hospital": {
+            target: "http://yao-databoard.jd.com/",
+            secure: false,
+            changeOrigin: true,
+        },
+        "/ds": {
+            target: "http://yao-databoard.jd.com/",
+            secure: false,
+            changeOrigin: true,
+        },
+        "/app": {
+            target: "http://yao-databoard.jd.com/",
+            secure: false,
+            changeOrigin: true,
+        },
     },
     ignoreMomentLocale: true,
     lessLoaderOptions: {

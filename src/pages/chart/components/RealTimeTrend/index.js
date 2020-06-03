@@ -158,7 +158,9 @@ class RealTimeTrend extends Component {
                 label: {
                     show: true,
                     position: 'top',
-                    color: '#fff'
+                    color: '#fff',
+                    rotate: 60,
+                    offset: [0, -10]
                 },
                 lineStyle,
                 areaStyle,

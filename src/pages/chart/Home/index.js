@@ -109,7 +109,7 @@ class Home extends Component {
                 id = "hospitalRealTimeTrend"
                 title = '互联网问诊下单量实时趋势'
                 legend = {['互联网医院问诊下单量']}
-                url = 'DrugStoreRealTimeTrend'
+                url = 'InterRealTimeTrend'
                 titleConfig = {comTitle}
                 legendConfig = {comLegend}
                 lineStyle = {hospitalRealLineStyle}
@@ -120,7 +120,7 @@ class Home extends Component {
                 title = '互联网大促期间问诊下单量趋势'
                 legend = {['互联网医院问诊下单量']}
                 id = 'hospitalQuantityTrend'
-                url = 'DrugStoreQuantityTrend'
+                url = 'InterQuantityTrend'
                 titleConfig = {comTitle}
                 legendConfig = {barLegend}
                 gridConfig = {drugQuantityGrid}
@@ -139,7 +139,7 @@ class Home extends Component {
                 id = "urgentRealTimeTrend"
                 title = '药急送下单量实时趋势'
                 legend = {['药急送下单量']}
-                url = 'DrugStoreRealTimeTrend'
+                url = 'UrgentRealTimeTrend'
                 titleConfig = {comTitle}
                 legendConfig = {comLegend}
                 lineStyle = {urgentRealLineStyle}
@@ -150,7 +150,7 @@ class Home extends Component {
                 title = '药急送大促期间单量趋势'
                 legend = {['药急送下单量']}
                 id = 'urgentQuantityTrend'
-                url = 'DrugStoreQuantityTrend'
+                url = 'UrgentQuantityTrend'
                 titleConfig = {comTitle}
                 legendConfig = {barLegend}
                 gridConfig = {drugQuantityGrid}
@@ -233,7 +233,7 @@ class Home extends Component {
                             id = "appRealTrend"
                             title = '实时支付单量趋势'
                             legend = {['京东健康APP支付单量']}
-                            url = 'DrugStoreRealTimeTrend'
+                            url = 'AppRealTimeTrend'
                             titleConfig = {titleConfig}
                             legendConfig = {legendConfig}
                             lineStyle = {lineStyle}
@@ -243,7 +243,7 @@ class Home extends Component {
                             title = '大促期间支付单量趋势'
                             legend = {['京东健康APP支付单量']}
                             id = 'appQuantityTrend'
-                            url = 'DrugStoreQuantityTrend'
+                            url = 'AppQuantityTrend'
                             titleConfig = {titleConfig}
                             lineStyle = {lineStyle}
                             itemStyle = {appQuatityBar}
