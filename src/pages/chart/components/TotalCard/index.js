@@ -71,13 +71,13 @@ class TotalCard extends Component {
         return (
             <div className = {styles['total-card']}>
                 <span className = {styles['total-card-title']}>{title}</span>
-                <div className = {styles['total-card-pv']}>当日累积PV</div>
+                <div className = {styles['total-card-pv']}>当日累计PV</div>
                 <FormatNum
                     data = {orderSumMoney}
                     numFormat = {[ 0, '', ', ']}
                     className = {styles['total-card-pv-num']}
                 />
-                <span className = {styles['total-card-order']}>当日累积支付单量</span>
+                <span className = {styles['total-card-order']}>当日累计支付单量</span>
                 <FormatNum
                     data = {orderCount}
                     numFormat = {[ 0, '', ', ']}
