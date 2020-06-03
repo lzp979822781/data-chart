@@ -105,7 +105,7 @@ class Home extends Component {
                 legend = {["大药房下单量"]}
                 url = "DrugStoreRealTimeTrend"
                 titleConfig = {comTitle}
-                legendConfig = {comLegend}
+                legendConfig = {{ ...comLegend, icon: 'image:////img14.360buyimg.com/imagetools/jfs/t1/131444/12/1318/652/5ed7779fEef6bfafa/9449c4dcc56cfa9c.png' }}
                 lineStyle = {drugRealLineStyle}
                 areaStyle = {drugAreaStyle}
                 gridConfig = {comGrid}
@@ -137,7 +137,7 @@ class Home extends Component {
                 legend = {["互联网医院问诊下单量"]}
                 url = "InterRealTimeTrend"
                 titleConfig = {comTitle}
-                legendConfig = {comLegend}
+                legendConfig = {{ ...comLegend, icon: 'image:////img12.360buyimg.com/imagetools/jfs/t1/117925/35/9261/707/5ed777a4E84066893/4aa752d7e4003e46.png' }}
                 lineStyle = {hospitalRealLineStyle}
                 areaStyle = {hospitalAreaStyle}
                 gridConfig = {comGrid}
@@ -168,7 +168,7 @@ class Home extends Component {
                 legend = {["药急送下单量"]}
                 url = "UrgentRealTimeTrend"
                 titleConfig = {comTitle}
-                legendConfig = {comLegend}
+                legendConfig = {{ ...comLegend, icon: "image:////img14.360buyimg.com/imagetools/jfs/t1/115905/17/9156/719/5ed7779fE59d5c7a7/f24e88d1a86ae5e0.png" }}
                 lineStyle = {urgentRealLineStyle}
                 areaStyle = {urgentAreaStyle}
                 gridConfig = {comGrid}
