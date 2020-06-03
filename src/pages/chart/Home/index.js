@@ -251,36 +251,38 @@ class Home extends Component {
         };
         return (
             <div className = {styles['home-chart-left']}>
-                <img className = {styles['home-chart-left-img']} src = {titleDecorate} width = {10} height = {28} alt = "" />
-                <div>
-                    <HealthAppCard
-                        title = '京东健康app'
-                        url = 'AppTotal'
-                        pvData = {healthApp}
-                    />
-                    <div className = {styles['home-chart-app-container']}>
-                        <RealTimeTrend
-                            id = "appRealTrend"
-                            title = '实时支付单量趋势'
-                            legend = {['京东健康APP支付单量']}
-                            url = 'AppRealTimeTrend'
-                            titleConfig = {titleConfig}
-                            legendConfig = {legendConfig}
-                            lineStyle = {lineStyle}
-                            areaStyle = {areaStyle}
+                <div className = {styles['home-chart-left-grid']}>
+                    <img className = {styles['home-chart-left-img']} src = {titleDecorate} width = {10} height = {28} alt = "" />
+                    <div>
+                        <HealthAppCard
+                            title = '京东健康app'
+                            url = 'AppTotal'
+                            pvData = {healthApp}
                         />
-                        <OrderQuantityTrend
-                            title = '大促期间支付单量趋势'
-                            legend = {['京东健康APP支付单量']}
-                            id = 'appQuantityTrend'
-                            url = 'AppQuantityTrend'
-                            titleConfig = {titleConfig}
-                            lineStyle = {lineStyle}
-                            itemStyle = {appQuatityBar}
-                            legendConfig = {appQuatitylegend}
-                        />
-                    </div>
+                        <div className = {styles['home-chart-app-container']}>
+                            <RealTimeTrend
+                                id = "appRealTrend"
+                                title = '实时支付单量趋势'
+                                legend = {['京东健康APP支付单量']}
+                                url = 'AppRealTimeTrend'
+                                titleConfig = {titleConfig}
+                                legendConfig = {legendConfig}
+                                lineStyle = {lineStyle}
+                                areaStyle = {areaStyle}
+                            />
+                            <OrderQuantityTrend
+                                title = '大促期间支付单量趋势'
+                                legend = {['京东健康APP支付单量']}
+                                id = 'appQuantityTrend'
+                                url = 'AppQuantityTrend'
+                                titleConfig = {titleConfig}
+                                lineStyle = {lineStyle}
+                                itemStyle = {appQuatityBar}
+                                legendConfig = {appQuatitylegend}
+                            />
+                        </div>
 
+                    </div>
                 </div>
             </div>
         )
