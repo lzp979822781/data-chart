@@ -1,9 +1,9 @@
 import request from "@/utils/request";
 
 const URL = {
-    DrugStoreRealTimeTrend: `/btb/order/latelyMinutes`, // 大药房下单量实时趋势
-    DrugStoreQuantityTrend: `/btb/order/latelyDays`, // 大药房大促期间单量趋势
-    DrugStoreTotal: `/btb/order/todayTotal`, // 大药房当日累积PV、累计下单量
+    DrugStoreRealTimeTrend: `/pha/order/latelyMinutes`, // 大药房下单量实时趋势
+    DrugStoreQuantityTrend: `/pha/order/latelyDays`, // 大药房大促期间单量趋势
+    DrugStoreTotal: `/pha/order/todayTotal`, // 大药房当日累积PV、累计下单量
 
     InterRealTimeTrend: `/hospital/order/latelyMinutes`, // 互联网医院实时趋势
     InterQuantityTrend: `/hospital/order/latelyDays`, // 互联网医院近n天每天总量

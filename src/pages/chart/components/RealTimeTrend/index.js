@@ -188,7 +188,12 @@ class RealTimeTrend extends Component {
         return data;
     }
 
-    getAxisData = (data, field) => data.map(({ [field]: value }) => value)
+    getAxisData = (data, field) => {
+        if(Array.isArray(data)) {
+            return data.map(({ [field]: value }) => value);
+        }
+        return data;
+    }
 
     formatData = (data, format ) => {
         if(Array.isArray(data) && data.length) {

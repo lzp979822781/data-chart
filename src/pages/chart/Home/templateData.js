@@ -112,7 +112,12 @@ const drugQuantityBar = {
     barBorderRadius: [ 4, 4, 0, 0], // 设置柱状图
 }
 
-export { drugRealLineStyle, drugAreaStyle, drugQuantityGrid, drugQuantityBar };
+const drugLabelConfig = {
+    rotate: 60,
+    ffset: [0, -10]
+}
+
+export { drugRealLineStyle, drugAreaStyle, drugQuantityGrid, drugQuantityBar, drugLabelConfig };
 
 const hospitalRealLineStyle = {
     color: new echarts.graphic.LinearGradient(

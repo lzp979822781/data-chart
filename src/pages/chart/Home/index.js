@@ -5,7 +5,7 @@ import { RealTimeTrend, OrderQuantityTrend, Time, TotalCard, HealthAppCard } fro
 import {
     appQuatityBar, appQuatitylegend,
     comTitle, comLegend, comGrid, barLegend,
-    drugRealLineStyle, drugAreaStyle, drugQuantityGrid, drugQuantityBar,
+    drugRealLineStyle, drugAreaStyle, drugQuantityGrid, drugQuantityBar, drugLabelConfig,
     hospitalRealLineStyle, hospitalAreaStyle, hospitalQuantityBar, hospitalLabelConfig,
     urgentRealLineStyle, urgentAreaStyle, urgentQuantityBar, urgentlLabelConfig,
 } from './templateData';
@@ -109,6 +109,7 @@ class Home extends Component {
                 lineStyle = {drugRealLineStyle}
                 areaStyle = {drugAreaStyle}
                 gridConfig = {comGrid}
+                labelConfig = {drugLabelConfig}
             />
             <OrderQuantityTrend
                 title = '大药房大促期间支付单量趋势'
@@ -120,6 +121,7 @@ class Home extends Component {
                 gridConfig = {drugQuantityGrid}
                 itemStyle = {drugQuantityBar}
                 className = {styles['home-chart-right-drugStore-bar']}
+                labelConfig = {drugLabelConfig}
             />
         </div>
     )
