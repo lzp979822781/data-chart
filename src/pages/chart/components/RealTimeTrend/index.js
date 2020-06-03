@@ -111,7 +111,11 @@ class RealTimeTrend extends Component {
                     show: false, // 刻度线的显示
                 },
                 axisLine: {
-                    show: false // 轴线的显示
+                    show: true, // 轴线的显示
+                    lineStyle: {
+                        color: '#0051F3',
+                        width: 2
+                    }
                 },
                 axisLabel: {
                     textStyle: {
@@ -132,7 +136,7 @@ class RealTimeTrend extends Component {
             yAxis: {
                 type: 'value',
                 axisLine: {
-                    show: false
+                    show: false,
                 },
                 axisTick: {
                     show: false
