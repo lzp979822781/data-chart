@@ -10,7 +10,7 @@ const titleStyle = {
 
 const defaultProps = {
     title: '大药房下单量实时趋势',
-    reqTimeRange: 30,
+    reqTimeRange: 15,
     format: 'HH:mm',
     interval: 5000,
 }
