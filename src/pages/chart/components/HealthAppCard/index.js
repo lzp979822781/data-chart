@@ -82,7 +82,7 @@ class HealthAppCard extends Component {
         const data = this.formatData(pvData);
         return (
             <div className = {styles['health-app-pv']}>
-                <div className = {styles['health-app-pv-title']}>当日累积PV</div>
+                <div className = {styles['health-app-pv-title']}>当日累计PV</div>
                 <div className = {styles['health-app-pv-container']}>
                     {
                         `${data}`.split("").map((item, index) => {
@@ -104,7 +104,7 @@ class HealthAppCard extends Component {
         const data = this.formatData(orderCount);
         return (
             <div className = {styles['health-app-order']}>
-                <div className = {styles['health-app-order-title']}>当日累积支付单量</div>
+                <div className = {styles['health-app-order-title']}>当日累计支付单量</div>
                 <div className = {styles['health-app-order-container']}>
                     {
                         `${data}`.split("").map((item, index) => {
