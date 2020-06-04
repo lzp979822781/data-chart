@@ -51,6 +51,8 @@ const comTitle = {
 const comLegend = {
     top: 32,
     left: 0,
+    itemWidth: 32,
+    itemHeight: 14,
     textStyle: {
         color: '#fff',
         fontSize: 14,
@@ -227,3 +229,22 @@ function exitScreen() {
 }
 
 export { fullScreen, exitScreen };
+
+
+
+/**
+ * 登录权限处理
+ * @param { string} isAuth 接口返回的字段，是否有权限，有权限直接返回数据
+ * @
+ */
+function handleLogin(isAuth) {
+    if(!isAuth) {
+        const { location: { origin } = {} } = window;
+        window.location.href = `https://ssa.jd.com/sso/login?returnUrl=${origin}`;
+        return false;
+    }
+
+    return true;
+}
+
+export { handleLogin };

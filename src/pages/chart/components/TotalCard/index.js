@@ -6,7 +6,7 @@ import styles from './index.less';
 
 const defaultProps = {
     title: '大药房',
-    timeInterval: 10000,
+    interval: 5000,
     pvData: 0
 }
 

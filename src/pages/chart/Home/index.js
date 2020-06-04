@@ -48,7 +48,7 @@ class Home extends Component {
     callTimeout = () => {
         this.timeout = setTimeout(() => {
             this.getPvData();
-        }, 5000)
+        }, 30000)
     }
 
     getPvData = async () => {

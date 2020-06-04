@@ -7,7 +7,7 @@ import { post } from '../../services';
 import styles from './index.less';
 
 const defaultProps = {
-    timeInterval: 5000,
+    interval: 5000,
     numFormat: [0, '', ','],
     pvData: 0
 }
