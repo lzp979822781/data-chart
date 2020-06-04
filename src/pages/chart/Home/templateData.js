@@ -256,7 +256,7 @@ const codeFunc = {
             })
             isFirst = false;
             setTimeout(() => {
-
+                isFirst = true;
             }, 300000);
         }
 
