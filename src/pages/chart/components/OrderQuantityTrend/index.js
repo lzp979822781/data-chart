@@ -7,7 +7,7 @@ import { post } from '../../services';
 const defaultProps = {
     title: '大药房大促期间单量趋势',
     reqTimeRange: 10,
-    format: 'YYYY/MM/DD',
+    format: 'MM/DD',
     interval: 5000
 }
 
@@ -116,7 +116,7 @@ class OrderQuantityTrend extends Component {
                         fontSize: 12,
                         fontFamily: 'SFProText-Light'
                     },
-                    interval: 3
+                    interval: 2
                 },
             },
             yAxis: {
