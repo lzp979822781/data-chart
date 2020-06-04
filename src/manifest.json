@@ -1,6 +1,6 @@
 {
-  "name": "Big Drug Store",
-  "short_name": "Big Drug Store",
+  "name": "健康实时大屏",
+  "short_name": "健康实时大屏",
   "display": "standalone",
   "start_url": "./?utm_source=homescreen",
   "theme_color": "#002140",

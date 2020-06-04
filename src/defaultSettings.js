@@ -6,5 +6,5 @@ module.exports = {
     fixedHeader: false, // sticky header
     autoHideHeader: false, // auto hide header
     fixSiderbar: false, // sticky siderbar
-    title: "Big Drug Store",
+    title: "健康实时大屏",
 };

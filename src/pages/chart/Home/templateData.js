@@ -1,4 +1,5 @@
 import echarts from "echarts";
+import { notification } from 'antd';
 
 const appQuatityTitle = {
     textStyle: {
@@ -234,17 +235,38 @@ export { fullScreen, exitScreen };
 
 /**
  * 登录权限处理
- * @param { string} isAuth 接口返回的字段，是否有权限，有权限直接返回数据
- * @
+ * @param { string} code 接口返回的字段，是否有权限，有权限直接返回数据 code为4002表明没有权限
+ * @returns { Boolean }
  */
-function handleLogin(isAuth) {
-    if(!isAuth) {
-        const { location: { origin } = {} } = window;
-        window.location.href = `https://ssa.jd.com/sso/login?returnUrl=${origin}`;
-        return false;
-    }
 
-    return true;
+let isFirst = true;
+
+const codeFunc = {
+    '4002': () => {
+        const { location: { origin } = {} } = window;
+        window.location.href = `http://ssa.jd.com/sso/login?returnUrl=${origin}`;
+        return false;
+    },
+    '9001': () => {
+        if(isFirst) {
+            notification.warning({
+                message: '权限限制',
+                description: '当前用户无权限操作                                                         ',
+                placement: 'topLeft'
+            })
+            isFirst = false;
+            setTimeout(() => {
+
+            }, 300000);
+        }
+
+    }
+}
+
+function handleLogin(code) {
+    if(code !== null && typeof code !== 'undefined') {
+        codeFunc[code]();
+    }
 }
 
 export { handleLogin };

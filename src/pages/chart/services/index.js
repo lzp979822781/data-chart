@@ -47,8 +47,8 @@ export function post(param) {
             data: param.data,
         })
             .then(res => {
-                const { success, data, errorMsg } = res;
-                resolve({ success, data, error: errorMsg });
+                const { success, data, errorMsg, ...other } = res;
+                resolve({ success, data, error: errorMsg, ...other });
             })
             .catch(error => resolve({ success: false, error }));
     });
