@@ -105,7 +105,7 @@ class RealTimeTrend extends Component {
             },
             xAxis: {
                 type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                data: [],
                 axisTick: {
                     show: false, // 刻度线的显示
                 },
@@ -156,7 +156,7 @@ class RealTimeTrend extends Component {
                 },
             },
             series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                data: [],
                 type: 'line',
                 smooth: true,
                 symbolSize: 8,
