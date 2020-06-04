@@ -7,13 +7,7 @@ export default [
         authority: ["admin", "user"],
         routes: [
             // dashboard
-            { path: "/", redirect: "/home" },
-            {
-                name: "home",
-                icon: "home",
-                path: "/home",
-                component: "./chart/Home",
-            },
+            { path: "/", icon: "home", component: "./chart/Home" },
             {
                 name: "exception",
                 icon: "warning",
