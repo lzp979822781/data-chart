@@ -49,7 +49,7 @@ class TotalCard extends Component {
             this.handleData(data);
         } else {
             clearInterval(this.timeInterval);
-            if(typeof this.initInterVal === 'function') {
+            if(this && this.initInterval) {
                 this.initInterval();
             }
         }
