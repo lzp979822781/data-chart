@@ -1,4 +1,5 @@
 import request from "@/utils/request";
+import { handleLogin } from '../Home/templateData';
 
 const URL = {
     DrugStoreRealTimeTrend: `/pha/order/latelyMinutes`, // 大药房下单量实时趋势
@@ -48,6 +49,8 @@ export function post(param) {
         })
             .then(res => {
                 const { success, data, errorMsg, ...other } = res;
+                const { code } = other;
+                handleLogin(code);
                 resolve({ success, data, error: errorMsg, ...other });
             })
             .catch(error => resolve({ success: false, error }));
