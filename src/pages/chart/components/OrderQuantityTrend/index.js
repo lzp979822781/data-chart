@@ -8,7 +8,7 @@ const defaultProps = {
     title: '大药房大促期间单量趋势',
     reqTimeRange: 10,
     format: 'MM/DD',
-    interval: 5000
+    interval: 10000
 }
 
 const propTypes = {
@@ -34,7 +34,6 @@ class OrderQuantityTrend extends Component {
     componentDidMount() {
         this.initMap();
         this.initResize();
-        this.initInterval();
         this.getData();
     }
 
@@ -42,6 +41,11 @@ class OrderQuantityTrend extends Component {
         if(this.myChart) {
             this.myChart.dispose();
         }
+
+        if(this.timeout) {
+            clearTimeout(this.timeout);
+        }
+
         window.onresize = null;
     }
 
@@ -53,9 +57,9 @@ class OrderQuantityTrend extends Component {
         }
     }
 
-    initInterval = () => {
+    callTimeout = () => {
         const { interval } = this.props;
-        this.timeInterval = setInterval(() => {
+        this.timeout = setTimeout(() => {
             this.getData();
         }, interval)
     }
@@ -221,11 +225,10 @@ class OrderQuantityTrend extends Component {
         const { success, data } = await post(this.getReqParam());
         if(success) {
             this.handleData(data);
-        } else {
-            clearInterval(this.timeInterval);
-            if(typeof this.initInterVal === 'function') {
-                this.initInterval();
-            }
+        }
+
+        if(this && this.callTimeout) {
+            this.callTimeout();
         }
     }
 

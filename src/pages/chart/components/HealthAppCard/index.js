@@ -20,20 +20,19 @@ class HealthAppCard extends Component {
 
     componentDidMount() {
         this.getData();
-        this.initInterVal();
     }
 
     componentWillUnmount() {
-        if(this.interval) {
-            clearInterval(this.interval);
+        if(this.timeout) {
+            clearTimeout(this.timeout);
         }
     }
 
-    initInterVal = () => {
-        const { timeInterval } = this.props;
-        this.interval = setInterval(() => {
+    callTimeout = () => {
+        const { interval } = this.props;
+        this.timeout = setTimeout(() => {
             this.getData();
-        }, timeInterval);
+        }, interval)
     }
 
     getReqParam = () => {
@@ -49,11 +48,10 @@ class HealthAppCard extends Component {
         const { success, data } = await post(this.getReqParam());
         if(success) {
             this.handleData(data);
-        } else {
-            clearInterval(this.timeInterval);
-            if(this && this.initInterval) {
-                this.initInterval();
-            }
+        }
+
+        if(this && this.callTimeout) {
+            this.callTimeout();
         }
     }
 

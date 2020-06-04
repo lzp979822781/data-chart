@@ -37,20 +37,19 @@ class Home extends Component {
 
     componentDidMount() {
         this.getPvData();
-        this.initInterval();
     }
 
     componentWillUnmount() {
-        if (this.timeInterval) {
-            clearInterval(this.timeInterval);
+        if(this.timeout) {
+            clearTimeout(this.timeout);
         }
     }
 
-    initInterval = () => {
-        this.timeInterval = setInterval(() => {
+    callTimeout = () => {
+        this.timeout = setTimeout(() => {
             this.getPvData();
-        }, 5000);
-    };
+        }, 5000)
+    }
 
     getPvData = async () => {
         const reqParm = {
@@ -60,11 +59,10 @@ class Home extends Component {
         const { data = {}, success } = await post(reqParm);
         if (success) {
             this.setState({ pvObj: data });
-        } else {
-            clearInterval(this.timeInterval);
-            if (typeof this.initInterVal === "function") {
-                this.initInterval();
-            }
+        }
+
+        if(this && this.callTimeout) {
+            this.callTimeout();
         }
     };
 

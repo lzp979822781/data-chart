@@ -34,7 +34,6 @@ class RealTimeTrend extends Component {
     componentDidMount() {
         this.initMap();
         this.initResize();
-        this.initInterval();
         this.getData();
     }
 
@@ -42,8 +41,8 @@ class RealTimeTrend extends Component {
         if(this.myChart) {
             this.myChart.dispose();
         }
-        if(this.timeInterval) {
-            clearInterval(this.timeInterval);
+        if(this.timeout) {
+            clearTimeout(this.timeout);
         }
         window.onresize = null;
     }
@@ -56,9 +55,9 @@ class RealTimeTrend extends Component {
         }
     }
 
-    initInterval = () => {
+    callTimeout = () => {
         const { interval } = this.props;
-        this.timeInterval = setInterval(() => {
+        this.timeout = setTimeout(() => {
             this.getData();
         }, interval)
     }
@@ -225,11 +224,10 @@ class RealTimeTrend extends Component {
         const { success, data } = await post(this.getReqParam());
         if(success) {
             this.handleData(data);
-        } else {
-            clearInterval(this.timeInterval);
-            if(typeof this.initInterVal === 'function') {
-                this.initInterval();
-            }
+        }
+
+        if(this && this.callTimeout) {
+            this.callTimeout();
         }
     }
 
