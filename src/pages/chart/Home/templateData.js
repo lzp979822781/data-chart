@@ -243,8 +243,8 @@ let isFirst = true;
 
 const codeFunc = {
     '4002': () => {
-        const { location: { origin } = {} } = window;
-        window.location.href = `http://ssa.jd.com/sso/login?returnUrl=${origin}`;
+        const { location: { href } = {} } = window;
+        window.location.href = `http://ssa.jd.com/sso/login?returnUrl=${ encodeURIComponent(href)}`;
         return false;
     },
     '9001': () => {
