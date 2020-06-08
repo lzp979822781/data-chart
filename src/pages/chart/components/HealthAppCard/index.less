@@ -13,11 +13,38 @@
 }
 
 .health-app {
-    padding: 30px 26px;
     &-title {
         &-text {
             .font(30px, #FFFFFF, 'PingFangSC-Semibold');
+            line-height: 76px;
+            flex: 1;
+            text-align: center;
+            height: 76px;
         }
+
+        &-container {
+            .flex(row, flex-start, center);
+        }
+
+        &-app {
+            flex: 1;
+            background: url("../../../../assets/svg/appBg.svg");
+            background-origin: border-box;
+            position: relative;
+            left: -4px;
+        }
+
+        &-program {
+            background: url('../../../../assets/svg/mini-program.svg');
+            background-origin: border-box;
+            flex: 1;
+            position: relative;
+            right: -4px;
+        }
+    }
+
+    &-content {
+        padding: 0 26px 30px 26px;
     }
 
     &-pv {

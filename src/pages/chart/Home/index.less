@@ -1,3 +1,5 @@
+@iconTop: 25px;
+
 .flex(@direction: row, @rowAlign: flex-start, @colAlign: center) {
     display: flex;
     flex-direction: @direction;
@@ -96,10 +98,16 @@
             position: relative;
             background: linear-gradient(180deg, rgba(0,66,199,0.7) 0%,rgba(0,11,100,0.1) 100%);
             border: 2px solid rgba(4,87,255,0.7);
-            &-img {
+            &-app {
                 position: absolute;
-                top: 31px;
+                top: @iconTop;
                 left: 0;
+            }
+
+            &-program {
+                position: absolute;
+                top: @iconTop;
+                right: 0;
             }
 
             &-grid {
@@ -112,6 +120,10 @@
             &-container {
                 padding: 30px 26px  0 26px;
                 box-sizing: border-box;
+            }
+            &-card {
+                position: relative;
+                top: -4px;
             }
         }
     }

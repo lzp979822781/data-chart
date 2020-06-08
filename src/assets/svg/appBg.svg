@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="264px" height="76px" viewBox="0 0 264 76" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>矩形@1x</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="89.2521913%" id="linearGradient-1">
+            <stop stop-color="#000827" stop-opacity="0.597874781" offset="0%"></stop>
+            <stop stop-color="#00195F" stop-opacity="0.300480769" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="58.2908117%" y1="45.9806814%" x2="50%" y2="54.0193186%" id="linearGradient-2">
+            <stop stop-color="#002C86" offset="0%"></stop>
+            <stop stop-color="#024ADC" stop-opacity="0.499262456" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="618大屏小程序切换" transform="translate(-29.000000, -133.000000)" fill="url(#linearGradient-1)" stroke="url(#linearGradient-2)" stroke-width="2">
+            <g id="编组-4" transform="translate(30.000000, 134.000000)">
+                <g id="京东健康背景图">
+                    <path d="M0,0 L253,0 C257.418278,-8.11624501e-16 261,3.581722 261,8 L261,74 L261,74 L20.3884491,74 C16.5332898,74 13.2264486,71.250524 12.5228245,67.4601195 L0,0 L0,0 Z" id="矩形" transform="translate(130.500000, 37.000000) scale(-1, 1) translate(-130.500000, -37.000000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

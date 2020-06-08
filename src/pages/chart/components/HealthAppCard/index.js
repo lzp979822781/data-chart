@@ -15,7 +15,9 @@ const defaultProps = {
 class HealthAppCard extends Component {
     constructor(props) {
         super(props);
-        this.state = { };
+        this.state = {
+            tabIndex: 0
+        };
     }
 
     componentDidMount() {
@@ -121,16 +123,51 @@ class HealthAppCard extends Component {
         );
     }
 
-    renderTitle = () => {
-        const { title } = this.props;
+    onTabClick = tabIndex => () => {
+        const { onClick } = this.props;
+        this.setState({ tabIndex }, () => {
+            if(onClick) {
+                onClick(tabIndex);
+            }
+        });
+    }
+
+    getAppCls = () => {
+        const { tabIndex } = this.state;
+        return classnames(styles['health-app-title-text'], {
+            [styles['health-app-title-app']]: tabIndex === 1
+        });
+    }
+
+    getProgCls = () => {
+        const { tabIndex } = this.state;
+        return classnames(styles['health-app-title-text'], {
+            [styles['health-app-title-program']]: tabIndex === 0
+        })
+    }
+
+    renderTitleText = () => {
+        const { title: [ appTitle, progTitle ] } = this.props;
+        const appCls = this.getAppCls();
+        const progCls = this.getProgCls();
+
         return (
-            <div className = {styles['health-app-title']}>
-                <div className = {styles['health-app-title-text']}>{title}</div>
+            <div className = {styles['health-app-title-container']}>
+                <div className = {appCls} onClick = {this.onTabClick(0)}>{appTitle}</div>
+                <div className = {progCls} onClick = {this.onTabClick(1)}>{progTitle}</div>
+            </div>
+        )
+    }
+
+    renderTitle = () => (
+        <div className = {styles['health-app-title']}>
+            { this.renderTitleText()}
+            <div className = {styles['health-app-content']}>
                 { this.renderPV()}
                 { this.renderOrder()}
             </div>
-        );
-    }
+        </div>
+    )
 
     render() {
         const { className } = this.props;

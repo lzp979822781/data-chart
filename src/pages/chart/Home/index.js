@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import echarts from "echarts";
 import titleDecorate from "@/assets/titleDecorate.svg";
+import rightTitleIcon from '@/assets/svg/rightTitleIcon.svg';
 import { RealTimeTrend, OrderQuantityTrend, Time, TotalCard, HealthAppCard } from "../components";
 import {
     appQuatityBar,
@@ -31,6 +32,7 @@ class Home extends Component {
         super(props);
         this.state = {
             pvObj: {},
+            tabIndex: 0
         };
         this.ref = React.createRef();
     }
@@ -48,7 +50,7 @@ class Home extends Component {
     callTimeout = () => {
         this.timeout = setTimeout(() => {
             this.getPvData();
-        }, 30000);
+        }, 5000);
     }
 
     getPvData = async () => {
@@ -236,12 +238,23 @@ class Home extends Component {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: "rgba(40, 213, 223, 1)" }, { offset: 1, color: "rgba(40,213,223, .19)" }]),
             },
         };
+
+        const icon = this.getAppIcon();
+
+        const iconCls = this.getIconCls();
+
         return (
             <div className = {styles["home-chart-left"]}>
                 <div className = {styles["home-chart-left-grid"]}>
-                    <img className = {styles["home-chart-left-img"]} src = {titleDecorate} width = {10} height = {28} alt = "" />
+                    <img className = {iconCls} src = {icon} width = {10} height = {28} alt = "" />
                     <div>
-                        <HealthAppCard title = "京东健康APP" url = "AppTotal" pvData = {healthApp} />
+                        <HealthAppCard
+                            title = {["京东健康APP", "京东健康小程序"]}
+                            url = "AppTotal"
+                            pvData = {healthApp}
+                            onClick = {this.onChangeTab}
+                            className = {styles['home-chart-app-card']}
+                        />
                         <div className = {styles["home-chart-app-container"]}>
                             <RealTimeTrend
                                 id = "appRealTrend"
@@ -269,6 +282,27 @@ class Home extends Component {
             </div>
         );
     };
+
+    /**
+     * 切换Tab是修改对应的url以加载不同的程序
+     * @param {*} index 0表示app 1表示mini program
+     */
+    onChangeTab = tabIndex => {
+        console.log("index", tabIndex);
+        this.setState({
+            tabIndex
+        })
+    }
+
+    getAppIcon = () => {
+        const { tabIndex } = this.state;
+        return tabIndex === 0 ? titleDecorate : rightTitleIcon;
+    }
+
+    getIconCls = () => {
+        const { tabIndex } = this.state;
+        return styles[`home-chart-left-${ tabIndex === 0 ? 'app' : 'program'}`]
+    }
 
     render() {
         return (
