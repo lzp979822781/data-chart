@@ -102,6 +102,7 @@ class RealTimeTrend extends Component {
             tooltip: {
                 trigger: 'axis',
                 backgroundColor: 'rgba(50,50,50,0.7)',
+                appendToBody: true // 解决tooptip透过图表显示的问题
             },
             xAxis: {
                 type: 'category',
