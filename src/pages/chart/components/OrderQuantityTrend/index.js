@@ -100,6 +100,9 @@ class OrderQuantityTrend extends Component {
             tooltip: {
                 trigger: 'axis',
                 backgroundColor: 'rgba(50,50,50,0.7)',
+                // extraCssText: 'z-index: 1000;transform: translateZ(1000)',
+                // confine: true,
+                appendToBody: true
             },
             xAxis: {
                 type: 'category',
