@@ -22,12 +22,33 @@ class HealthAppCard extends Component {
 
     componentDidMount() {
         this.getData();
+        this.switchTab();
     }
 
     componentWillUnmount() {
         if(this.timeout) {
             clearTimeout(this.timeout);
         }
+        this.clearAllTimeout([this.timeout, this.tabTimeout])
+    }
+
+    clearAllTimeout = data => {
+        data.forEach(item => {
+            if(item) {
+                clearTimeout(item);
+            }
+        });
+    }
+
+    switchTab = () => {
+        const { tabIndex } = this.state;
+        this.onTabClick( tabIndex === 0 ? 1 : 0)
+    }
+
+    callTabTimeout = () => {
+        this.tabTimeout = setTimeout(() => {
+            this.switchTab();
+        }, 10000)
     }
 
     callTimeout = () => {
@@ -126,8 +147,10 @@ class HealthAppCard extends Component {
     onTabClick = tabIndex => () => {
         const { onClick } = this.props;
         this.setState({ tabIndex }, () => {
+            this.clearAllTimeout([this.tabTimeout])
             if(onClick) {
                 onClick(tabIndex);
+                // this.callTabTimeout();
             }
         });
     }
