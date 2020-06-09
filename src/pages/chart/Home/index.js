@@ -204,7 +204,7 @@ class Home extends Component {
      */
     renderApp = () => {
         const {
-            pvObj: { healthApp },
+            pvObj: { healthApp, healthAppLets },
         } = this.state;
         const titleConfig = {
             textStyle: {
@@ -240,8 +240,8 @@ class Home extends Component {
         };
 
         const icon = this.getAppIcon();
-
         const iconCls = this.getIconCls();
+        const { tabIndex } = this.state;
 
         return (
             <div className = {styles["home-chart-left"]}>
@@ -250,8 +250,8 @@ class Home extends Component {
                     <div>
                         <HealthAppCard
                             title = {["京东健康APP", "京东健康小程序"]}
-                            url = "AppTotal"
-                            pvData = {healthApp}
+                            url = {tabIndex === 0 ? "AppTotal" : 'MiniProgTotal'}
+                            pvData = {tabIndex === 0 ? healthApp : healthAppLets}
                             onClick = {this.onChangeTab}
                             className = {styles['home-chart-app-card']}
                         />
@@ -260,7 +260,7 @@ class Home extends Component {
                                 id = "appRealTrend"
                                 title = "实时支付单量趋势"
                                 legend = {["京东健康APP支付单量"]}
-                                url = "AppRealTimeTrend"
+                                url = {tabIndex === 0 ? "AppRealTimeTrend" : "MiniProgRealTimeTrend"}
                                 titleConfig = {titleConfig}
                                 legendConfig = {legendConfig}
                                 lineStyle = {lineStyle}
@@ -270,7 +270,7 @@ class Home extends Component {
                                 title = "大促期间支付单量趋势"
                                 legend = {["京东健康APP支付单量"]}
                                 id = "appQuantityTrend"
-                                url = "AppQuantityTrend"
+                                url = {tabIndex === 0 ? "AppQuantityTrend" : "MiniProgQuantityTrend"}
                                 titleConfig = {titleConfig}
                                 lineStyle = {lineStyle}
                                 itemStyle = {appQuatityBar}
