@@ -229,11 +229,16 @@ class Home extends Component {
     }
 
     renderAppTitleText = () => {
+        const { tabIndex } = this.state;
         const appCls = this.getAppCls();
         const progCls = this.getProgCls();
+        const appContentCls = classnames(styles['home-chart-left-container'], {
+            [styles["home-chart-left-mini-bg"]]: tabIndex === 0,
+            [styles["home-chart-left-app-bg"]]: tabIndex === 1
+        })
 
         return (
-            <div className = {styles['home-chart-left-container']}>
+            <div className = {appContentCls}>
                 <div className = {appCls} onClick = {this.onTabClick(0)}>京东健康APP</div>
                 <div className = {progCls} onClick = {this.onTabClick(1)}>京东健康小程序</div>
             </div>
@@ -243,10 +248,9 @@ class Home extends Component {
     renderHealthApp = () => {
         const {
             pvObj: { healthApp },
-            tabIndex
         } = this.state;
 
-        const cls = classnames({ [ styles.hide]: tabIndex === 1 });
+        const cls = classnames(styles['home-chart-left-content']);
 
         return (
             <div className = {cls}>
@@ -286,10 +290,9 @@ class Home extends Component {
     renderMiniPrograme = () => {
         const {
             pvObj: { healthAppLets },
-            tabIndex
         } = this.state;
 
-        const cls = classnames({ [ styles.hide]: tabIndex === 0 })
+        const cls = classnames(styles['home-chart-left-content'])
 
         return (
             <div className = {cls}>
@@ -331,17 +334,19 @@ class Home extends Component {
      * @returns
      */
     renderApp = () => {
+        const { tabIndex } = this.state;
         const icon = this.getAppIcon();
         const iconCls = this.getIconCls();
-        const { tabIndex } = this.state;
 
         return (
             <div className = {styles["home-chart-left"]}>
                 <div className = {styles["home-chart-left-grid"]}>
                     <img className = {iconCls} src = {icon} width = {10} height = {28} alt = "" />
                     { this.renderAppTitleText()}
+
                     { tabIndex === 0 && this.renderHealthApp() }
                     { tabIndex === 1 && this.renderMiniPrograme()}
+
                 </div>
             </div>
         );

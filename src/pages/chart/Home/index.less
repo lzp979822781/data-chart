@@ -1,4 +1,4 @@
-@iconTop: 25px;
+@iconTop: 23px;
 
 .flex(@direction: row, @rowAlign: flex-start, @colAlign: center) {
     display: flex;
@@ -117,8 +117,16 @@
 
             &-container {
                 .flex(row, flex-start, center);
-                position: relative;
-                top: -4px;
+                /* position: relative;
+                top: -4px; */
+                position: absolute;
+                top: -2px;
+                left: -2px;
+                right: -2px;
+            }
+
+            &-content {
+                margin-top: 100px;
             }
 
             &-text {
@@ -130,17 +138,29 @@
             }
 
             &-app-text {
-                background: url("../../../assets/svg/appBg.svg");
-                background-origin: border-box;
-                position: relative;
-                left: -4px;
+                /* background: url("../../../assets/svg/appBg.svg") no-repeat;
+                background-origin: border-box; */
+                /* position: relative;
+                left: -4px; */
             }
     
             &-program-text {
-                background: url('../../../assets/svg/mini-program.svg');
+                /* background: url('../../../assets/svg/mini-program.svg') no-repeat;
                 background-origin: border-box;
                 position: relative;
-                right: -4px;
+                right: -4px; */
+            }
+
+            &-mini-bg {
+                background: url('../../../assets/svg/mini-program.svg') no-repeat;
+                background-origin: border-box;
+                background-position: top right;
+            }
+
+            &-app-bg {
+                background: url("../../../assets/svg/appBg.svg") no-repeat;
+                background-origin: border-box;
+                background-position: top left;
             }
         }
 
