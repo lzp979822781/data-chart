@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import echarts from "echarts";
+import classnames from 'classnames';
 import titleDecorate from "@/assets/titleDecorate.svg";
 import rightTitleIcon from '@/assets/svg/rightTitleIcon.svg';
 import { RealTimeTrend, OrderQuantityTrend, Time, TotalCard, HealthAppCard } from "../components";
@@ -23,6 +23,7 @@ import {
     urgentAreaStyle,
     urgentQuantityBar,
     urgentlLabelConfig,
+    titleConfig, legendConfig, lineStyle, areaStyle
 } from "./templateData";
 import { post } from "../services";
 import styles from "./index.less";
@@ -198,47 +199,138 @@ class Home extends Component {
         </div>
     );
 
+    getAppCls = () => {
+        const { tabIndex } = this.state;
+        return classnames(styles['home-chart-left-text'], {
+            [styles['home-chart-left-app-text']]: tabIndex === 1
+        });
+    }
+
+    getProgCls = () => {
+        const { tabIndex } = this.state;
+        return classnames(styles['home-chart-left-text'], {
+            [styles['home-chart-left-program-text']]: tabIndex === 0
+        })
+    }
+
+    onTabClick = tabIndex => () => {
+        this.setState({ tabIndex });
+    }
+
+    switchTab = () => {
+        const { tabIndex } = this.state;
+        this.onTabClick( tabIndex === 0 ? 1 : 0)
+    }
+
+    callTabTimeout = () => {
+        this.tabTimeout = setTimeout(() => {
+            this.switchTab();
+        }, 10000)
+    }
+
+    renderAppTitleText = () => {
+        const appCls = this.getAppCls();
+        const progCls = this.getProgCls();
+
+        return (
+            <div className = {styles['home-chart-left-container']}>
+                <div className = {appCls} onClick = {this.onTabClick(0)}>京东健康APP</div>
+                <div className = {progCls} onClick = {this.onTabClick(1)}>京东健康小程序</div>
+            </div>
+        )
+    }
+
+    renderHealthApp = () => {
+        const {
+            pvObj: { healthApp },
+            tabIndex
+        } = this.state;
+
+        const cls = classnames({ [ styles.hide]: tabIndex === 1 });
+
+        return (
+            <div className = {cls}>
+                <HealthAppCard
+                    title = {["京东健康APP", "京东健康小程序"]}
+                    url = "AppTotal"
+                    pvData = {healthApp}
+                    onClick = {this.onChangeTab}
+                    className = {styles['home-chart-app-card']}
+                />
+                <div className = {styles["home-chart-app-container"]}>
+                    <RealTimeTrend
+                        id = "appRealTrend"
+                        title = "实时支付单量趋势"
+                        legend = {["京东健康APP支付单量"]}
+                        url = "AppRealTimeTrend"
+                        titleConfig = {titleConfig}
+                        legendConfig = {legendConfig}
+                        lineStyle = {lineStyle}
+                        areaStyle = {areaStyle}
+                    />
+                    <OrderQuantityTrend
+                        title = "大促期间支付单量趋势"
+                        legend = {["京东健康APP支付单量"]}
+                        id = "appQuantityTrend"
+                        url = "AppQuantityTrend"
+                        titleConfig = {titleConfig}
+                        lineStyle = {lineStyle}
+                        itemStyle = {appQuatityBar}
+                        legendConfig = {appQuatitylegend}
+                    />
+                </div>
+            </div>
+        )
+    }
+
+    renderMiniPrograme = () => {
+        const {
+            pvObj: { healthAppLets },
+            tabIndex
+        } = this.state;
+
+        const cls = classnames({ [ styles.hide]: tabIndex === 0 })
+
+        return (
+            <div className = {cls}>
+                <HealthAppCard
+                    title = {["京东健康APP", "京东健康小程序"]}
+                    url = "MiniProgTotal"
+                    pvData = {healthAppLets}
+                    onClick = {this.onChangeTab}
+                    className = {styles['home-chart-app-card']}
+                />
+                <div className = {styles["home-chart-app-container"]}>
+                    <RealTimeTrend
+                        id = "miniRealTrend"
+                        title = "实时支付单量趋势"
+                        legend = {["京东健康小程序支付单量"]}
+                        url = "MiniProgRealTimeTrend"
+                        titleConfig = {titleConfig}
+                        legendConfig = {legendConfig}
+                        lineStyle = {lineStyle}
+                        areaStyle = {areaStyle}
+                    />
+                    <OrderQuantityTrend
+                        title = "大促期间支付单量趋势"
+                        legend = {["京东健康小程序支付单量"]}
+                        id = "miniQuantityTrend"
+                        url = "MiniProgQuantityTrend"
+                        titleConfig = {titleConfig}
+                        lineStyle = {lineStyle}
+                        itemStyle = {appQuatityBar}
+                        legendConfig = {appQuatitylegend}
+                    />
+                </div>
+            </div>
+        )
+    }
+
     /**
      * 左侧app容器包含总数统计、实时趋势
      * @returns
      */
     renderApp = () => {
-        const {
-            pvObj: { healthApp, healthAppLets },
-        } = this.state;
-        const titleConfig = {
-            textStyle: {
-                color: "#fff",
-                fontSize: 22,
-                fontFamily: "PingFangSC-Regular",
-                lineHeight: 22,
-            },
-        };
-
-        const legendConfig = {
-            top: 0,
-            left: "auto",
-            right: 0,
-            textStyle: {
-                color: "#fff",
-                fontSize: 14,
-                lineHeight: 22,
-            },
-            itemWidth: 32,
-            itemHeight: 14,
-            icon: "image:////img11.360buyimg.com/imagetools/jfs/t1/112812/21/9101/780/5ed7779fEf526dbea/07bec2d688335f92.png",
-        };
-
-        const lineStyle = {
-            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: "#52FFEA" }, { offset: 1, color: "#28AFDF" }]),
-        };
-
-        const areaStyle = {
-            normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: "rgba(40, 213, 223, 1)" }, { offset: 1, color: "rgba(40,213,223, .19)" }]),
-            },
-        };
-
         const icon = this.getAppIcon();
         const iconCls = this.getIconCls();
         const { tabIndex } = this.state;
@@ -247,37 +339,9 @@ class Home extends Component {
             <div className = {styles["home-chart-left"]}>
                 <div className = {styles["home-chart-left-grid"]}>
                     <img className = {iconCls} src = {icon} width = {10} height = {28} alt = "" />
-                    <div>
-                        <HealthAppCard
-                            title = {["京东健康APP", "京东健康小程序"]}
-                            url = {tabIndex === 0 ? "AppTotal" : 'MiniProgTotal'}
-                            pvData = {tabIndex === 0 ? healthApp : healthAppLets}
-                            onClick = {this.onChangeTab}
-                            className = {styles['home-chart-app-card']}
-                        />
-                        <div className = {styles["home-chart-app-container"]}>
-                            <RealTimeTrend
-                                id = "appRealTrend"
-                                title = "实时支付单量趋势"
-                                legend = {["京东健康APP支付单量"]}
-                                url = {tabIndex === 0 ? "AppRealTimeTrend" : "MiniProgRealTimeTrend"}
-                                titleConfig = {titleConfig}
-                                legendConfig = {legendConfig}
-                                lineStyle = {lineStyle}
-                                areaStyle = {areaStyle}
-                            />
-                            <OrderQuantityTrend
-                                title = "大促期间支付单量趋势"
-                                legend = {["京东健康APP支付单量"]}
-                                id = "appQuantityTrend"
-                                url = {tabIndex === 0 ? "AppQuantityTrend" : "MiniProgQuantityTrend"}
-                                titleConfig = {titleConfig}
-                                lineStyle = {lineStyle}
-                                itemStyle = {appQuatityBar}
-                                legendConfig = {appQuatitylegend}
-                            />
-                        </div>
-                    </div>
+                    { this.renderAppTitleText()}
+                    { tabIndex === 0 && this.renderHealthApp() }
+                    { tabIndex === 1 && this.renderMiniPrograme()}
                 </div>
             </div>
         );

@@ -22,9 +22,9 @@ const URL = {
     AppQuantityTrend: `/app/order/latelyDays`, // 京东健康APP大促期间单量趋势
     AppTotal: `/app/order/todayTotal`, // 京东健康APP当天订单量和订单金额
 
-    MiniProgRealTimeTrend: `/app/order/latelyMinutes`, // 小程序实时趋势
-    MiniProgQuantityTrend: `/app/order/latelyDays`, // 小程序大促期间单量趋势
-    MiniProgTotal: `/app/order/todayTotal`, // 京东健康APP当天订单量和订单金额
+    MiniProgRealTimeTrend: `/applets/order/latelyMinutes`, // 小程序实时趋势
+    MiniProgQuantityTrend: `/applets/order/latelyDays`, // 小程序大促期间单量趋势
+    MiniProgTotal: `/applets/order/todayTotal`, // 京东健康APP当天订单量和订单金额
 
 
     TodayPv: `/ump/todayPV`,

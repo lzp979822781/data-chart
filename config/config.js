@@ -111,6 +111,11 @@ export default {
             secure: false,
             changeOrigin: true,
         },
+        "/applets": {
+            target: "http://yao-databoard.jd.com/",
+            secure: false,
+            changeOrigin: true,
+        },
     },
     ignoreMomentLocale: true,
     lessLoaderOptions: {

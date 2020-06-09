@@ -270,3 +270,38 @@ function handleLogin(code) {
 }
 
 export { handleLogin };
+
+const titleConfig = {
+    textStyle: {
+        color: "#fff",
+        fontSize: 22,
+        fontFamily: "PingFangSC-Regular",
+        lineHeight: 22,
+    },
+};
+
+const legendConfig = {
+    top: 0,
+    left: "auto",
+    right: 0,
+    textStyle: {
+        color: "#fff",
+        fontSize: 14,
+        lineHeight: 22,
+    },
+    itemWidth: 32,
+    itemHeight: 14,
+    icon: "image:////img11.360buyimg.com/imagetools/jfs/t1/112812/21/9101/780/5ed7779fEf526dbea/07bec2d688335f92.png",
+};
+
+const lineStyle = {
+    color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: "#52FFEA" }, { offset: 1, color: "#28AFDF" }]),
+};
+
+const areaStyle = {
+    normal: {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: "rgba(40, 213, 223, 1)" }, { offset: 1, color: "rgba(40,213,223, .19)" }]),
+    },
+};
+
+export { titleConfig, legendConfig, lineStyle, areaStyle }

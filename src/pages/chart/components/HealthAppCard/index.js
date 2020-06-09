@@ -22,7 +22,6 @@ class HealthAppCard extends Component {
 
     componentDidMount() {
         this.getData();
-        this.switchTab();
     }
 
     componentWillUnmount() {
@@ -38,17 +37,6 @@ class HealthAppCard extends Component {
                 clearTimeout(item);
             }
         });
-    }
-
-    switchTab = () => {
-        const { tabIndex } = this.state;
-        this.onTabClick( tabIndex === 0 ? 1 : 0)
-    }
-
-    callTabTimeout = () => {
-        this.tabTimeout = setTimeout(() => {
-            this.switchTab();
-        }, 10000)
     }
 
     callTimeout = () => {
@@ -184,7 +172,7 @@ class HealthAppCard extends Component {
 
     renderTitle = () => (
         <div className = {styles['health-app-title']}>
-            { this.renderTitleText()}
+            {/* { this.renderTitleText()} */}
             <div className = {styles['health-app-content']}>
                 { this.renderPV()}
                 { this.renderOrder()}

@@ -114,6 +114,34 @@
                 background-image: linear-gradient(rgba(26,84,183, .2) 1px, transparent 0), linear-gradient(90deg, rgba(26,84,183, .2) 1px, transparent 0);
                 background-size: 14px 14px;
             }
+
+            &-container {
+                .flex(row, flex-start, center);
+                position: relative;
+                top: -4px;
+            }
+
+            &-text {
+                .font(30px, #FFFFFF, 'PingFangSC-Semibold');
+                line-height: 76px;
+                flex: 1;
+                text-align: center;
+                height: 76px;
+            }
+
+            &-app-text {
+                background: url("../../../assets/svg/appBg.svg");
+                background-origin: border-box;
+                position: relative;
+                left: -4px;
+            }
+    
+            &-program-text {
+                background: url('../../../assets/svg/mini-program.svg');
+                background-origin: border-box;
+                position: relative;
+                right: -4px;
+            }
         }
 
         &-app {
@@ -149,3 +177,7 @@
     box-sizing: border-box;
     opacity: 0;
 } */
+
+.hide {
+    display: none;
+}
