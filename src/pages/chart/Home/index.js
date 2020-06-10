@@ -40,12 +40,14 @@ class Home extends Component {
 
     componentDidMount() {
         this.getPvData();
+        this.onTabClick(0)();
     }
 
     componentWillUnmount() {
         if(this.timeout) {
             clearTimeout(this.timeout);
         }
+        this.clearAllTimeout([ this.timeout, this.tabTimeout]);
     }
 
     callTimeout = () => {
@@ -215,19 +217,31 @@ class Home extends Component {
         })
     }
 
-    onTabClick = tabIndex => () => {
-        this.setState({ tabIndex });
+    clearAllTimeout = data => {
+        data.forEach(item => {
+            if(item) {
+                clearTimeout(item);
+            }
+        });
     }
 
-    switchTab = () => {
-        const { tabIndex } = this.state;
-        this.onTabClick( tabIndex === 0 ? 1 : 0)
+    onTabClick = tabIndex => () => {
+        this.clearAllTimeout([this.tabTimeout]);
+        this.setState({ tabIndex }, () => {
+            this.tabTimeout = setTimeout(() => {
+                this.switchTab(tabIndex);
+            }, 60000);
+        });
+    }
+
+    switchTab = tabIndex => {
+        this.onTabClick( tabIndex === 0 ? 1 : 0)();
     }
 
     callTabTimeout = () => {
         this.tabTimeout = setTimeout(() => {
             this.switchTab();
-        }, 10000)
+        }, 60000)
     }
 
     renderAppTitleText = () => {
