@@ -260,12 +260,13 @@ class Home extends Component {
                     pvData = {healthApp}
                     onClick = {this.onChangeTab}
                     className = {styles['home-chart-app-card']}
+                    pvTitle = "今日累计首页请求量"
                 />
                 <div className = {styles["home-chart-app-container"]}>
                     <RealTimeTrend
                         id = "appRealTrend"
-                        title = "实时支付单量趋势"
-                        legend = {["京东健康APP支付单量"]}
+                        title = "实时下单量趋势"
+                        legend = {["京东健康APP下单量"]}
                         url = "AppRealTimeTrend"
                         titleConfig = {titleConfig}
                         legendConfig = {legendConfig}
@@ -273,8 +274,8 @@ class Home extends Component {
                         areaStyle = {areaStyle}
                     />
                     <OrderQuantityTrend
-                        title = "大促期间支付单量趋势"
-                        legend = {["京东健康APP支付单量"]}
+                        title = "大促期间下单单量趋势"
+                        legend = {["京东健康APP下单量"]}
                         id = "appQuantityTrend"
                         url = "AppQuantityTrend"
                         titleConfig = {titleConfig}
@@ -302,12 +303,13 @@ class Home extends Component {
                     pvData = {healthAppLets}
                     onClick = {this.onChangeTab}
                     className = {styles['home-chart-app-card']}
+                    pvTitle = "今日累计商详请求量"
                 />
                 <div className = {styles["home-chart-app-container"]}>
                     <RealTimeTrend
                         id = "miniRealTrend"
-                        title = "实时支付单量趋势"
-                        legend = {["京东健康小程序支付单量"]}
+                        title = "实时下单量趋势"
+                        legend = {["京东健康小程序下单量"]}
                         url = "MiniProgRealTimeTrend"
                         titleConfig = {titleConfig}
                         legendConfig = {legendConfig}
@@ -315,8 +317,8 @@ class Home extends Component {
                         areaStyle = {areaStyle}
                     />
                     <OrderQuantityTrend
-                        title = "大促期间支付单量趋势"
-                        legend = {["京东健康小程序支付单量"]}
+                        title = "大促期间下单量趋势"
+                        legend = {["京东健康小程序下单量"]}
                         id = "miniQuantityTrend"
                         url = "MiniProgQuantityTrend"
                         titleConfig = {titleConfig}

@@ -89,11 +89,11 @@ class HealthAppCard extends Component {
     }
 
     renderPV = () => {
-        const { pvData } = this.props;
+        const { pvData, pvTitle } = this.props;
         const data = this.formatData(pvData);
         return (
             <div className = {styles['health-app-pv']}>
-                <div className = {styles['health-app-pv-title']}>今日累计PV</div>
+                <div className = {styles['health-app-pv-title']}>{pvTitle}</div>
                 <div className = {styles['health-app-pv-container']}>
                     {
                         `${data}`.split("").map((item, index) => {
