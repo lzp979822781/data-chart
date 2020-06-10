@@ -202,14 +202,16 @@ class Home extends Component {
     getAppCls = () => {
         const { tabIndex } = this.state;
         return classnames(styles['home-chart-left-text'], {
-            [styles['home-chart-left-app-text']]: tabIndex === 1
+            [styles['home-chart-left-app-text']]: tabIndex === 1,
+            [styles['home-chart-left-not-active']]: tabIndex === 1
         });
     }
 
     getProgCls = () => {
         const { tabIndex } = this.state;
         return classnames(styles['home-chart-left-text'], {
-            [styles['home-chart-left-program-text']]: tabIndex === 0
+            [styles['home-chart-left-program-text']]: tabIndex === 0,
+            [styles['home-chart-left-not-active']]: tabIndex === 0,
         })
     }
 
