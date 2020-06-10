@@ -113,7 +113,7 @@ class Home extends Component {
                 labelConfig = {drugLabelConfig}
             />
             <OrderQuantityTrend
-                title = "大药房大促期间支付单量趋势"
+                title = "大药房大促期间下单量趋势"
                 legend = {["大药房下单量"]}
                 id = "drugStoreQuantityTrend"
                 url = "DrugStoreQuantityTrend"
@@ -175,7 +175,7 @@ class Home extends Component {
                 gridConfig = {comGrid}
             />
             <OrderQuantityTrend
-                title = "药急送大促期间单量趋势"
+                title = "药急送大促期间下单量趋势"
                 legend = {["药急送下单量"]}
                 id = "urgentQuantityTrend"
                 url = "UrgentQuantityTrend"
