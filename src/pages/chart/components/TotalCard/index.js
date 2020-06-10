@@ -7,7 +7,8 @@ import styles from './index.less';
 const defaultProps = {
     title: '大药房',
     interval: 5000,
-    pvData: 0
+    pvData: 0,
+    pvTitle: '今日累积PV'
 }
 
 class TotalCard extends Component {
@@ -65,13 +66,13 @@ class TotalCard extends Component {
     }
 
     render() {
-        const { title, pvData } = this.props;
+        const { title, pvData, pvTitle } = this.props;
         const { orderCount } = this.state;
 
         return (
             <div className = {styles['total-card']}>
                 <span className = {styles['total-card-title']}>{title}</span>
-                <div className = {styles['total-card-pv']}>今日累计PV</div>
+                <div className = {styles['total-card-pv']}>{pvTitle}</div>
                 <FormatNum
                     data = {pvData}
                     numFormat = {[ 0, '', ', ']}
