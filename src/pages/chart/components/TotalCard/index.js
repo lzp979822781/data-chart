@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import authArr from '@/utils/auth';
 import { post } from '../../services';
 import FormatNum from './FormatNum';
 
@@ -14,11 +15,14 @@ const defaultProps = {
 class TotalCard extends Component {
     constructor(props) {
         super(props);
-        this.state = { };
+        this.state = {
+            orderSumMoney: 0
+        };
     }
 
     componentDidMount() {
         this.getData();
+        this.getAuth();
     }
 
     componentWillUnmount() {
@@ -59,10 +63,30 @@ class TotalCard extends Component {
      * @param {*} data
      */
     handleData = data => {
-        const { orderCount } = data;
+        const { orderCount, orderSumMoney = 0 } = data;
         this.setState({
             orderCount,
+            orderSumMoney: orderSumMoney || 0
         })
+    }
+
+    getAuth = async () => {
+        const { success, data: { pin, hasAuth } = {} } = await post({ url: 'Auth', data: {} });
+        if(success) {
+            this.pin = pin;
+            this.hasAuth = hasAuth;
+        }
+    }
+
+    renderAmount = () => {
+        const { orderSumMoney } = this.state;
+        if(!authArr.includes(this.pin) || !this.hasAuth) return '';
+
+        return (
+            <div className = {styles['total-card-money']}>
+                { `￥${parseInt(orderSumMoney, 10)}`}
+            </div>
+        );
     }
 
     render() {
@@ -84,6 +108,7 @@ class TotalCard extends Component {
                     numFormat = {[ 0, '', ', ']}
                     className = {styles['total-card-order-num']}
                 />
+                { this.renderAmount()}
             </div>
         );
     }

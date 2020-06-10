@@ -28,6 +28,8 @@ const URL = {
 
 
     TodayPv: `/ump/todayPV`,
+
+    Auth: `/user/getUser`,
 };
 
 /**
