@@ -90,6 +90,7 @@ class TotalCard extends Component {
         const { orderSumMoney } = this.state;
         if(!authArr.includes(this.pin) || !this.hasAuth) return '';
         const showVal = this.handleMoney(orderSumMoney);
+        if(showVal === 0) return '';
 
         return (
             <div className = {styles['total-card-money']}>
