@@ -78,13 +78,22 @@ class TotalCard extends Component {
         }
     }
 
+    handleMoney = data => {
+        if(Object.prototype.toString.call(data) === "[object Number]" && data > 9999) {
+            return `${parseFloat(data / 10000).toFixed(2)}万`
+        }
+
+        return 0;
+    }
+
     renderAmount = () => {
         const { orderSumMoney } = this.state;
         if(!authArr.includes(this.pin) || !this.hasAuth) return '';
+        const showVal = this.handleMoney(orderSumMoney);
 
         return (
             <div className = {styles['total-card-money']}>
-                { `￥${parseInt(orderSumMoney, 10)}`}
+                { `￥${showVal}`}
             </div>
         );
     }
