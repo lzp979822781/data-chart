@@ -77,7 +77,7 @@ class Home extends Component {
         } = this.state;
         return (
             <div className = {styles["home-chart-right-total"]}>
-                <TotalCard title = "大药房" url = "DrugStoreTotal" pvData = {pharmacy} pvTitle = "今日累计结算页请求量" />
+                <TotalCard title = "大药房-处方药" url = "DrugStoreTotal" pvData = {pharmacy} pvTitle = "今日累计结算页请求量" />
                 <TotalCard title = "互联网医院" url = "InterTotal" pvData = {hospital} pvTitle = "今日累计预问诊请求量" />
                 <TotalCard title = "药急送" url = "UrgentTotal" pvData = {urgentSend} pvTitle = "今日累计首页请求量" />
                 <TotalCard title = "药京采" url = "YjcTotal" pvData = {yjc} pvTitle = "今日累计加购请求量" />
