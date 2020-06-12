@@ -226,9 +226,9 @@ class Home extends Component {
     onTabClick = tabIndex => () => {
         this.clearAllTimeout([this.tabTimeout]);
         this.setState({ tabIndex }, () => {
-            this.tabTimeout = setTimeout(() => {
+            /* this.tabTimeout = setTimeout(() => {
                 this.switchTab(tabIndex);
-            }, 60000);
+            }, 60000); */
         });
     }
 
