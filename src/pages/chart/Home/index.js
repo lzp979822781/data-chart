@@ -40,7 +40,7 @@ class Home extends Component {
 
     componentDidMount() {
         this.getPvData();
-        this.onTabClick(0)();
+        // this.onTabClick(0)(); // 停止自动切换
     }
 
     componentWillUnmount() {
@@ -204,16 +204,14 @@ class Home extends Component {
     getAppCls = () => {
         const { tabIndex } = this.state;
         return classnames(styles['home-chart-left-text'], {
-            [styles['home-chart-left-app-text']]: tabIndex === 1,
-            [styles['home-chart-left-not-active']]: tabIndex === 1
+            [styles['home-chart-left-not-active']]: tabIndex === 0
         });
     }
 
     getProgCls = () => {
         const { tabIndex } = this.state;
         return classnames(styles['home-chart-left-text'], {
-            [styles['home-chart-left-program-text']]: tabIndex === 0,
-            [styles['home-chart-left-not-active']]: tabIndex === 0,
+            [styles['home-chart-left-not-active']]: tabIndex === 1,
         })
     }
 
@@ -249,14 +247,16 @@ class Home extends Component {
         const appCls = this.getAppCls();
         const progCls = this.getProgCls();
         const appContentCls = classnames(styles['home-chart-left-container'], {
-            [styles["home-chart-left-mini-bg"]]: tabIndex === 0,
-            [styles["home-chart-left-app-bg"]]: tabIndex === 1
+            [styles["home-chart-left-right-bg"]]: tabIndex === 0,
+            [styles["home-chart-left-left-bg"]]: tabIndex === 1
         })
 
         return (
             <div className = {appContentCls}>
-                <div className = {appCls} onClick = {this.onTabClick(0)}>京东健康APP</div>
-                <div className = {progCls} onClick = {this.onTabClick(1)}>京东健康小程序</div>
+                {/* <div className = {appCls} onClick = {this.onTabClick(0)}>京东健康APP</div>
+                <div className = {progCls} onClick = {this.onTabClick(1)}>京东健康小程序</div> */}
+                <div className = {progCls} onClick = {this.onTabClick(0)}>京东健康小程序</div>
+                <div className = {appCls} onClick = {this.onTabClick(1)}>京东健康APP</div>
             </div>
         )
     }
@@ -362,8 +362,10 @@ class Home extends Component {
                     <img className = {iconCls} src = {icon} width = {10} height = {28} alt = "" />
                     { this.renderAppTitleText()}
 
-                    { tabIndex === 0 && this.renderHealthApp() }
-                    { tabIndex === 1 && this.renderMiniPrograme()}
+                    {/* { tabIndex === 0 && this.renderHealthApp() }
+                    { tabIndex === 1 && this.renderMiniPrograme()} */}
+                    { tabIndex === 0 && this.renderMiniPrograme() }
+                    { tabIndex === 1 && this.renderHealthApp()}
 
                 </div>
             </div>
