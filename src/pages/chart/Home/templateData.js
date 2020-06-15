@@ -241,12 +241,15 @@ export { fullScreen, exitScreen };
 
 let isFirst = true;
 
+function toLogin() {
+    const { location: { href } = {} } = window;
+    window.location.href = `http://ssa.jd.com/sso/login?returnUrl=${ encodeURIComponent(href)}`;
+    return false;
+}
+
 const codeFunc = {
-    '4002': () => {
-        const { location: { href } = {} } = window;
-        window.location.href = `http://ssa.jd.com/sso/login?returnUrl=${ encodeURIComponent(href)}`;
-        return false;
-    },
+    '401': toLogin,
+    '4002': toLogin,
     '9001': () => {
         if(isFirst) {
             notification.warning({
