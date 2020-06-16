@@ -2,14 +2,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import { formatMoney } from '@/utils/utils';
+import { formatMoney, UUID } from '@/utils/utils';
 
 import styles from './index.less';
 
 const defaultProps = {
     data: 0,
-    numFormat: [2, '']
+    numFormat: [ 0, '', ', ']
 }
 
 const propTypes = {
@@ -36,6 +35,7 @@ class FormatNum extends Component {
 
     renderNum = () => {
         const data = this.handleData();
+        // const data = 0;
         // console.log("decimal data", data);
         // return data;
         /* return `${data}`.split('').map( (item, index) => {
@@ -48,34 +48,20 @@ class FormatNum extends Component {
         }); */
 
         return (
-            <TransitionGroup className = {styles['format-num-text-list']}>
+            <div className = {styles['format-num-text-list']}>
                 {
-                    `${data}`.split('').map( (item, index) => {
+                    `${data}`.split('').map( (item) => {
                         const isNumber = this.isNum(item);
                         const cls = classnames({
                             [styles['format-num-num']]: isNumber
                         })
 
                         return (
-                            <CSSTransition
-                                key = {index}
-                                timeout = {1000}
-                                onEnter = {e => {
-                                    e.style.backgroundPositionY = `0`
-                                }}
-                                onEntering = {e => {
-                                    e.style.backgroundPositionY = `${-3 * ( isNumber ? item : 0) - 30}rem`
-                                    e.style.transitionProperty = "background-position-y"
-                                    e.style.transitionDuration = `${(index + 1) * 100}ms`
-                                    e.style.transitionTimingFunction = "ease-out"
-                                }}
-                            >
-                                <span className = {cls}>{item}</span>
-                            </CSSTransition>
+                            <span className = {cls} key = {UUID()}>{item}</span>
                         )
                     })
                 }
-            </TransitionGroup>
+            </div>
         )
     }
 
