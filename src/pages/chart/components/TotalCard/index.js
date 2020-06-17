@@ -79,8 +79,12 @@ class TotalCard extends Component {
     }
 
     handleMoney = data => {
-        if(Object.prototype.toString.call(data) === "[object Number]" && data > 9999) {
+        if(Object.prototype.toString.call(data) === "[object Number]" && (data >= 10000 && data < 100000000)) {
             return `${parseFloat(data / 10000).toFixed(2)}万`
+        }
+
+        if(Object.prototype.toString.call(data) === "[object Number]" && data >= 100000000) {
+            return `${parseFloat(data / 100000000).toFixed(4)}亿`
         }
 
         return 0;
