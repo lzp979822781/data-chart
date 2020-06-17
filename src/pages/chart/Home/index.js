@@ -40,7 +40,7 @@ class Home extends Component {
 
     componentDidMount() {
         this.getPvData();
-        // this.onTabClick(0)(); // 停止自动切换
+        this.onTabClick(0)(); // 自动切换
     }
 
     componentWillUnmount() {
@@ -225,10 +225,15 @@ class Home extends Component {
 
     onTabClick = tabIndex => () => {
         this.clearAllTimeout([this.tabTimeout]);
+        const { location: { query: { change, interval = 60000 } = {} } = {} } = this.props;
         this.setState({ tabIndex }, () => {
-            /* this.tabTimeout = setTimeout(() => {
-                this.switchTab(tabIndex);
-            }, 60000); */
+            if(change) {
+                this.tabTimeout = setTimeout(() => {
+                    this.switchTab(tabIndex);
+                }, parseInt(interval, 10));
+            } else {
+                this.clearAllTimeout([this.tabTimeout]);
+            }
         });
     }
 
