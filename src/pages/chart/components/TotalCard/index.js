@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import authArr from '@/utils/auth';
+// import authArr from '@/utils/auth';
 import { post } from '../../services';
 import FormatNum from './FormatNum';
 
