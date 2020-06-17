@@ -88,7 +88,8 @@ class TotalCard extends Component {
 
     renderAmount = () => {
         const { orderSumMoney } = this.state;
-        if(!authArr.includes(this.pin) || !this.hasAuth) return '';
+        const { location: { query: { money } = {} } = {} } = this.props;
+        if(!money || !this.hasAuth) return '';
         const showVal = this.handleMoney(orderSumMoney);
         if(showVal === 0) return '';
 
