@@ -2,9 +2,11 @@ import React, { Component } from "react";
 // import authArr from '@/utils/auth';
 import classnames from "classnames";
 import { post } from "../../services";
-import FormatNum from "./FormatNum";
+import FormatNum from "../FormatNum";
 
 import styles from "./index.less";
+
+const PREFIX = "cloud";
 
 const defaultProps = {
     title: "大药房",
@@ -13,7 +15,7 @@ const defaultProps = {
     pvTitle: "今日累积PV",
 };
 
-class TotalCard extends Component {
+class HealthMagCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -64,10 +66,12 @@ class TotalCard extends Component {
      * @param {*} data
      */
     handleData = data => {
-        const { orderCount, orderSumMoney = 0 } = data;
+        const { singleOrderCount, chainOrderCount, totalOrderCount, orderSumMoney = 0 } = data;
         this.setState({
-            orderCount,
+            singleOrderCount,
             orderSumMoney: orderSumMoney || 0,
+            chainOrderCount,
+            totalOrderCount,
         });
     };
 
@@ -98,28 +102,50 @@ class TotalCard extends Component {
         const showVal = this.handleMoney(orderSumMoney);
         if (showVal === 0) return "";
 
-        return <div className = {styles["total-card-money"]}>{`￥${showVal}`}</div>;
+        return <div className = {styles[`${PREFIX}-money`]}>{`￥${showVal}`}</div>;
+    };
+
+    renderItem = (title, amount) => (
+        <div className = {styles[`${PREFIX}-child-card-amout-container`]}>
+            <div className = {styles[`${PREFIX}-child-card-amout-container-title`]}>{title}</div>
+            <FormatNum data = {amount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-child-card-amout-container-content`]} />
+        </div>
+    );
+
+    renderChildCard = () => {
+        const { singleOrderCount, chainOrderCount } = this.state;
+        return (
+            <div className = {styles[`${PREFIX}-child-card`]}>
+                {this.renderItem("单体版下单量", singleOrderCount)}
+                <div className = {styles[`${PREFIX}-delimiter`]} />
+                {this.renderItem("连锁版下单量", chainOrderCount)}
+            </div>
+        );
     };
 
     render() {
-        const { title, pvData, pvTitle, className } = this.props;
-        const { orderCount } = this.state;
+        const { title, pvTitle, className } = this.props;
+        const { totalOrderCount } = this.state;
 
-        const containerCls = classnames(styles["total-card"], className);
+        const containerCls = classnames(styles[`${PREFIX}`], className);
 
         return (
             <div className = {containerCls}>
-                <span className = {styles["total-card-title"]}>{title}</span>
-                <div className = {styles["total-card-pv"]}>{pvTitle}</div>
-                <FormatNum data = {pvData} numFormat = {[0, "", ", "]} className = {styles["total-card-pv-num"]} />
-                <span className = {styles["total-card-order"]}>今日累计下单量</span>
-                <FormatNum data = {orderCount} numFormat = {[0, "", ", "]} className = {styles["total-card-order-num"]} />
+                <span className = {styles[`${PREFIX}-title`]}>{title}</span>
+                <div className = {styles[`${PREFIX}-pv`]}>{pvTitle}</div>
+                <FormatNum data = {totalOrderCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-pv-num`]} />
+                {this.renderChildCard()}
+                {/* <FormatNum
+                    data = {orderCount}
+                    numFormat = {[ 0, '', ', ']}
+                    className = {styles[`${PREFIX}-order-num`]}
+                /> */}
                 {this.renderAmount()}
             </div>
         );
     }
 }
 
-TotalCard.defaultProps = defaultProps;
+HealthMagCard.defaultProps = defaultProps;
 
-export default TotalCard;
+export default HealthMagCard;

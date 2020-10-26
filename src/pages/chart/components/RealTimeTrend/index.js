@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import echarts from "echarts";
-import moment from 'moment';
-import { post } from '../../services';
+import moment from "moment";
+import { post } from "../../services";
 
 const titleStyle = {
-    color: '#8600FF'
-}
+    color: "#8600FF",
+};
 
 const defaultProps = {
-    title: '大药房下单量实时趋势',
+    title: "大药房下单量实时趋势",
     reqTimeRange: 15,
-    format: 'HH:mm',
+    format: "HH:mm",
     interval: 5000,
-}
+};
 
 const propTypes = {
     title: PropTypes.string,
@@ -22,13 +22,15 @@ const propTypes = {
     url: PropTypes.string.isRequired,
     reqTimeRange: PropTypes.number,
     format: PropTypes.string,
-    interval: PropTypes.number
-}
+    interval: PropTypes.number,
+};
 
 class RealTimeTrend extends Component {
+    hasYoy = true;
+
     constructor(props) {
         super(props);
-        this.state = { };
+        this.state = {};
     }
 
     componentDidMount() {
@@ -38,29 +40,29 @@ class RealTimeTrend extends Component {
     }
 
     componentWillUnmount() {
-        if(this.myChart) {
+        if (this.myChart) {
             this.myChart.dispose();
         }
-        if(this.timeout) {
+        if (this.timeout) {
             clearTimeout(this.timeout);
         }
         window.onresize = null;
     }
 
     initResize = () => {
-        if(!window.onresize) {
+        if (!window.onresize) {
             window.onresize = () => {
                 this.myChart.resize();
-            }
+            };
         }
-    }
+    };
 
     callTimeout = () => {
         const { interval } = this.props;
         this.timeout = setTimeout(() => {
             this.getData();
-        }, interval)
-    }
+        }, interval);
+    };
 
     initMap = () => {
         const { id } = this.props;
@@ -69,43 +71,51 @@ class RealTimeTrend extends Component {
             this.myChart = echarts.init(realTimeTrend);
             this.myChart.setOption(this.genOption(), true);
         }
-    }
+    };
 
     getTitleConfig = () => {
         const { title, titleConfig } = this.props;
-        const result = Object.assign({}, {
-            text: title,
-            textStyle: titleStyle,
-            left: 0
-        }, titleConfig);
+        const result = Object.assign(
+            {},
+            {
+                text: title,
+                textStyle: titleStyle,
+                left: 0,
+            },
+            titleConfig
+        );
         return result;
-    }
+    };
 
     getLegendConfig = () => {
         const { legend, legendConfig = {} } = this.props;
-        return Object.assign({}, {
-            data: legend,
-            top: 20,
-            left: 'left', // 可以设置如下位置属性left、top、right、bottom、width、height、orient、align、padding
-            textStyle: {
-                color: '#8600FF',
-                fontSize: 12
+        return Object.assign(
+            {},
+            {
+                data: legend,
+                top: 20,
+                left: "left", // 可以设置如下位置属性left、top、right、bottom、width、height、orient、align、padding
+                textStyle: {
+                    color: "#8600FF",
+                    fontSize: 12,
+                },
             },
-        }, legendConfig);
-    }
+            legendConfig
+        );
+    };
 
     genOption = () => {
-        const { legend, lineStyle = {}, areaStyle = {}, gridConfig, labelConfig = {} } = this.props;
+        const { legend, lineStyle: { singlesLine, yoyLine } = {}, areaStyle: { singleArea, yoyArea } = {}, gridConfig, labelConfig = {} } = this.props;
         const option = {
             title: this.getTitleConfig(),
             legend: this.getLegendConfig(),
             tooltip: {
-                trigger: 'axis',
-                backgroundColor: 'rgba(50,50,50,0.7)',
-                appendToBody: true // 解决tooptip透过图表显示的问题
+                trigger: "axis",
+                backgroundColor: "rgba(50,50,50,0.7)",
+                appendToBody: true, // 解决tooptip透过图表显示的问题
             },
             xAxis: {
-                type: 'category',
+                type: "category",
                 data: [],
                 axisTick: {
                     show: false, // 刻度线的显示
@@ -113,124 +123,170 @@ class RealTimeTrend extends Component {
                 axisLine: {
                     show: true, // 轴线的显示
                     lineStyle: {
-                        color: '#0051F3',
-                        width: 2
-                    }
+                        color: "#0051F3",
+                        width: 2,
+                    },
                 },
                 axisLabel: {
                     textStyle: {
-                        color: '#fff',
+                        color: "#fff",
                         fontSize: 12,
-                        fontFamily: 'SFProText-Light'
+                        fontFamily: "SFProText-Light",
                     },
                     formatter: value => {
-                        const year = moment().format('YYYY/MM/DD');
+                        const year = moment().format("YYYY/MM/DD");
                         return `${value}\n${year}`;
                     },
-                    interval: 3
-                }
+                    interval: 3,
+                },
             },
             grid: gridConfig || {
                 left: 30,
                 right: 0,
             },
             yAxis: {
-                type: 'value',
+                type: "value",
                 axisLine: {
                     show: false,
                 },
                 axisTick: {
-                    show: false
+                    show: false,
                 },
                 splitLine: {
                     lineStyle: {
-                        color: '#0043A8',
-                        width: 2
-                    }
+                        color: "#0043A8",
+                        width: 2,
+                    },
                 },
                 axisLabel: {
                     textStyle: {
-                        color: '#fff',
+                        color: "#fff",
                         fontSize: 12,
-                        fontFamily: 'PingFangSC-Light'
-                    }
+                        fontFamily: "PingFangSC-Light",
+                    },
                 },
             },
-            series: [{
+            series: [
+                {
+                    data: [],
+                    type: "line",
+                    smooth: true,
+                    symbolSize: 8,
+                    name: legend[0],
+                    // stack: 'gap',
+                    // 显示数值
+                    label: Object.assign(
+                        {},
+                        {
+                            show: true,
+                            position: "top",
+                            color: "#fff",
+                            /* rotate: 60,
+                    offset: [0, -10] */
+                        },
+                        labelConfig
+                    ),
+                    lineStyle: singlesLine,
+                    areaStyle: singleArea,
+                    itemStyle: {
+                        borderWidth: 0,
+                    },
+                },
+            ],
+        };
+
+        if (this.hasYoy) {
+            const yoyData = {
                 data: [],
-                type: 'line',
+                type: "line",
                 smooth: true,
                 symbolSize: 8,
-                name: legend[0],
+                name: legend[1],
+                // stack: 'gap',
                 // 显示数值
-                label: Object.assign({}, {
-                    show: true,
-                    position: 'top',
-                    color: '#fff',
-                    /* rotate: 60,
-                    offset: [0, -10] */
-                }, labelConfig ),
-                lineStyle,
-                areaStyle,
+                label: Object.assign(
+                    {},
+                    {
+                        show: true,
+                        position: "top",
+                        color: "#fff",
+                    },
+                    labelConfig
+                ),
+                lineStyle: yoyLine,
+                areaStyle: yoyArea,
                 itemStyle: {
                     borderWidth: 0,
-                }
-            }]
-        };
+                },
+            };
+            option.series.push(yoyData);
+        }
         return option;
-    }
+    };
 
     getReqParam = () => {
         const { url, reqTimeRange } = this.props;
         const data = {
             url,
-            data: { num: reqTimeRange }
+            data: { num: reqTimeRange },
         };
         return data;
-    }
+    };
 
     getAxisData = (data, field) => {
-        if(Array.isArray(data)) {
+        if (Array.isArray(data)) {
             return data.map(({ [field]: value }) => value);
         }
         return data;
-    }
+    };
 
-    formatData = (data, format ) => {
-        if(Array.isArray(data) && data.length) {
-            return data.map(item => moment(item).format(format))
+    getYoyData = (data, field) => {
+        if (Array.isArray(data)) {
+            const yoyData = data.filter(({ hasYoy }) => hasYoy);
+            return yoyData.length ? [{ data: yoyData.map(({ [field]: value }) => value) }] : [];
+        }
+
+        return [];
+    };
+
+    formatData = (data, format) => {
+        if (Array.isArray(data) && data.length) {
+            return data.map(item => moment(item).format(format));
         }
         return data;
-    }
+    };
 
     handleData = data => {
-        const { format } = this.props;
-        const xArr = this.formatData(this.getAxisData(data, 'date'), format);
-        const yArr = this.getAxisData(data, 'total');
-        this.setOption(xArr, yArr);
-    }
+        const { format, dataField = "total" } = this.props;
+        const xArr = this.formatData(this.getAxisData(data, "date"), format);
+        const yArr = this.getAxisData(data, dataField);
+        // const yoyData = this.getYoyData(data, 'yoyTotal');
+        const yoyData = yArr.map(item => item * 2);
+        this.setOption(xArr, yArr, [{ data: yoyData }]);
+    };
 
-    setOption = (xArr, yArr) => {
-        if(this.myChart) {
-            this.myChart.setOption({
+    setOption = (xArr, yArr, yoyData) => {
+        if (this.myChart) {
+            const updateData = {
                 xAxis: {
-                    data: xArr
+                    data: xArr,
                 },
-                series: [{ data: yArr }]
-            })
+                series: [{ data: yArr }, ...yoyData],
+            };
+            this.myChart.setOption(updateData);
         }
-    }
+    };
 
     getData = async () => {
         const { success, data } = await post(this.getReqParam());
-        if(success) {
+        if (success) {
             this.handleData(data);
         }
 
-        if(this && this.callTimeout) {
+        if (this && this.callTimeout) {
             this.callTimeout();
         }
-    }
+    };
 
     render() {
         const { id } = this.props;

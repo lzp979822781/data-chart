@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import { handleLogin } from '../Home/templateData';
+import { handleLogin } from "../Home/templateData";
 
 const URL = {
     DrugStoreRealTimeTrend: `/pha/order/latelyMinutes`, // 大药房下单量实时趋势
@@ -26,6 +26,17 @@ const URL = {
     MiniProgQuantityTrend: `/applets/order/latelyDays`, // 小程序大促期间单量趋势
     MiniProgTotal: `/applets/order/todayTotal`, // 京东健康APP当天订单量和订单金额
 
+    HealthMagRealTimeTrend: `/health/manage/order/latelyMinutes`, // 健管平台实时趋势
+    HealthMagQuantityTrend: `/health/manage/order/latelyDays`, // 健管平台大促期间单量趋势
+    HealthMagTotal: `/health/manage/order/todayTotal`, // 健管平台当天订单量和订单金额
+
+    FeiJiaYunRealTimeTrend: `/feiJiaYun/order/latelyMinutes`, // 菲加云实时趋势
+    FeijiaYunQuantityTrend: `/feiJiaYun/order/latelyDays`, // 菲加云大促期间单量趋势
+    FeijiaYunTotal: `/feiJiaYun/order/todayTotal`, // 菲加云当天订单量和订单金额
+
+    SelfErpRealTimeTrend: `/medicine/erp/order/latelyMinutes`, // 药店管家即自营erp实时趋势
+    SelfErpQuantityTrend: `/medicine/erp/order/latelyDays`, // 药店管家大促期间单量趋势
+    SelfErpTotal: `/medicine/erp/order/todayTotal`, // 药店管家当天订单量和订单金额
 
     TodayPv: `/ump/todayPV`,
 

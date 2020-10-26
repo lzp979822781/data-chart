@@ -1,0 +1,27 @@
+.flex(@direction, @rowAlign, @colAlign) {
+    display: flex;
+    flex-direction: @direction;
+    justify-content: @rowAlign;
+    align-items: @colAlign;
+}
+
+.chart-bg {
+    width: 450px;  // 设计稿430
+    box-sizing: border-box;
+    padding: 30px 17px 10px 17px;
+    background: linear-gradient(180deg, rgba(0,64,194,0.4) 0%,rgba(0,11,95,0) 100%);
+    border: 2px solid rgba(0,43,131,0.3);
+    border-radius: 8px 8px 0 0;
+}
+
+.trend-container {
+    .flex(row, space-between, flex-start);
+    margin-top: 10px;
+
+    &-content {
+        .chart-bg();
+        &-bar {
+            margin-top: 10px;
+        }
+    }
+}

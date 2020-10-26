@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import classnames from 'classnames';
+import classnames from "classnames";
 import titleDecorate from "@/assets/titleDecorate.svg";
-import rightTitleIcon from '@/assets/svg/rightTitleIcon.svg';
-import { RealTimeTrend, OrderQuantityTrend, Time, TotalCard, HealthAppCard } from "../components";
+import rightTitleIcon from "@/assets/svg/rightTitleIcon.svg";
+import { RealTimeTrend, OrderQuantityTrend, Time, TotalCard, HealthAppCard, SecContainer } from "../components";
 import {
     appQuatityBar,
     appQuatitylegend,
@@ -23,7 +23,11 @@ import {
     urgentAreaStyle,
     urgentQuantityBar,
     urgentlLabelConfig,
-    titleConfig, legendConfig, lineStyle, areaStyle
+    titleConfig,
+    legendConfig,
+    lineStyle,
+    areaStyle,
+    genLegendIcon,
 } from "./templateData";
 import { post } from "../services";
 import styles from "./index.less";
@@ -33,7 +37,7 @@ class Home extends Component {
         super(props);
         this.state = {
             pvObj: {},
-            tabIndex: 0
+            tabIndex: 0,
         };
         this.ref = React.createRef();
     }
@@ -44,17 +48,17 @@ class Home extends Component {
     }
 
     componentWillUnmount() {
-        if(this.timeout) {
+        if (this.timeout) {
             clearTimeout(this.timeout);
         }
-        this.clearAllTimeout([ this.timeout, this.tabTimeout]);
+        this.clearAllTimeout([this.timeout, this.tabTimeout]);
     }
 
     callTimeout = () => {
         this.timeout = setTimeout(() => {
             this.getPvData();
         }, 5000);
-    }
+    };
 
     getPvData = async () => {
         const reqParm = {
@@ -66,14 +70,14 @@ class Home extends Component {
             this.setState({ pvObj: data });
         }
 
-        if(this && this.callTimeout) {
+        if (this && this.callTimeout) {
             this.callTimeout();
         }
     };
 
     renderTotalCard = () => {
         const {
-            pvObj: { yjc, pharmacy, hospital, urgentSend },
+            pvObj: { pharmacy, hospital, urgentSend },
         } = this.state;
         const { location } = this.props;
         return (
@@ -81,7 +85,7 @@ class Home extends Component {
                 <TotalCard title = "大药房-处方药" url = "DrugStoreTotal" pvData = {pharmacy} pvTitle = "今日累计结算页请求量" location = {location} />
                 <TotalCard title = "互联网医院" url = "InterTotal" pvData = {hospital} pvTitle = "今日累计预问诊请求量" location = {location} />
                 <TotalCard title = "药急送" url = "UrgentTotal" pvData = {urgentSend} pvTitle = "今日累计首页请求量" location = {location} />
-                <TotalCard title = "药京采" url = "YjcTotal" pvData = {yjc} pvTitle = "今日累计加购请求量" location = {location} />
+                {/* <TotalCard title = "药京采" url = "YjcTotal" pvData = {yjc} pvTitle = "今日累计加购请求量" location = {location} /> */}
             </div>
         );
     };
@@ -106,10 +110,10 @@ class Home extends Component {
             <RealTimeTrend
                 id = "drugStoreRealTimeTrend"
                 title = "大药房下单量趋势"
-                legend = {["大药房下单量"]}
+                legend = {["今日", "618"]}
                 url = "DrugStoreRealTimeTrend"
                 titleConfig = {comTitle}
-                legendConfig = {{ ...comLegend, icon: "image:////img14.360buyimg.com/imagetools/jfs/t1/131444/12/1318/652/5ed7779fEef6bfafa/9449c4dcc56cfa9c.png" }}
+                legendConfig = {{ ...comLegend, ...genLegendIcon("drugSingle") }}
                 lineStyle = {drugRealLineStyle}
                 areaStyle = {drugAreaStyle}
                 gridConfig = {comGrid}
@@ -138,10 +142,10 @@ class Home extends Component {
             <RealTimeTrend
                 id = "hospitalRealTimeTrend"
                 title = "互联网问诊下单量实时趋势"
-                legend = {["互联网医院问诊下单量"]}
+                legend = {["今日", "618"]}
                 url = "InterRealTimeTrend"
                 titleConfig = {comTitle}
-                legendConfig = {{ ...comLegend, icon: "image:////img12.360buyimg.com/imagetools/jfs/t1/117925/35/9261/707/5ed777a4E84066893/4aa752d7e4003e46.png" }}
+                legendConfig = {{ ...comLegend, ...genLegendIcon("hispitalSingle") }}
                 lineStyle = {hospitalRealLineStyle}
                 areaStyle = {hospitalAreaStyle}
                 gridConfig = {comGrid}
@@ -169,10 +173,10 @@ class Home extends Component {
             <RealTimeTrend
                 id = "urgentRealTimeTrend"
                 title = "药急送下单量实时趋势"
-                legend = {["药急送下单量"]}
+                legend = {["今日", "618"]}
                 url = "UrgentRealTimeTrend"
                 titleConfig = {comTitle}
-                legendConfig = {{ ...comLegend, icon: "image:////img14.360buyimg.com/imagetools/jfs/t1/115905/17/9156/719/5ed7779fE59d5c7a7/f24e88d1a86ae5e0.png" }}
+                legendConfig = {{ ...comLegend, ...genLegendIcon("ergentSingle") }}
                 lineStyle = {urgentRealLineStyle}
                 areaStyle = {urgentAreaStyle}
                 gridConfig = {comGrid}
@@ -204,31 +208,31 @@ class Home extends Component {
 
     getAppCls = () => {
         const { tabIndex } = this.state;
-        return classnames(styles['home-chart-left-text'], {
-            [styles['home-chart-left-not-active']]: tabIndex === 0
+        return classnames(styles["home-chart-left-text"], {
+            [styles["home-chart-left-not-active"]]: tabIndex === 0,
         });
-    }
+    };
 
     getProgCls = () => {
         const { tabIndex } = this.state;
-        return classnames(styles['home-chart-left-text'], {
-            [styles['home-chart-left-not-active']]: tabIndex === 1,
-        })
-    }
+        return classnames(styles["home-chart-left-text"], {
+            [styles["home-chart-left-not-active"]]: tabIndex === 1,
+        });
+    };
 
     clearAllTimeout = data => {
         data.forEach(item => {
-            if(item) {
+            if (item) {
                 clearTimeout(item);
             }
         });
-    }
+    };
 
     onTabClick = tabIndex => () => {
         this.clearAllTimeout([this.tabTimeout]);
         const { location: { query: { change, interval = 60000 } = {} } = {} } = this.props;
         this.setState({ tabIndex }, () => {
-            if(change) {
+            if (change) {
                 this.tabTimeout = setTimeout(() => {
                     this.switchTab(tabIndex);
                 }, parseInt(interval, 10));
@@ -236,43 +240,47 @@ class Home extends Component {
                 this.clearAllTimeout([this.tabTimeout]);
             }
         });
-    }
+    };
 
     switchTab = tabIndex => {
-        this.onTabClick( tabIndex === 0 ? 1 : 0)();
-    }
+        this.onTabClick(tabIndex === 0 ? 1 : 0)();
+    };
 
     callTabTimeout = () => {
         this.tabTimeout = setTimeout(() => {
             this.switchTab();
-        }, 60000)
-    }
+        }, 60000);
+    };
 
     renderAppTitleText = () => {
         const { tabIndex } = this.state;
         const appCls = this.getAppCls();
         const progCls = this.getProgCls();
-        const appContentCls = classnames(styles['home-chart-left-container'], {
+        const appContentCls = classnames(styles["home-chart-left-container"], {
             [styles["home-chart-left-right-bg"]]: tabIndex === 0,
-            [styles["home-chart-left-left-bg"]]: tabIndex === 1
-        })
+            [styles["home-chart-left-left-bg"]]: tabIndex === 1,
+        });
 
         return (
             <div className = {appContentCls}>
                 {/* <div className = {appCls} onClick = {this.onTabClick(0)}>京东健康APP</div>
                 <div className = {progCls} onClick = {this.onTabClick(1)}>京东健康小程序</div> */}
-                <div className = {progCls} onClick = {this.onTabClick(0)}>京东健康小程序</div>
-                <div className = {appCls} onClick = {this.onTabClick(1)}>京东健康APP</div>
+                <div className = {progCls} onClick = {this.onTabClick(0)}>
+                    京东健康小程序
+                </div>
+                <div className = {appCls} onClick = {this.onTabClick(1)}>
+                    京东健康APP
+                </div>
             </div>
-        )
-    }
+        );
+    };
 
     renderHealthApp = () => {
         const {
             pvObj: { healthApp },
         } = this.state;
 
-        const cls = classnames(styles['home-chart-left-content']);
+        const cls = classnames(styles["home-chart-left-content"]);
 
         return (
             <div className = {cls}>
@@ -281,14 +289,14 @@ class Home extends Component {
                     url = "AppTotal"
                     pvData = {healthApp}
                     onClick = {this.onChangeTab}
-                    className = {styles['home-chart-app-card']}
+                    className = {styles["home-chart-app-card"]}
                     pvTitle = "今日累计首页请求量"
                 />
                 <div className = {styles["home-chart-app-container"]}>
                     <RealTimeTrend
                         id = "appRealTrend"
                         title = "实时下单量趋势"
-                        legend = {["京东健康APP下单量"]}
+                        legend = {["今日", "618"]}
                         url = "AppRealTimeTrend"
                         titleConfig = {titleConfig}
                         legendConfig = {legendConfig}
@@ -307,15 +315,15 @@ class Home extends Component {
                     />
                 </div>
             </div>
-        )
-    }
+        );
+    };
 
     renderMiniPrograme = () => {
         const {
             pvObj: { healthAppLets },
         } = this.state;
 
-        const cls = classnames(styles['home-chart-left-content'])
+        const cls = classnames(styles["home-chart-left-content"]);
 
         return (
             <div className = {cls}>
@@ -324,14 +332,14 @@ class Home extends Component {
                     url = "MiniProgTotal"
                     pvData = {healthAppLets}
                     onClick = {this.onChangeTab}
-                    className = {styles['home-chart-app-card']}
+                    className = {styles["home-chart-app-card"]}
                     pvTitle = "今日累计商详请求量"
                 />
                 <div className = {styles["home-chart-app-container"]}>
                     <RealTimeTrend
                         id = "miniRealTrend"
                         title = "实时下单量趋势"
-                        legend = {["京东健康小程序下单量"]}
+                        legend = {["今日", "618"]}
                         url = "MiniProgRealTimeTrend"
                         titleConfig = {titleConfig}
                         legendConfig = {legendConfig}
@@ -350,8 +358,8 @@ class Home extends Component {
                     />
                 </div>
             </div>
-        )
-    }
+        );
+    };
 
     /**
      * 左侧app容器包含总数统计、实时趋势
@@ -366,13 +374,12 @@ class Home extends Component {
             <div className = {styles["home-chart-left"]}>
                 <div className = {styles["home-chart-left-grid"]}>
                     <img className = {iconCls} src = {icon} width = {10} height = {28} alt = "" />
-                    { this.renderAppTitleText()}
+                    {this.renderAppTitleText()}
 
                     {/* { tabIndex === 0 && this.renderHealthApp() }
                     { tabIndex === 1 && this.renderMiniPrograme()} */}
-                    { tabIndex === 0 && this.renderMiniPrograme() }
-                    { tabIndex === 1 && this.renderHealthApp()}
-
+                    {tabIndex === 0 && this.renderMiniPrograme()}
+                    {tabIndex === 1 && this.renderHealthApp()}
                 </div>
             </div>
         );
@@ -385,43 +392,37 @@ class Home extends Component {
     onChangeTab = tabIndex => {
         console.log("index", tabIndex);
         this.setState({
-            tabIndex
-        })
-    }
+            tabIndex,
+        });
+    };
 
     getAppIcon = () => {
         const { tabIndex } = this.state;
         return tabIndex === 0 ? titleDecorate : rightTitleIcon;
-    }
+    };
 
     getIconCls = () => {
         const { tabIndex } = this.state;
-        return styles[`home-chart-left-${ tabIndex === 0 ? 'app' : 'program'}`]
-    }
+        return styles[`home-chart-left-${tabIndex === 0 ? "app" : "program"}`];
+    };
+
+    renderSecScreen = () => {
+        const { pvObj } = this.state;
+        return <SecContainer pvObj = {pvObj} />;
+    };
 
     render() {
         return (
             <div className = {styles.home} ref = {this.ref}>
                 {this.renderTitle()}
-                <div className = {styles["home-chart-container"]}>
+                {/* <div className = {styles["home-chart-container"]}>
                     {this.renderApp()}
                     <div className = {styles["home-chart-right"]}>
                         {this.renderTotalCard()}
                         {this.renderNotAppChart()}
-                        {/* <RealTimeTrend
-                        id = "intHospitalRealTimeTrend"
-                        title = '互联网医院问诊下单量实时趋势'
-                        legend = {['互联网医院问诊下单量']}
-                        url = 'DrugStoreRealTimeTrend'
-                    /> */}
-                        {/* <OrderQuantityTrend
-                            title = '大药房大促期间单量趋势'
-                            legend = {['大药房下单量']}
-                            id = 'drugStoreQuantityTrend'
-                            url = 'DrugStoreQuantityTrend'
-                        /> */}
                     </div>
-                </div>
+                </div> */}
+                {this.renderSecScreen()}
             </div>
         );
     }

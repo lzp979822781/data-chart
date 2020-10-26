@@ -1,0 +1,13 @@
+.flex(@direction, @rowAlign, @colAlign) {
+    display: flex;
+    flex-direction: @direction;
+    justify-content: @rowAlign;
+    align-items: @colAlign;
+}
+
+.sec-total {
+    .flex(row, space-between, flex-start);
+    &-card {
+        width: 450px;
+    }
+}
