@@ -412,9 +412,14 @@ class Home extends Component {
     };
 
     renderSecScreen = () => {
-        const { pvObj } = this.state;
+        const { pvObj, pageIndex } = this.state;
+        const containerCls = classnames({
+            // [styles.hide]: pageIndex === 1,
+            [styles["home-icon-show"]]: pageIndex === 1,
+            [styles["home-icon-hide"]]: pageIndex === 0,
+        });
 
-        return <SecContainer pvObj = {pvObj} />;
+        return <SecContainer pvObj = {pvObj} className = {containerCls} />;
     };
 
     onIconClick = () => {
@@ -437,7 +442,9 @@ class Home extends Component {
     render() {
         const { pageIndex } = this.state;
         const firstPage = classnames(styles["home-chart-container"], {
-            [styles.hide]: pageIndex === 1,
+            // [styles.hide]: pageIndex === 1,
+            [styles["home-icon-show"]]: pageIndex === 0,
+            [styles["home-icon-hide"]]: pageIndex === 1,
         });
 
         return (
