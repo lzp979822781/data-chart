@@ -244,7 +244,7 @@ class RealTimeTrend extends Component {
     getYoyData = (data, field) => {
         if (Array.isArray(data)) {
             const yoyData = data.filter(({ hasYoy }) => hasYoy);
-            return yoyData.length ? [{ data: yoyData.map(({ [field]: value }) => value) }] : [];
+            return yoyData.length ? yoyData.map(({ [field]: value }) => value) : [];
         }
 
         return [];
@@ -261,8 +261,8 @@ class RealTimeTrend extends Component {
         const { format, dataField = "total" } = this.props;
         const xArr = this.formatData(this.getAxisData(data, "date"), format);
         const yArr = this.getAxisData(data, dataField);
-        // const yoyData = this.getYoyData(data, 'yoyTotal');
-        const yoyData = yArr.map(item => item * 2);
+        const yoyData = this.getYoyData(data, "yoyTotal");
+        // const yoyData = yArr.map(item => item * 2);
         this.setOption(xArr, yArr, [{ data: yoyData }]);
     };
 
