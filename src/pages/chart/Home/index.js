@@ -4,7 +4,6 @@ import titleDecorate from "@/assets/titleDecorate.svg";
 import rightTitleIcon from "@/assets/svg/rightTitleIcon.svg";
 import { RealTimeTrend, OrderQuantityTrend, Time, TotalCard, HealthAppCard, SecContainer } from "../components";
 import {
-    appQuatityBar,
     appQuatitylegend,
     comTitle,
     comLegend,
@@ -17,20 +16,22 @@ import {
     drugLabelConfig,
     hospitalRealLineStyle,
     hospitalAreaStyle,
-    hospitalQuantityBar,
     hospitalLabelConfig,
     urgentRealLineStyle,
     urgentAreaStyle,
-    urgentQuantityBar,
     urgentlLabelConfig,
     titleConfig,
     legendConfig,
     lineStyle,
     areaStyle,
     genLegendIcon,
+    genQuatityBar,
 } from "./templateData";
 import { post } from "../services";
 import styles from "./index.less";
+
+const leftImg = "https://img12.360buyimg.com/imagetools/jfs/t1/155282/21/3631/56164/5f97d5f2Ece4c71d2/bb0145e0aa66fe6e.png";
+const rightImg = "https://img10.360buyimg.com/imagetools/jfs/t1/145936/32/12023/55985/5f97d5e7Ecf2c68e1/5de70e901202a506.png";
 
 class Home extends Component {
     constructor(props) {
@@ -38,6 +39,7 @@ class Home extends Component {
         this.state = {
             pvObj: {},
             tabIndex: 0,
+            pageIndex: 0,
         };
         this.ref = React.createRef();
     }
@@ -145,7 +147,7 @@ class Home extends Component {
                 legend = {["今日", "618"]}
                 url = "InterRealTimeTrend"
                 titleConfig = {comTitle}
-                legendConfig = {{ ...comLegend, ...genLegendIcon("hispitalSingle") }}
+                legendConfig = {{ ...comLegend, ...genLegendIcon("hospitalSingle") }}
                 lineStyle = {hospitalRealLineStyle}
                 areaStyle = {hospitalAreaStyle}
                 gridConfig = {comGrid}
@@ -158,7 +160,7 @@ class Home extends Component {
                 titleConfig = {comTitle}
                 legendConfig = {barLegend}
                 gridConfig = {drugQuantityGrid}
-                itemStyle = {hospitalQuantityBar}
+                itemStyle = {genQuatityBar("hospitalSingle")}
                 className = {styles["home-chart-right-drugStore-bar"]}
                 labelConfig = {hospitalLabelConfig}
             />
@@ -189,7 +191,7 @@ class Home extends Component {
                 titleConfig = {comTitle}
                 legendConfig = {barLegend}
                 gridConfig = {drugQuantityGrid}
-                itemStyle = {urgentQuantityBar}
+                itemStyle = {genQuatityBar("ergentSingle")}
                 className = {styles["home-chart-right-drugStore-bar"]}
                 labelConfig = {urgentlLabelConfig}
             />
@@ -302,6 +304,7 @@ class Home extends Component {
                         legendConfig = {legendConfig}
                         lineStyle = {lineStyle}
                         areaStyle = {areaStyle}
+                        style = {{ height: "280px" }}
                     />
                     <OrderQuantityTrend
                         title = "大促期间下单量趋势"
@@ -310,8 +313,9 @@ class Home extends Component {
                         url = "AppQuantityTrend"
                         titleConfig = {titleConfig}
                         lineStyle = {lineStyle}
-                        itemStyle = {appQuatityBar}
+                        itemStyle = {genQuatityBar("appSingle")}
                         legendConfig = {appQuatitylegend}
+                        style = {{ height: "318px", marginTop: "8px" }}
                     />
                 </div>
             </div>
@@ -345,6 +349,7 @@ class Home extends Component {
                         legendConfig = {legendConfig}
                         lineStyle = {lineStyle}
                         areaStyle = {areaStyle}
+                        style = {{ height: "280px" }}
                     />
                     <OrderQuantityTrend
                         title = "大促期间下单量趋势"
@@ -353,8 +358,9 @@ class Home extends Component {
                         url = "MiniProgQuantityTrend"
                         titleConfig = {titleConfig}
                         lineStyle = {lineStyle}
-                        itemStyle = {appQuatityBar}
+                        itemStyle = {genQuatityBar("appSingle")}
                         legendConfig = {appQuatitylegend}
+                        style = {{ marginTop: "8px" }}
                     />
                 </div>
             </div>
@@ -408,21 +414,50 @@ class Home extends Component {
 
     renderSecScreen = () => {
         const { pvObj } = this.state;
+
         return <SecContainer pvObj = {pvObj} />;
     };
 
+    onLeftClick = () => {
+        this.setState({ pageIndex: 0 });
+    };
+
+    onRightClick = () => {
+        this.setState({ pageIndex: 1 });
+    };
+
+    renderScreenIcon = () => {
+        const { pageIndex } = this.state;
+        const leftCls = classnames(styles["home-icon-com"], styles["home-icon-left"]);
+        const rightCls = classnames(styles["home-icon-com"], styles["home-icon-right"]);
+        const isFirstPage = pageIndex === 0;
+
+        return (
+            <>
+                {!isFirstPage && <img className = {leftCls} src = {leftImg} alt = "" onClick = {this.onLeftClick} />}
+                {isFirstPage && <img className = {rightCls} src = {rightImg} alt = "" onClick = {this.onRightClick} />}
+            </>
+        );
+    };
+
     render() {
+        const { pageIndex } = this.state;
+        const firstPage = classnames(styles["home-chart-container"], {
+            [styles.hide]: pageIndex === 1,
+        });
+
         return (
             <div className = {styles.home} ref = {this.ref}>
                 {this.renderTitle()}
-                {/* <div className = {styles["home-chart-container"]}>
+                <div className = {firstPage}>
                     {this.renderApp()}
                     <div className = {styles["home-chart-right"]}>
                         {this.renderTotalCard()}
                         {this.renderNotAppChart()}
                     </div>
-                </div> */}
+                </div>
                 {this.renderSecScreen()}
+                {this.renderScreenIcon()}
             </div>
         );
     }

@@ -29,6 +29,7 @@
     padding: 30px;
     overflow: auto;
     background: transparent;
+    position: relative;
 
     &-title-left {
         .flex(row, flex-start, center);
@@ -126,7 +127,7 @@
             }
 
             &-content {
-                margin-top: 100px;
+                margin-top: 75px;
             }
 
             &-text {
@@ -170,12 +171,42 @@
 
         &-app {
             &-container {
-                padding: 30px 26px  0 26px;
+                padding: 12px 26px  0 26px;
                 box-sizing: border-box;
             }
             &-card {
                 position: relative;
                 top: -4px;
+            }
+        }
+    }
+
+    &-icon {
+        &-com {
+            width: 112px;
+            height: 600px;
+            opacity: 0;
+            transition: opacity .5s linear;
+        }
+        &-left {
+            position: fixed;
+            left: 45px;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        
+        
+        &-right {
+            position: fixed;
+            right: -60px;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            &:hover {
+                opacity: 1;
             }
         }
     }

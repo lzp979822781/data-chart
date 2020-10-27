@@ -21,7 +21,7 @@ const comConfig = {
     feiJiaYun: {
         title: "菲加云",
         pvTitle: "今日累计下单量",
-        url: "HealthMagTotal",
+        url: "FeijiaYunTotal",
     },
     medicineErp: {
         title: "药店管家",

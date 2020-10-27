@@ -5,13 +5,48 @@ const legend618 = "image:////img12.360buyimg.com/imagetools/jfs/t1/150970/5/4389
 
 export { legend618 };
 
+const yoyLine = {
+    color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: "rgba(255,255,255,0.4)" }, { offset: 1, color: "#FFF" }]),
+};
+
+const yoyArea = {
+    normal: {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: "#FFF" }, { offset: 0.4, color: "rgba(255,255,255, .7)" }, { offset: 1, color: "rgba(255,255,255, .1)" }]),
+    },
+};
+
 const iconObj = {
     legend618,
     drugSingle: "image:////img14.360buyimg.com/imagetools/jfs/t1/131444/12/1318/652/5ed7779fEef6bfafa/9449c4dcc56cfa9c.png",
-    hispitalSingle: "image:////img12.360buyimg.com/imagetools/jfs/t1/117925/35/9261/707/5ed777a4E84066893/4aa752d7e4003e46.png",
+    hospitalSingle: "image:////img12.360buyimg.com/imagetools/jfs/t1/117925/35/9261/707/5ed777a4E84066893/4aa752d7e4003e46.png",
     ergentSingle: "image:////img14.360buyimg.com/imagetools/jfs/t1/115905/17/9156/719/5ed7779fE59d5c7a7/f24e88d1a86ae5e0.png",
     appSingle: "image:////img11.360buyimg.com/imagetools/jfs/t1/112812/21/9101/780/5ed7779fEf526dbea/07bec2d688335f92.png",
+    yjcSingle: "image:////img13.360buyimg.com/imagetools/jfs/t1/150629/36/4521/603/5f977beeE7e2321c1/88f1ff637fffeb2a.png",
+    cloudSingle: "image:////img13.360buyimg.com/imagetools/jfs/t1/122893/33/16458/664/5f977c4cEd85a34b1/5772798efea3afa6.png",
+    // selfErpSingle: "image:////img12.360buyimg.com/imagetools/jfs/t1/132530/15/13727/610/5f977e08E6197d747/5db7f1660e739117.png"
 };
+
+const quatityBarObj = {
+    drugSingle: { start: "#FF6060", end: "#FFA77D" },
+    hospitalSingle: { start: "#3D89FF", end: "#89D3FF" },
+    appSingle: { start: "#00DEC2", end: "#0046A2" },
+    ergentSingle: { start: "#FF9222", end: "#FFC72A" },
+};
+
+function genQuatityBar(field) {
+    const { start, end } = quatityBarObj[field];
+    const res = {
+        color: new echarts.graphic.LinearGradient(
+            0,
+            0,
+            0,
+            1, // 右 下 左 上
+            [{ offset: 0, color: start }, { offset: 1, color: end }]
+        ),
+        barBorderRadius: [4, 4, 0, 0], // 设置柱状图
+    };
+    return res;
+}
 
 function genLegendIcon(field) {
     const res = {
@@ -21,7 +56,25 @@ function genLegendIcon(field) {
     return res;
 }
 
-export { genLegendIcon };
+const lineStyleObj = {
+    drugSingle: { start: "#FF9B9B", end: "#FF4242" },
+    hospitalSingle: { start: "#3D89FF", end: "#89D3FF" },
+    appSingle: { start: "#00DEC2", end: "#0046A2" },
+    ergentSingle: { start: "#FF9222", end: "#FFC72A" },
+};
+
+function genRealLineStyle(field) {
+    const { start, end } = lineStyleObj[field];
+    const res = {
+        singlesLine: {
+            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: start }, { offset: 1, color: end }]),
+        },
+        yoyLine: { ...yoyLine },
+    };
+    return res;
+}
+
+export { genLegendIcon, genQuatityBar, genRealLineStyle };
 
 const appQuatityTitle = {
     textStyle: {
@@ -34,7 +87,7 @@ const appQuatityTitle = {
 
 export { appQuatityTitle };
 
-const appQuatityBar = {
+/* const appQuatityBar = {
     color: new echarts.graphic.LinearGradient(
         0,
         0,
@@ -45,7 +98,7 @@ const appQuatityBar = {
     barBorderRadius: [4, 4, 0, 0], // 设置柱状图
 };
 
-export { appQuatityBar };
+export { appQuatityBar }; */
 
 const appQuatitylegend = {
     top: 0,
@@ -96,16 +149,6 @@ const comGrid = {
 };
 
 export { comTitle, comLegend, comGrid, barLegend };
-
-const yoyLine = {
-    color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: "rgba(255,255,255,0.4)" }, { offset: 1, color: "#FFF" }]),
-};
-
-const yoyArea = {
-    normal: {
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: "#FFF" }, { offset: 0.4, color: "rgba(255,255,255, .7)" }, { offset: 1, color: "rgba(255,255,255, .1)" }]),
-    },
-};
 
 const drugRealLineStyle = {
     singlesLine: {
@@ -163,27 +206,12 @@ const hospitalAreaStyle = {
     yoyArea: { ...yoyArea },
 };
 
-const hospitalQuantityBar = {
-    color: new echarts.graphic.LinearGradient(
-        0,
-        0,
-        0,
-        1, // 右 下 左 上
-        [
-            { offset: 0, color: "#3D89FF" },
-            // { offset: 0.6, color: '##0040C2' },
-            { offset: 1, color: "#89D3FF" },
-        ]
-    ),
-    barBorderRadius: [4, 4, 0, 0], // 设置柱状图
-};
-
 const hospitalLabelConfig = {
     rotate: 60,
     ffset: [0, -10],
 };
 
-export { hospitalRealLineStyle, hospitalAreaStyle, hospitalQuantityBar, hospitalLabelConfig };
+export { hospitalRealLineStyle, hospitalAreaStyle, hospitalLabelConfig };
 
 const urgentRealLineStyle = {
     singlesLine: {
@@ -201,27 +229,12 @@ const urgentAreaStyle = {
     yoyArea: { ...yoyArea },
 };
 
-const urgentQuantityBar = {
-    color: new echarts.graphic.LinearGradient(
-        0,
-        0,
-        0,
-        1, // 右 下 左 上
-        [
-            { offset: 0, color: "#FF9222" },
-            // { offset: 0.6, color: '##0040C2' },
-            { offset: 1, color: "#FFC72A" },
-        ]
-    ),
-    barBorderRadius: [4, 4, 0, 0], // 设置柱状图
-};
-
 const urgentlLabelConfig = {
     rotate: 60,
     ffset: [0, -10],
 };
 
-export { urgentRealLineStyle, urgentAreaStyle, urgentQuantityBar, urgentlLabelConfig };
+export { urgentRealLineStyle, urgentAreaStyle, urgentlLabelConfig };
 
 const healthMagLineStyle = {
     singlesLine: {

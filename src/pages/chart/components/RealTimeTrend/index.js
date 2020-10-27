@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import echarts from "echarts";
 import moment from "moment";
+import classnames from "classnames";
 import { post } from "../../services";
 
 const titleStyle = {
@@ -288,11 +289,17 @@ class RealTimeTrend extends Component {
         }
     };
 
+    getStyle = () => {
+        const { className } = this.props;
+        const res = classnames(className);
+        return res;
+    };
+
     render() {
-        const { id } = this.props;
+        const { id, style = {} } = this.props;
         return (
             <div>
-                <div id = {id} style = {{ width: "100%", height: "307px" }} />
+                <div className = {this.getStyle()} id = {id} style = {{ width: "100%", height: "307px", ...style }} />
             </div>
         );
     }

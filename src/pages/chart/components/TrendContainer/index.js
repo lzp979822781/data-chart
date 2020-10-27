@@ -7,13 +7,20 @@ import {
     comLegend,
     comGrid,
     barLegend,
+    drugAreaStyle,
     drugLabelConfig,
     drugQuantityGrid,
+    drugQuantityBar,
+    hospitalRealLineStyle,
+    hospitalAreaStyle,
+    urgentRealLineStyle,
+    urgentAreaStyle,
     healthMagLineStyle,
     healthMagAreaStyle,
     healthMagLabelConfig,
-    appQuatityBar,
     genLegendIcon,
+    genQuatityBar,
+    genRealLineStyle,
 } from "../../Home/templateData";
 
 import styles from "./index.less";
@@ -32,6 +39,9 @@ class TrendContainer extends Component {
         return res;
     };
 
+    /**
+     * 健管平台
+     */
     renderHealthMagTrend = () => (
         <div className = {styles[`${PREFIX}-content`]}>
             <RealTimeTrend
@@ -40,7 +50,7 @@ class TrendContainer extends Component {
                 legend = {["今日", "618"]}
                 url = "HealthMagRealTimeTrend"
                 titleConfig = {comTitle}
-                legendConfig = {{ ...comLegend, ...genLegendIcon("drugSingle") }}
+                legendConfig = {{ ...comLegend, ...genLegendIcon("appSingle") }}
                 lineStyle = {healthMagLineStyle}
                 areaStyle = {healthMagAreaStyle}
                 gridConfig = {comGrid}
@@ -55,7 +65,7 @@ class TrendContainer extends Component {
                 titleConfig = {comTitle}
                 legendConfig = {barLegend}
                 gridConfig = {drugQuantityGrid}
-                itemStyle = {appQuatityBar}
+                itemStyle = {genQuatityBar("appSingle")}
                 className = {styles[`${PREFIX}-content-bar`]}
                 labelConfig = {drugLabelConfig}
                 dataField = "rightCount"
@@ -63,8 +73,112 @@ class TrendContainer extends Component {
         </div>
     );
 
+    /**
+     * 药京采实时趋势图
+     */
+    renderYjc = () => (
+        <div className = {styles[`${PREFIX}-content`]}>
+            <RealTimeTrend
+                id = "yjcTrend"
+                title = "药京采下单量实时趋势"
+                legend = {["今日", "618"]}
+                url = "YjcStoreRealTimeTrend"
+                titleConfig = {comTitle}
+                legendConfig = {{ ...comLegend, ...genLegendIcon("yjcSingle") }}
+                lineStyle = {genRealLineStyle("drugSingle")}
+                areaStyle = {drugAreaStyle}
+                gridConfig = {comGrid}
+                labelConfig = {healthMagLabelConfig}
+            />
+            <OrderQuantityTrend
+                title = "药京采大促期间下单量趋势"
+                legend = {["药京采下单量"]}
+                id = "yjcQuantityTrend"
+                url = "YjcQuantityTrend"
+                titleConfig = {comTitle}
+                legendConfig = {barLegend}
+                gridConfig = {drugQuantityGrid}
+                itemStyle = {drugQuantityBar}
+                className = {styles[`${PREFIX}-content-bar`]}
+                labelConfig = {drugLabelConfig}
+            />
+        </div>
+    );
+
+    /**
+     * 菲加云
+     * @returns
+     */
+    renderCloud = () => (
+        <div className = {styles[`${PREFIX}-content`]}>
+            <RealTimeTrend
+                id = "cloudTrend"
+                title = "菲加云下单量实时趋势"
+                legend = {["今日", "618"]}
+                url = "FeiJiaYunRealTimeTrend"
+                titleConfig = {comTitle}
+                legendConfig = {{ ...comLegend, ...genLegendIcon("hospitalSingle") }}
+                lineStyle = {hospitalRealLineStyle}
+                areaStyle = {hospitalAreaStyle}
+                gridConfig = {comGrid}
+            />
+            <OrderQuantityTrend
+                title = "菲加云大促期间下单量趋势"
+                legend = {["菲加云下单量"]}
+                id = "cloudQuantityTrend"
+                url = "FeijiaYunQuantityTrend"
+                titleConfig = {comTitle}
+                legendConfig = {barLegend}
+                gridConfig = {drugQuantityGrid}
+                itemStyle = {genQuatityBar("hospitalSingle")}
+                className = {styles[`${PREFIX}-content-bar`]}
+                labelConfig = {drugLabelConfig}
+                interval = {15000}
+            />
+        </div>
+    );
+
+    /**
+     * 药店管家
+     * @returns
+     */
+    renderErp = () => (
+        <div className = {styles[`${PREFIX}-content`]}>
+            <RealTimeTrend
+                id = "erpTrend"
+                title = "药店管家下单量实时趋势"
+                legend = {["今日", "618"]}
+                url = "SelfErpRealTimeTrend"
+                titleConfig = {comTitle}
+                legendConfig = {{ ...comLegend, ...genLegendIcon("ergentSingle") }}
+                lineStyle = {urgentRealLineStyle}
+                areaStyle = {urgentAreaStyle}
+                gridConfig = {comGrid}
+            />
+            <OrderQuantityTrend
+                title = "药店管家大促期间下单量趋势"
+                legend = {["菲加云下单量"]}
+                id = "erpQuantityTrend"
+                url = "SelfErpQuantityTrend"
+                titleConfig = {comTitle}
+                legendConfig = {barLegend}
+                gridConfig = {drugQuantityGrid}
+                itemStyle = {genQuatityBar("ergentSingle")}
+                className = {styles[`${PREFIX}-content-bar`]}
+                labelConfig = {drugLabelConfig}
+            />
+        </div>
+    );
+
     render() {
-        return <div className = {this.getContainerCls()}>{this.renderHealthMagTrend()}</div>;
+        return (
+            <div className = {this.getContainerCls()}>
+                {this.renderHealthMagTrend()}
+                {this.renderYjc()}
+                {this.renderCloud()}
+                {this.renderErp()}
+            </div>
+        );
     }
 }
 

@@ -240,15 +240,15 @@ class OrderQuantityTrend extends Component {
         }
 
         if (this && this.callTimeout) {
-            this.callTimeout();
+            // this.callTimeout();
         }
     };
 
     render() {
-        const { id, className } = this.props;
+        const { id, className, style = {} } = this.props;
         return (
             <div className = {className}>
-                <div id = {id} style = {{ width: "100%", height: "307px" }} />
+                <div id = {id} style = {{ width: "100%", height: "307px", ...style }} />
             </div>
         );
     }
