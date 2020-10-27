@@ -396,7 +396,6 @@ class Home extends Component {
      * @param {*} index 0表示app 1表示mini program
      */
     onChangeTab = tabIndex => {
-        console.log("index", tabIndex);
         this.setState({
             tabIndex,
         });
@@ -418,24 +417,19 @@ class Home extends Component {
         return <SecContainer pvObj = {pvObj} />;
     };
 
-    onLeftClick = () => {
-        this.setState({ pageIndex: 0 });
-    };
-
-    onRightClick = () => {
-        this.setState({ pageIndex: 1 });
+    onIconClick = () => {
+        const { pageIndex } = this.state;
+        this.setState({ pageIndex: pageIndex === 0 ? 1 : 0 });
     };
 
     renderScreenIcon = () => {
-        const { pageIndex } = this.state;
         const leftCls = classnames(styles["home-icon-com"], styles["home-icon-left"]);
         const rightCls = classnames(styles["home-icon-com"], styles["home-icon-right"]);
-        const isFirstPage = pageIndex === 0;
 
         return (
             <>
-                {!isFirstPage && <img className = {leftCls} src = {leftImg} alt = "" onClick = {this.onLeftClick} />}
-                {isFirstPage && <img className = {rightCls} src = {rightImg} alt = "" onClick = {this.onRightClick} />}
+                <img className = {leftCls} src = {leftImg} alt = "" onClick = {this.onIconClick} />
+                <img className = {rightCls} src = {rightImg} alt = "" onClick = {this.onIconClick} />
             </>
         );
     };

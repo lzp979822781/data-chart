@@ -116,6 +116,21 @@ export default {
             secure: false,
             changeOrigin: true,
         },
+        "/health": {
+            target: "http://yao-databoard.jd.com/",
+            secure: false,
+            changeOrigin: true,
+        },
+        "/feiJiaYun": {
+            target: "http://yao-databoard.jd.com/",
+            secure: false,
+            changeOrigin: true,
+        },
+        "/medicine": {
+            target: "http://yao-databoard.jd.com/",
+            secure: false,
+            changeOrigin: true,
+        },
     },
     ignoreMomentLocale: true,
     lessLoaderOptions: {
