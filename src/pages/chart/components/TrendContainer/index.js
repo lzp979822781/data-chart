@@ -157,7 +157,7 @@ class TrendContainer extends Component {
             />
             <OrderQuantityTrend
                 title = "药店管家大促期间下单量趋势"
-                legend = {["菲加云下单量"]}
+                legend = {["药店管家下单量"]}
                 id = "erpQuantityTrend"
                 url = "SelfErpQuantityTrend"
                 titleConfig = {comTitle}
