@@ -274,13 +274,23 @@ const codeFunc = {
             }, 300000);
         }
     },
-    "9002": (code, errorMsg) => {
+    "9002": (code, { url, errorMsg }) => {
+        const tempArr = cacheError.filter(({ url: tempUrl }) => tempUrl === url);
+        if (tempArr.length) {
+            const [{ errorMsg: tempMsg }] = tempArr;
+            if (errorMsg !== tempMsg) {
+                if (errorMsg) {
+                    notifyError("权限限制", errorMsg);
+                }
+                cacheError = cacheError.filter(({ url: tempUrl }) => tempUrl !== url).push({ url, errorMsg });
+            }
+        } else {
+            tempArr.push({ url, errorMsg });
+        }
+
         if (cacheError.includes(errorMsg)) return;
         cacheError.push(errorMsg);
         notifyError("权限限制", errorMsg);
-        setTimeout(() => {
-            cacheError = cacheError.filter(item => item !== errorMsg);
-        }, 30000);
     },
 };
 

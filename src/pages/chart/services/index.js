@@ -68,7 +68,7 @@ export function post(param) {
             .then(res => {
                 const { success, data, errorMsg, ...other } = res;
                 const { code } = other;
-                handleLogin(code, errorMsg);
+                handleLogin(code, { url: param.url, errorMsg });
                 resolve({ success, data, error: errorMsg, ...other });
             })
             .catch(error => resolve({ success: false, error }));
