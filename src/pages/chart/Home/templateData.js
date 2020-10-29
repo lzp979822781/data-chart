@@ -252,7 +252,7 @@ function toLogin() {
     return false;
 }
 
-let cacheError = [];
+const cacheError = [];
 
 function notifyError(msg = "权限限制", des = "当前用户无权限操作\n") {
     notification.warning({
@@ -275,17 +275,16 @@ const codeFunc = {
         }
     },
     "9002": (code, errorMsg) => {
-        if (cacheError.includes(code)) return;
-        cacheError.push(code);
-        notifyError("权限限制", errorMsg);
+        if (cacheError.includes(errorMsg)) return;
+        console.log("cacheError", cacheError);
+        cacheError.push(errorMsg);
+        // notifyError("权限限制", errorMsg);
     },
 };
 
 function handleLogin(code, errorMsg) {
     if (code !== null && typeof code !== "undefined") {
         codeFunc[code](code, errorMsg);
-    } else {
-        cacheError = [];
     }
 }
 

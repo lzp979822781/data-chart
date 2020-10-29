@@ -411,8 +411,8 @@ class Home extends Component {
         const { pvObj, pageIndex } = this.state;
         const containerCls = classnames({
             // [styles.hide]: pageIndex === 1,
-            [styles["home-icon-show"]]: pageIndex === 1,
-            [styles["home-icon-hide"]]: pageIndex === 0,
+            [styles["home-page-common"]]: true,
+            [styles["home-page-show"]]: pageIndex === 1,
         });
 
         return <SecContainer pvObj = {pvObj} className = {containerCls} />;
@@ -439,8 +439,8 @@ class Home extends Component {
         const { pageIndex } = this.state;
         const firstPage = classnames(styles["home-chart-container"], {
             // [styles.hide]: pageIndex === 1,
-            [styles["home-icon-show"]]: pageIndex === 0,
-            [styles["home-icon-hide"]]: pageIndex === 1,
+            [styles["home-page-common"]]: true,
+            [styles["home-page-show"]]: pageIndex === 0,
         });
 
         return (
