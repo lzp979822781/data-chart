@@ -252,8 +252,6 @@ function toLogin() {
     return false;
 }
 
-let cacheError = [];
-
 function notifyError(msg = "权限限制", des = "当前用户无权限操作\n") {
     notification.warning({
         message: msg,
@@ -274,33 +272,54 @@ const codeFunc = {
             }, 300000);
         }
     },
-    "9002": (code, { url, errorMsg }) => {
-        const tempArr = cacheError.filter(({ url: tempUrl }) => tempUrl === url);
-        if (tempArr.length) {
-            const [{ errorMsg: tempMsg }] = tempArr;
-            if (errorMsg !== tempMsg) {
-                if (errorMsg) {
-                    notifyError("权限限制", errorMsg);
-                }
-                cacheError = cacheError.filter(({ url: tempUrl }) => tempUrl !== url).push({ url, errorMsg });
-            }
-        } else {
-            tempArr.push({ url, errorMsg });
-        }
-
-        if (cacheError.includes(errorMsg)) return;
-        cacheError.push(errorMsg);
-        notifyError("权限限制", errorMsg);
-    },
 };
 
-function handleLogin(code, errorMsg) {
+function handleLogin(code, otherParam) {
     if (code !== null && typeof code !== "undefined") {
-        codeFunc[code](code, errorMsg);
+        if (codeFunc[code]) {
+            codeFunc[code](code, otherParam);
+        }
     }
 }
 
-export { handleLogin };
+const authObj = {
+    cacheError: [],
+    handleSysUnAuth(code, param) {
+        const { url, errorMsg } = param;
+        const tempArr = this.cacheError.filter(item => item.errorMsg === errorMsg);
+        if (tempArr.length) {
+            this.cacheError = this.cacheError.map(item => {
+                const { errorMsg: tempMsg, url: urlArr } = item;
+                const isContainerUrl = urlArr.includes(url);
+                if (tempMsg === errorMsg && !isContainerUrl) {
+                    return { errorMsg: tempMsg, url: urlArr.concat(url) };
+                }
+                return item;
+            });
+        } else {
+            notifyError("权限限制", errorMsg);
+            this.cacheError.push({ url: [url], errorMsg });
+        }
+    },
+    handleSysAuth(code, param) {
+        const { url } = param;
+        // 找到url数组
+        const tempArr = this.cacheError.filter(item => item.url.includes(url));
+        if (!tempArr.length) return;
+        this.cacheError = this.cacheError.filter(item => !item.url.includes(url));
+    },
+};
+
+// 处理9002错误
+function handleSysAuth(code, param) {
+    if (param.errorMsg) {
+        authObj.handleSysUnAuth(code, param);
+    } else {
+        authObj.handleSysAuth(code, param);
+    }
+}
+
+export { handleLogin, handleSysAuth };
 
 const titleConfig = {
     textStyle: {

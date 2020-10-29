@@ -12,10 +12,7 @@ class WaterMark extends Component {
     }
 
     async componentDidMount() {
-        const {
-            data: { pin },
-            success,
-        } = await get({ url: "Auth" });
+        const { data: { pin } = {}, success } = (await get({ url: "Auth" })) || {};
         if (success) {
             this.setState({ userPin: pin }, () => {
                 this.setWaterMark();
