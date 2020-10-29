@@ -7,20 +7,14 @@ import {
     comLegend,
     comGrid,
     barLegend,
-    drugAreaStyle,
     drugLabelConfig,
     drugQuantityGrid,
     drugQuantityBar,
-    hospitalRealLineStyle,
-    hospitalAreaStyle,
-    urgentRealLineStyle,
-    urgentAreaStyle,
-    healthMagLineStyle,
-    healthMagAreaStyle,
     healthMagLabelConfig,
     genLegendIcon,
     genQuatityBar,
     genRealLineStyle,
+    genAreaStyle,
 } from "../../Home/templateData";
 
 import styles from "./index.less";
@@ -51,8 +45,8 @@ class TrendContainer extends Component {
                 url = "HealthMagRealTimeTrend"
                 titleConfig = {comTitle}
                 legendConfig = {{ ...comLegend, ...genLegendIcon("appSingle") }}
-                lineStyle = {healthMagLineStyle}
-                areaStyle = {healthMagAreaStyle}
+                lineStyle = {genRealLineStyle("appSingle")}
+                areaStyle = {genAreaStyle("appSingle")}
                 gridConfig = {comGrid}
                 labelConfig = {healthMagLabelConfig}
                 dataField = "rightCount"
@@ -86,7 +80,7 @@ class TrendContainer extends Component {
                 titleConfig = {comTitle}
                 legendConfig = {{ ...comLegend, ...genLegendIcon("yjcSingle") }}
                 lineStyle = {genRealLineStyle("drugSingle")}
-                areaStyle = {drugAreaStyle}
+                areaStyle = {genAreaStyle("drugSingle")}
                 gridConfig = {comGrid}
                 labelConfig = {healthMagLabelConfig}
             />
@@ -118,8 +112,8 @@ class TrendContainer extends Component {
                 url = "FeiJiaYunRealTimeTrend"
                 titleConfig = {comTitle}
                 legendConfig = {{ ...comLegend, ...genLegendIcon("hospitalSingle") }}
-                lineStyle = {hospitalRealLineStyle}
-                areaStyle = {hospitalAreaStyle}
+                lineStyle = {genRealLineStyle("hospitalSingle")}
+                areaStyle = {genAreaStyle("hospitalSingle")}
                 gridConfig = {comGrid}
             />
             <OrderQuantityTrend
@@ -151,8 +145,8 @@ class TrendContainer extends Component {
                 url = "SelfErpRealTimeTrend"
                 titleConfig = {comTitle}
                 legendConfig = {{ ...comLegend, ...genLegendIcon("ergentSingle") }}
-                lineStyle = {urgentRealLineStyle}
-                areaStyle = {urgentAreaStyle}
+                lineStyle = {genRealLineStyle("ergentSingle")}
+                areaStyle = {genAreaStyle("ergentSingle")}
                 gridConfig = {comGrid}
             />
             <OrderQuantityTrend

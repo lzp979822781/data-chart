@@ -10,22 +10,18 @@ import {
     comGrid,
     barLegend,
     drugRealLineStyle,
-    drugAreaStyle,
     drugQuantityGrid,
     drugQuantityBar,
     drugLabelConfig,
-    hospitalRealLineStyle,
-    hospitalAreaStyle,
     hospitalLabelConfig,
-    urgentRealLineStyle,
-    urgentAreaStyle,
     urgentlLabelConfig,
     titleConfig,
     legendConfig,
     lineStyle,
-    areaStyle,
     genLegendIcon,
     genQuatityBar,
+    genAreaStyle,
+    genRealLineStyle,
 } from "./templateData";
 import { post } from "../services";
 import styles from "./index.less";
@@ -117,7 +113,7 @@ class Home extends Component {
                 titleConfig = {comTitle}
                 legendConfig = {{ ...comLegend, ...genLegendIcon("drugSingle") }}
                 lineStyle = {drugRealLineStyle}
-                areaStyle = {drugAreaStyle}
+                areaStyle = {genAreaStyle("drugSingle")}
                 gridConfig = {comGrid}
                 labelConfig = {drugLabelConfig}
             />
@@ -148,8 +144,8 @@ class Home extends Component {
                 url = "InterRealTimeTrend"
                 titleConfig = {comTitle}
                 legendConfig = {{ ...comLegend, ...genLegendIcon("hospitalSingle") }}
-                lineStyle = {hospitalRealLineStyle}
-                areaStyle = {hospitalAreaStyle}
+                lineStyle = {genRealLineStyle("hospitalSingle")}
+                areaStyle = {genAreaStyle("hospitalSingle")}
                 gridConfig = {comGrid}
             />
             <OrderQuantityTrend
@@ -179,8 +175,8 @@ class Home extends Component {
                 url = "UrgentRealTimeTrend"
                 titleConfig = {comTitle}
                 legendConfig = {{ ...comLegend, ...genLegendIcon("ergentSingle") }}
-                lineStyle = {urgentRealLineStyle}
-                areaStyle = {urgentAreaStyle}
+                lineStyle = {genRealLineStyle("ergentSingle")}
+                areaStyle = {genAreaStyle("ergentSingle")}
                 gridConfig = {comGrid}
             />
             <OrderQuantityTrend
@@ -303,7 +299,7 @@ class Home extends Component {
                         titleConfig = {titleConfig}
                         legendConfig = {legendConfig}
                         lineStyle = {lineStyle}
-                        areaStyle = {areaStyle}
+                        areaStyle = {genAreaStyle("appSingle")}
                         style = {{ height: "280px" }}
                     />
                     <OrderQuantityTrend
@@ -348,7 +344,7 @@ class Home extends Component {
                         titleConfig = {titleConfig}
                         legendConfig = {legendConfig}
                         lineStyle = {lineStyle}
-                        areaStyle = {areaStyle}
+                        areaStyle = {genAreaStyle("appSingle")}
                         style = {{ height: "280px" }}
                     />
                     <OrderQuantityTrend

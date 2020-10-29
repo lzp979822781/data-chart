@@ -58,9 +58,9 @@ function genLegendIcon(field) {
 
 const lineStyleObj = {
     drugSingle: { start: "#FF9B9B", end: "#FF4242" },
-    hospitalSingle: { start: "#3D89FF", end: "#89D3FF" },
-    appSingle: { start: "#00DEC2", end: "#0046A2" },
-    ergentSingle: { start: "#FF9222", end: "#FFC72A" },
+    hospitalSingle: { start: "#9AD4FF", end: "#388BFF" },
+    appSingle: { start: "#52FFEA", end: "#28AFDF" },
+    ergentSingle: { start: "#FFD359", end: "#FF6B00" },
 };
 
 function genRealLineStyle(field) {
@@ -74,7 +74,29 @@ function genRealLineStyle(field) {
     return res;
 }
 
-export { genLegendIcon, genQuatityBar, genRealLineStyle };
+const areaColorObj = {
+    appSingle: { start: "rgba(40, 213, 223, 1)", end: "rgba(40,213,223, .19)" },
+    drugSingle: { start: "#FF3B51", end: "rgba(255,107,109, .1)" },
+    hospitalSingle: { start: "#2F8DFF", end: "rgba(0,40,190, .11)" },
+    ergentSingle: { start: "#FF6600", end: "rgba(255,183,89, .19)" },
+};
+
+function genAreaStyle(field) {
+    const { start, end } = areaColorObj[field];
+
+    const res = {
+        singleArea: {
+            normal: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: start }, { offset: 1, color: end }]),
+            },
+        },
+        yoyArea: { ...yoyArea },
+    };
+
+    return res;
+}
+
+export { genLegendIcon, genQuatityBar, genRealLineStyle, genAreaStyle };
 
 const appQuatityTitle = {
     textStyle: {
@@ -86,19 +108,6 @@ const appQuatityTitle = {
 };
 
 export { appQuatityTitle };
-
-/* const appQuatityBar = {
-    color: new echarts.graphic.LinearGradient(
-        0,
-        0,
-        0,
-        1, // 右 下 左 上
-        [{ offset: 0, color: "#00DEC2" }, { offset: 1, color: "#0046A2" }]
-    ),
-    barBorderRadius: [4, 4, 0, 0], // 设置柱状图
-};
-
-export { appQuatityBar }; */
 
 const appQuatitylegend = {
     top: 0,
@@ -157,15 +166,6 @@ const drugRealLineStyle = {
     yoyLine: { ...yoyLine },
 };
 
-const drugAreaStyle = {
-    singleArea: {
-        normal: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: "#FF3B51" }, { offset: 1, color: "rgba(255,107,109, .1)" }]),
-        },
-    },
-    yoyArea: { ...yoyArea },
-};
-
 const drugQuantityGrid = {
     left: 50,
     right: 0,
@@ -188,76 +188,28 @@ const drugLabelConfig = {
     offset: [0, -10],
 };
 
-export { drugRealLineStyle, drugAreaStyle, drugQuantityGrid, drugQuantityBar, drugLabelConfig };
-
-const hospitalRealLineStyle = {
-    singlesLine: {
-        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: "#9AD4FF" }, { offset: 1, color: "#388BFF" }]),
-    },
-    yoyLine: { ...yoyLine },
-};
-
-const hospitalAreaStyle = {
-    singleArea: {
-        normal: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: "#2F8DFF" }, { offset: 1, color: "rgba(0,40,190, .11)" }]),
-        },
-    },
-    yoyArea: { ...yoyArea },
-};
+export { drugRealLineStyle, drugQuantityGrid, drugQuantityBar, drugLabelConfig };
 
 const hospitalLabelConfig = {
     rotate: 60,
     ffset: [0, -10],
 };
 
-export { hospitalRealLineStyle, hospitalAreaStyle, hospitalLabelConfig };
-
-const urgentRealLineStyle = {
-    singlesLine: {
-        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: "#FFD359" }, { offset: 1, color: "#FF6B00" }]),
-    },
-    yoyLine: { ...yoyLine },
-};
-
-const urgentAreaStyle = {
-    singleArea: {
-        normal: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: "#FF6600" }, { offset: 1, color: "rgba(255,183,89, .19)" }]),
-        },
-    },
-    yoyArea: { ...yoyArea },
-};
+export { hospitalLabelConfig };
 
 const urgentlLabelConfig = {
     rotate: 60,
     ffset: [0, -10],
 };
 
-export { urgentRealLineStyle, urgentAreaStyle, urgentlLabelConfig };
-
-const healthMagLineStyle = {
-    singlesLine: {
-        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: "#52FFEA" }, { offset: 1, color: "#28AFDF" }]),
-    },
-    yoyLine: { ...yoyLine },
-};
-
-const healthMagAreaStyle = {
-    singleArea: {
-        normal: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: "rgba(40, 213, 223, 1)" }, { offset: 1, color: "rgba(40,213,223, .19)" }]),
-        },
-    },
-    yoyArea: { ...yoyArea },
-};
+export { urgentlLabelConfig };
 
 const healthMagLabelConfig = {
     rotate: 60,
     offset: [0, -10],
 };
 
-export { healthMagLineStyle, healthMagAreaStyle, healthMagLabelConfig };
+export { healthMagLabelConfig };
 
 function fullScreen() {
     const docElm = document.documentElement;
@@ -371,16 +323,7 @@ const lineStyle = {
     yoyLine: { ...yoyLine },
 };
 
-const areaStyle = {
-    singleArea: {
-        normal: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: "rgba(40, 213, 223, 1)" }, { offset: 1, color: "rgba(40,213,223, .19)" }]),
-        },
-    },
-    yoyArea: { ...yoyArea },
-};
-
-export { titleConfig, legendConfig, lineStyle, areaStyle };
+export { titleConfig, legendConfig, lineStyle };
 
 /**
  * 判断当前用户是否具有数据权限
