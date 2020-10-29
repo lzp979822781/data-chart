@@ -2,7 +2,8 @@ import React, { Component } from "react";
 // import authArr from '@/utils/auth';
 import classnames from "classnames";
 import { post } from "../../services";
-import FormatNum from "./FormatNum";
+import FormatNum from "../FormatNum";
+import { hasDataAuth } from "../../Home/templateData";
 
 import styles from "./index.less";
 
@@ -49,9 +50,9 @@ class TotalCard extends Component {
     };
 
     getData = async () => {
-        const { success, data } = await post(this.getReqParam());
+        const { success, data, code } = await post(this.getReqParam());
         if (success) {
-            this.handleData(data);
+            this.handleData(data, code);
         }
 
         if (this && this.callTimeout) {
@@ -64,10 +65,11 @@ class TotalCard extends Component {
      * @param {*} data
      */
     handleData = data => {
-        const { orderCount, orderSumMoney = 0 } = data;
+        const { orderCount, orderSumMoney = 0, code } = data;
         this.setState({
             orderCount,
             orderSumMoney: orderSumMoney || 0,
+            code,
         });
     };
 
@@ -103,7 +105,7 @@ class TotalCard extends Component {
 
     render() {
         const { title, pvData, pvTitle, className } = this.props;
-        const { orderCount } = this.state;
+        const { orderCount, code } = this.state;
 
         const containerCls = classnames(styles["total-card"], className);
 
@@ -113,8 +115,8 @@ class TotalCard extends Component {
                 <div className = {styles["total-card-pv"]}>{pvTitle}</div>
                 <FormatNum data = {pvData} numFormat = {[0, "", ", "]} className = {styles["total-card-pv-num"]} />
                 <span className = {styles["total-card-order"]}>今日累计下单量</span>
-                <FormatNum data = {orderCount} numFormat = {[0, "", ", "]} className = {styles["total-card-order-num"]} />
-                {this.renderAmount()}
+                <FormatNum className = {styles["total-card-order-num"]} data = {orderCount} numFormat = {[0, "", ", "]} hasAuth = {hasDataAuth()} />
+                {this.renderAmount(code)}
             </div>
         );
     }

@@ -300,27 +300,40 @@ function toLogin() {
     return false;
 }
 
+let cacheError = [];
+
+function notifyError(msg = "权限限制", des = "当前用户无权限操作\n") {
+    notification.warning({
+        message: msg,
+        description: des,
+        placement: "topLeft",
+    });
+}
+
 const codeFunc = {
     "401": toLogin,
     "4002": toLogin,
     "9001": () => {
         if (isFirst) {
-            notification.warning({
-                message: "权限限制",
-                description: "当前用户无权限操作                                                         ",
-                placement: "topLeft",
-            });
+            notifyError();
             isFirst = false;
             setTimeout(() => {
                 isFirst = true;
             }, 300000);
         }
     },
+    "9002": (code, errorMsg) => {
+        if (cacheError.includes(code)) return;
+        cacheError.push(code);
+        notifyError("权限限制", errorMsg);
+    },
 };
 
-function handleLogin(code) {
+function handleLogin(code, errorMsg) {
     if (code !== null && typeof code !== "undefined") {
-        codeFunc[code]();
+        codeFunc[code](code, errorMsg);
+    } else {
+        cacheError = [];
     }
 }
 
@@ -368,3 +381,14 @@ const areaStyle = {
 };
 
 export { titleConfig, legendConfig, lineStyle, areaStyle };
+
+/**
+ * 判断当前用户是否具有数据权限
+ * @param {*} code 服务端返回编码
+ * @returns
+ */
+function hasDataAuth(code) {
+    return code !== "9002" && code !== 9002;
+}
+
+export { hasDataAuth };

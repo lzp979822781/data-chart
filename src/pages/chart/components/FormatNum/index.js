@@ -9,11 +9,13 @@ import styles from "./index.less";
 const defaultProps = {
     data: 0,
     numFormat: [0, "", ", "],
+    hasAuth: true,
 };
 
 const propTypes = {
     data: PropTypes.number,
     numFormat: PropTypes.array,
+    hasAuth: PropTypes.bool,
 };
 
 class FormatNum extends Component {
@@ -34,6 +36,7 @@ class FormatNum extends Component {
     };
 
     renderNum = () => {
+        const { hasAuth } = this.props;
         const data = this.handleData();
         // const data = 0;
         // console.log("decimal data", data);
@@ -57,7 +60,7 @@ class FormatNum extends Component {
 
                     return (
                         <span className = {cls} key = {UUID()}>
-                            {item}
+                            {hasAuth ? item : "*"}
                         </span>
                     );
                 })}
