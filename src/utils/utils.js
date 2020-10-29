@@ -1219,3 +1219,39 @@ const transCookie = () => {
 export { transCookie };
 
 export const devFlag = process.env.NODE_ENV === "development";
+
+const loadScripts = (urls, callbackFn) => {
+    const callback = callbackFn || (() => {});
+    // 添加script属性，并添加到head中
+    const loader = (src, handler) => {
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = src;
+        // 重点！！！！script加载成功
+        script.onload = () => {
+            script.onload = null;
+            script.onerror = null;
+            handler();
+        };
+        script.onerror = () => {
+            script.onload = null;
+            script.onerror = null;
+            callback({
+                message: `${src}依赖未加载成功！`,
+            });
+        };
+        const head = document.getElementsByTagName("head")[0];
+        (head || document.body).appendChild(script);
+    };
+    // 自执行函数，用于循环loader
+    const run = () => {
+        if (urls.length > 0) {
+            loader(urls.shift(), run);
+        } else {
+            callback();
+        }
+    };
+    run();
+};
+
+export { loadScripts };

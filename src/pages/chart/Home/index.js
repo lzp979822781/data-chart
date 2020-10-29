@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import titleDecorate from "@/assets/titleDecorate.svg";
 import rightTitleIcon from "@/assets/svg/rightTitleIcon.svg";
-import { RealTimeTrend, OrderQuantityTrend, Time, TotalCard, HealthAppCard, SecContainer } from "../components";
+import { RealTimeTrend, OrderQuantityTrend, Time, TotalCard, HealthAppCard, SecContainer, WaterMark } from "../components";
 import {
     appQuatitylegend,
     comTitle,
@@ -445,6 +445,7 @@ class Home extends Component {
 
         return (
             <div className = {styles.home} ref = {this.ref}>
+                <WaterMark />
                 {this.renderTitle()}
                 <div className = {firstPage}>
                     {this.renderApp()}

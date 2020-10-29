@@ -6,3 +6,4 @@ export { default as TotalCard } from "./TotalCard";
 export { default as HealthAppCard } from "./HealthAppCard";
 
 export { default as SecContainer } from "./SecContainer";
+export { default as WaterMark } from "./WaterMark";
