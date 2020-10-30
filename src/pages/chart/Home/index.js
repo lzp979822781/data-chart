@@ -12,12 +12,9 @@ import {
     drugRealLineStyle,
     drugQuantityGrid,
     drugQuantityBar,
-    drugLabelConfig,
-    hospitalLabelConfig,
-    urgentlLabelConfig,
+    labelConfig,
     titleConfig,
     legendConfig,
-    lineStyle,
     genLegendIcon,
     genQuatityBar,
     genAreaStyle,
@@ -115,7 +112,7 @@ class Home extends Component {
                 lineStyle = {drugRealLineStyle}
                 areaStyle = {genAreaStyle("drugSingle")}
                 gridConfig = {comGrid}
-                labelConfig = {drugLabelConfig}
+                labelConfig = {labelConfig}
             />
             <OrderQuantityTrend
                 title = "大药房大促期间下单量趋势"
@@ -127,7 +124,7 @@ class Home extends Component {
                 gridConfig = {drugQuantityGrid}
                 itemStyle = {drugQuantityBar}
                 className = {styles["home-chart-right-drugStore-bar"]}
-                labelConfig = {drugLabelConfig}
+                labelConfig = {labelConfig}
             />
         </div>
     );
@@ -158,7 +155,7 @@ class Home extends Component {
                 gridConfig = {drugQuantityGrid}
                 itemStyle = {genQuatityBar("hospitalSingle")}
                 className = {styles["home-chart-right-drugStore-bar"]}
-                labelConfig = {hospitalLabelConfig}
+                labelConfig = {labelConfig}
             />
         </div>
     );
@@ -189,7 +186,7 @@ class Home extends Component {
                 gridConfig = {drugQuantityGrid}
                 itemStyle = {genQuatityBar("ergentSingle")}
                 className = {styles["home-chart-right-drugStore-bar"]}
-                labelConfig = {urgentlLabelConfig}
+                labelConfig = {labelConfig}
             />
         </div>
     );
@@ -298,7 +295,7 @@ class Home extends Component {
                         url = "AppRealTimeTrend"
                         titleConfig = {titleConfig}
                         legendConfig = {legendConfig}
-                        lineStyle = {lineStyle}
+                        lineStyle = {genRealLineStyle("appSingle")}
                         areaStyle = {genAreaStyle("appSingle")}
                         style = {{ height: "280px" }}
                     />
@@ -308,7 +305,7 @@ class Home extends Component {
                         id = "appQuantityTrend"
                         url = "AppQuantityTrend"
                         titleConfig = {titleConfig}
-                        lineStyle = {lineStyle}
+                        lineStyle = {genRealLineStyle("appSingle")}
                         itemStyle = {genQuatityBar("appSingle")}
                         legendConfig = {appQuatitylegend}
                         style = {{ height: "318px", marginTop: "8px" }}
@@ -343,7 +340,7 @@ class Home extends Component {
                         url = "MiniProgRealTimeTrend"
                         titleConfig = {titleConfig}
                         legendConfig = {legendConfig}
-                        lineStyle = {lineStyle}
+                        lineStyle = {genRealLineStyle("appSingle")}
                         areaStyle = {genAreaStyle("appSingle")}
                         style = {{ height: "280px" }}
                     />
@@ -353,7 +350,7 @@ class Home extends Component {
                         id = "miniQuantityTrend"
                         url = "MiniProgQuantityTrend"
                         titleConfig = {titleConfig}
-                        lineStyle = {lineStyle}
+                        lineStyle = {genRealLineStyle("appSingle")}
                         itemStyle = {genQuatityBar("appSingle")}
                         legendConfig = {appQuatitylegend}
                         style = {{ marginTop: "8px" }}

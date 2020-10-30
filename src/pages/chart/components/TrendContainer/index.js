@@ -2,20 +2,7 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import RealTimeTrend from "../RealTimeTrend";
 import OrderQuantityTrend from "../OrderQuantityTrend";
-import {
-    comTitle,
-    comLegend,
-    comGrid,
-    barLegend,
-    drugLabelConfig,
-    drugQuantityGrid,
-    drugQuantityBar,
-    healthMagLabelConfig,
-    genLegendIcon,
-    genQuatityBar,
-    genRealLineStyle,
-    genAreaStyle,
-} from "../../Home/templateData";
+import { comTitle, comLegend, comGrid, barLegend, drugQuantityGrid, drugQuantityBar, labelConfig, genLegendIcon, genQuatityBar, genRealLineStyle, genAreaStyle } from "../../Home/templateData";
 
 import styles from "./index.less";
 
@@ -48,7 +35,7 @@ class TrendContainer extends Component {
                 lineStyle = {genRealLineStyle("appSingle")}
                 areaStyle = {genAreaStyle("appSingle")}
                 gridConfig = {comGrid}
-                labelConfig = {healthMagLabelConfig}
+                labelConfig = {labelConfig}
                 dataField = "rightCount"
             />
             <OrderQuantityTrend
@@ -61,7 +48,7 @@ class TrendContainer extends Component {
                 gridConfig = {drugQuantityGrid}
                 itemStyle = {genQuatityBar("appSingle")}
                 className = {styles[`${PREFIX}-content-bar`]}
-                labelConfig = {drugLabelConfig}
+                labelConfig = {labelConfig}
                 dataField = "rightCount"
             />
         </div>
@@ -82,7 +69,7 @@ class TrendContainer extends Component {
                 lineStyle = {genRealLineStyle("drugSingle")}
                 areaStyle = {genAreaStyle("drugSingle")}
                 gridConfig = {comGrid}
-                labelConfig = {healthMagLabelConfig}
+                labelConfig = {labelConfig}
             />
             <OrderQuantityTrend
                 title = "药京采大促期间下单量趋势"
@@ -94,7 +81,7 @@ class TrendContainer extends Component {
                 gridConfig = {drugQuantityGrid}
                 itemStyle = {drugQuantityBar}
                 className = {styles[`${PREFIX}-content-bar`]}
-                labelConfig = {drugLabelConfig}
+                labelConfig = {labelConfig}
             />
         </div>
     );
@@ -126,7 +113,7 @@ class TrendContainer extends Component {
                 gridConfig = {drugQuantityGrid}
                 itemStyle = {genQuatityBar("hospitalSingle")}
                 className = {styles[`${PREFIX}-content-bar`]}
-                labelConfig = {drugLabelConfig}
+                labelConfig = {labelConfig}
                 interval = {15000}
             />
         </div>
@@ -159,7 +146,7 @@ class TrendContainer extends Component {
                 gridConfig = {drugQuantityGrid}
                 itemStyle = {genQuatityBar("ergentSingle")}
                 className = {styles[`${PREFIX}-content-bar`]}
-                labelConfig = {drugLabelConfig}
+                labelConfig = {labelConfig}
             />
         </div>
     );

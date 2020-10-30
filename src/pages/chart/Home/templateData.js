@@ -183,33 +183,14 @@ const drugQuantityBar = {
     barBorderRadius: [4, 4, 0, 0], // 设置柱状图
 };
 
-const drugLabelConfig = {
+export { drugRealLineStyle, drugQuantityGrid, drugQuantityBar };
+
+const labelConfig = {
     rotate: 60,
     offset: [0, -10],
 };
 
-export { drugRealLineStyle, drugQuantityGrid, drugQuantityBar, drugLabelConfig };
-
-const hospitalLabelConfig = {
-    rotate: 60,
-    ffset: [0, -10],
-};
-
-export { hospitalLabelConfig };
-
-const urgentlLabelConfig = {
-    rotate: 60,
-    ffset: [0, -10],
-};
-
-export { urgentlLabelConfig };
-
-const healthMagLabelConfig = {
-    rotate: 60,
-    offset: [0, -10],
-};
-
-export { healthMagLabelConfig };
+export { labelConfig };
 
 function fullScreen() {
     const docElm = document.documentElement;
@@ -346,14 +327,7 @@ const legendConfig = {
     ...genLegendIcon("appSingle"),
 };
 
-const lineStyle = {
-    singlesLine: {
-        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: "#52FFEA" }, { offset: 1, color: "#28AFDF" }]),
-    },
-    yoyLine: { ...yoyLine },
-};
-
-export { titleConfig, legendConfig, lineStyle };
+export { titleConfig, legendConfig };
 
 /**
  * 判断当前用户是否具有数据权限
