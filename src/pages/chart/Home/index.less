@@ -212,13 +212,6 @@
     }
 
     &-page {
-        &-show {
-            opacity: 1 !important;
-            visibility: visible !important;
-            transform: scale(1) !important;
-            z-index: 1 !important;
-            position: static !important;
-        }
 
         &-common {
             position: absolute;
@@ -229,6 +222,14 @@
             transform: scale(0.3);
             transition: all 0.5s linear;
             z-index: 2;
+        }
+
+        &-show {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            z-index: 1;
+            position: static;
         }
     }
 
