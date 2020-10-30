@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import echarts from "echarts";
 import moment from "moment";
+import { setHide } from "../../Home/templateData";
 import { post } from "../../services";
 
 const defaultProps = {
@@ -35,6 +36,7 @@ class OrderQuantityTrend extends Component {
         this.initMap();
         this.initResize();
         this.getData();
+        this.getAuth();
     }
 
     componentWillUnmount() {
@@ -48,6 +50,10 @@ class OrderQuantityTrend extends Component {
 
         window.onresize = null;
     }
+
+    getAuth = async () => {
+        setHide(this.myChart, { type: "bar" });
+    };
 
     initResize = () => {
         if (!window.onresize) {

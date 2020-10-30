@@ -13,6 +13,7 @@ const defaultProps = {
     interval: 5000,
     pvData: 0,
     pvTitle: "今日累积PV",
+    hasDataAuth: true,
 };
 
 class HealthMagCard extends Component {
@@ -105,7 +106,7 @@ class HealthMagCard extends Component {
     };
 
     render() {
-        const { title, pvTitle, className } = this.props;
+        const { title, pvTitle, className, hasDataAuth } = this.props;
         const { orderCount, rightCount } = this.state;
 
         const containerCls = classnames(styles[`${PREFIX}`], className);
@@ -114,9 +115,9 @@ class HealthMagCard extends Component {
             <div className = {containerCls}>
                 <span className = {styles[`${PREFIX}-title`]}>{title}</span>
                 <div className = {styles[`${PREFIX}-pv`]}>{pvTitle}</div>
-                <FormatNum data = {rightCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-pv-num`]} />
+                <FormatNum data = {rightCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-pv-num`]} hasAuth = {hasDataAuth} />
                 <span className = {styles[`${PREFIX}-order`]}>今日累计下单量</span>
-                <FormatNum data = {orderCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-order-num`]} />
+                <FormatNum data = {orderCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-order-num`]} hasAuth = {hasDataAuth} />
                 {this.renderAmount()}
             </div>
         );

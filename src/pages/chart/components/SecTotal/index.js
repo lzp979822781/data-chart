@@ -30,6 +30,10 @@ const comConfig = {
     },
 };
 
+const defaultProps = {
+    hasDataAuth: true,
+};
+
 class SecTotal extends Component {
     constructor(props) {
         super(props);
@@ -56,15 +60,19 @@ class SecTotal extends Component {
     };
 
     render() {
+        const { hasDataAuth } = this.props;
+
         return (
             <div className = {this.getContainerCls()}>
-                <HealthMagCard {...this.getProps("healthManage")} className = {styles[`${clsPrefix}-card`]} />
-                <TotalCard {...this.getProps("yjc")} className = {styles[`${clsPrefix}-card`]} />
-                <FeijiaYunCard {...this.getProps("feiJiaYun")} className = {styles[`${clsPrefix}-card`]} />
-                <TotalCard {...this.getProps("medicineErp")} className = {styles[`${clsPrefix}-card`]} />
+                <HealthMagCard {...this.getProps("healthManage")} className = {styles[`${clsPrefix}-card`]} hasDataAuth = {hasDataAuth} />
+                <TotalCard {...this.getProps("yjc")} className = {styles[`${clsPrefix}-card`]} hasDataAuth = {hasDataAuth} />
+                <FeijiaYunCard {...this.getProps("feiJiaYun")} className = {styles[`${clsPrefix}-card`]} hasDataAuth = {hasDataAuth} />
+                <TotalCard {...this.getProps("medicineErp")} className = {styles[`${clsPrefix}-card`]} hasDataAuth = {hasDataAuth} />
             </div>
         );
     }
 }
+
+SecTotal.defaultProps = defaultProps;
 
 export default SecTotal;

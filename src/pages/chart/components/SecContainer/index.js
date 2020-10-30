@@ -7,6 +7,10 @@ import styles from "./index.less";
 
 const PREFIX = "container";
 
+const defaultProps = {
+    hasDataAuth: true,
+};
+
 class SecContainer extends Component {
     constructor(props) {
         super(props);
@@ -19,16 +23,18 @@ class SecContainer extends Component {
     };
 
     render() {
-        const { pvObj } = this.props;
+        const { pvObj, hasDataAuth } = this.props;
         return (
             <div className = {this.getContainerCls()}>
                 <div className = {styles[`${PREFIX}-card`]}>
-                    <SecTotal pvObj = {pvObj} />
+                    <SecTotal pvObj = {pvObj} hasDataAuth = {hasDataAuth} />
                 </div>
-                <TrendContainer />
+                <TrendContainer hasDataAuth = {hasDataAuth} />
             </div>
         );
     }
 }
+
+SecContainer.defaultProps = defaultProps;
 
 export default SecContainer;

@@ -335,7 +335,40 @@ export { titleConfig, legendConfig };
  * @returns
  */
 function hasDataAuth(code) {
-    return code !== "9002" && code !== 9002;
+    return !code;
 }
 
 export { hasDataAuth };
+
+function getOption(param, isHide) {
+    const { type = "line" } = param;
+    const data = {
+        type,
+        label: {
+            show: !isHide, // 是否展示折线上的坐标值
+        },
+    };
+    const option = {
+        tooltip: { show: !isHide },
+        yAxis: {
+            axisLabel: {
+                show: !isHide, // 隐藏y轴刻度线
+            },
+        },
+        silent: isHide, // 禁止浮动显示
+        series: [data, data],
+    };
+    return option;
+}
+
+function setHide(chartContext, param = {}) {
+    if (!chartContext) return;
+    chartContext.setOption(getOption(param, true));
+}
+
+function setShow(chartContext, param = {}) {
+    if (!chartContext) return;
+    chartContext.setOption(getOption(param, false));
+}
+
+export { setHide, setShow };

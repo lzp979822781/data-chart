@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import echarts from "echarts";
 import moment from "moment";
 import classnames from "classnames";
+import { setHide } from "../../Home/templateData";
 import { post } from "../../services";
 
 const titleStyle = {
@@ -14,6 +15,7 @@ const defaultProps = {
     reqTimeRange: 15,
     format: "HH:mm",
     interval: 5000,
+    hasDataAuth: true,
 };
 
 const propTypes = {
@@ -24,6 +26,7 @@ const propTypes = {
     reqTimeRange: PropTypes.number,
     format: PropTypes.string,
     interval: PropTypes.number,
+    hasDataAuth: PropTypes.bool,
 };
 
 class RealTimeTrend extends Component {
@@ -40,6 +43,14 @@ class RealTimeTrend extends Component {
         this.getData();
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { hasDataAuth: currentAuth } = this.props;
+        const { hasDataAuth: nextAuth } = nextProps;
+        if (!nextAuth && nextAuth !== currentAuth) {
+            setHide(this.myChart);
+        }
+    }
+
     componentWillUnmount() {
         if (this.myChart) {
             this.myChart.dispose();
@@ -49,6 +60,10 @@ class RealTimeTrend extends Component {
         }
         window.onresize = null;
     }
+
+    getAuth = async () => {
+        setHide(this.myChart);
+    };
 
     initResize = () => {
         if (!window.onresize) {
@@ -114,6 +129,7 @@ class RealTimeTrend extends Component {
                 trigger: "axis",
                 backgroundColor: "rgba(50,50,50,0.7)",
                 appendToBody: true, // 解决tooptip透过图表显示的问题
+                show: true, // 隐藏浮动显示值
             },
             xAxis: {
                 type: "category",
@@ -165,6 +181,7 @@ class RealTimeTrend extends Component {
                         fontSize: 12,
                         fontFamily: "PingFangSC-Light",
                     },
+                    show: true, // 隐藏y轴刻度线
                 },
             },
             series: [
@@ -179,7 +196,7 @@ class RealTimeTrend extends Component {
                     label: Object.assign(
                         {},
                         {
-                            show: true,
+                            show: true, // 是否展示折线上的坐标值
                             position: "top",
                             color: "#fff",
                             /* rotate: 60,
@@ -208,7 +225,7 @@ class RealTimeTrend extends Component {
                 label: Object.assign(
                     {},
                     {
-                        show: true,
+                        show: true, // 隐藏
                         position: "top",
                         color: "#fff",
                     },

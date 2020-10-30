@@ -13,6 +13,7 @@ const defaultProps = {
     interval: 5000,
     pvData: 0,
     pvTitle: "今日累积PV",
+    hasDataAuth: true,
 };
 
 class HealthMagCard extends Component {
@@ -105,12 +106,15 @@ class HealthMagCard extends Component {
         return <div className = {styles[`${PREFIX}-money`]}>{`￥${showVal}`}</div>;
     };
 
-    renderItem = (title, amount) => (
-        <div className = {styles[`${PREFIX}-child-card-amout-container`]}>
-            <div className = {styles[`${PREFIX}-child-card-amout-container-title`]}>{title}</div>
-            <FormatNum data = {amount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-child-card-amout-container-content`]} />
-        </div>
-    );
+    renderItem = (title, amount) => {
+        const { hasDataAuth } = this.props;
+        return (
+            <div className = {styles[`${PREFIX}-child-card-amout-container`]}>
+                <div className = {styles[`${PREFIX}-child-card-amout-container-title`]}>{title}</div>
+                <FormatNum data = {amount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-child-card-amout-container-content`]} hasAuth = {hasDataAuth} />
+            </div>
+        );
+    };
 
     renderChildCard = () => {
         const { singleOrderCount, chainOrderCount } = this.state;
@@ -124,7 +128,7 @@ class HealthMagCard extends Component {
     };
 
     render() {
-        const { title, pvTitle, className } = this.props;
+        const { title, pvTitle, className, hasDataAuth } = this.props;
         const { totalOrderCount } = this.state;
 
         const containerCls = classnames(styles[`${PREFIX}`], className);
@@ -133,7 +137,7 @@ class HealthMagCard extends Component {
             <div className = {containerCls}>
                 <span className = {styles[`${PREFIX}-title`]}>{title}</span>
                 <div className = {styles[`${PREFIX}-pv`]}>{pvTitle}</div>
-                <FormatNum data = {totalOrderCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-pv-num`]} />
+                <FormatNum data = {totalOrderCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-pv-num`]} hasAuth = {hasDataAuth} />
                 {this.renderChildCard()}
                 {/* <FormatNum
                     data = {orderCount}

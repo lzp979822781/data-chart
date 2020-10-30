@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import { post } from "../../services";
 import FormatNum from "../FormatNum";
-import { hasDataAuth } from "../../Home/templateData";
+// import { hasDataAuth } from "../../Home/templateData";
 
 import styles from "./index.less";
 
@@ -12,6 +12,7 @@ const defaultProps = {
     interval: 5000,
     pvData: 0,
     pvTitle: "今日累积PV",
+    hasDataAuth: true,
 };
 
 class TotalCard extends Component {
@@ -104,7 +105,7 @@ class TotalCard extends Component {
     };
 
     render() {
-        const { title, pvData, pvTitle, className } = this.props;
+        const { title, pvData, pvTitle, className, hasDataAuth } = this.props;
         const { orderCount, code } = this.state;
 
         const containerCls = classnames(styles["total-card"], className);
@@ -113,9 +114,9 @@ class TotalCard extends Component {
             <div className = {containerCls}>
                 <span className = {styles["total-card-title"]}>{title}</span>
                 <div className = {styles["total-card-pv"]}>{pvTitle}</div>
-                <FormatNum data = {pvData} numFormat = {[0, "", ", "]} className = {styles["total-card-pv-num"]} />
+                <FormatNum data = {pvData} numFormat = {[0, "", ", "]} className = {styles["total-card-pv-num"]} hasAuth = {hasDataAuth} />
                 <span className = {styles["total-card-order"]}>今日累计下单量</span>
-                <FormatNum className = {styles["total-card-order-num"]} data = {orderCount} numFormat = {[0, "", ", "]} hasAuth = {hasDataAuth()} />
+                <FormatNum className = {styles["total-card-order-num"]} data = {orderCount} numFormat = {[0, "", ", "]} hasAuth = {hasDataAuth} />
                 {this.renderAmount(code)}
             </div>
         );

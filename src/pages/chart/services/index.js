@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import { handleLogin, handleSysAuth } from "../Home/templateData";
+import { handleLogin } from "../Home/templateData";
 
 const URL = {
     DrugStoreRealTimeTrend: `/pha/order/latelyMinutes`, // 大药房下单量实时趋势
@@ -69,7 +69,7 @@ export function post(param) {
                 const { success, data, errorMsg, ...other } = res;
                 const { code } = other;
                 handleLogin(code, { url: param.url, errorMsg });
-                handleSysAuth(code, { url: param.url, errorMsg });
+                // handleSysAuth(code, { url: param.url, errorMsg });
                 resolve({ success, data, error: errorMsg, ...other });
             })
             .catch(error => resolve({ success: false, error }));
