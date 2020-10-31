@@ -52,9 +52,7 @@ class Home extends Component {
     }
 
     getAuth = async () => {
-        const {
-            data: { authCode },
-        } = await post({ url: "Auth", data: {} });
+        const { data: { authCode } = {} } = await post({ url: "Auth", data: {} });
         this.setState({ hasAuth: authCode !== "9002" });
     };
 
