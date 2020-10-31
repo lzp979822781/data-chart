@@ -43,6 +43,7 @@ class Home extends Component {
         this.onTabClick(0)(); // 自动切换
         this.getAuth();
         this.addKeybordEvent();
+        this.handleCountDown();
     }
 
     componentWillUnmount() {
@@ -52,6 +53,20 @@ class Home extends Component {
         this.clearAllTimeout([this.timeout, this.tabTimeout]);
         document.onkeydown = null;
     }
+
+    handleCountDown = () => {
+        const {
+            location: {
+                query: { time },
+            },
+        } = this.props;
+        if (time) {
+            const iframe = document.createElement("iframe");
+            iframe.src = "//yaostatic.jd.com/time/";
+            iframe.className = "iframeBody";
+            document.body.appendChild(iframe);
+        }
+    };
 
     addKeybordEvent = () => {
         document.onkeydown = ev => {
