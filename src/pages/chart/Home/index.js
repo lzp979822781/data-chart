@@ -55,7 +55,7 @@ class Home extends Component {
 
     addKeybordEvent = () => {
         document.onkeydown = ev => {
-            const { keyCode } = ev || window.event;
+            const { keyCode } = ev || window.event || {};
             if (keyCode) {
                 const callback = this.keyFunc(keyCode);
                 if (callback) {
