@@ -36,7 +36,14 @@ class OrderQuantityTrend extends Component {
         this.initMap();
         this.initResize();
         this.getData();
-        this.getAuth();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { hasDataAuth: currentAuth } = this.props;
+        const { hasDataAuth: nextAuth } = nextProps;
+        if (!nextAuth && nextAuth !== currentAuth) {
+            setHide(this.myChart, { type: "bar" });
+        }
     }
 
     componentWillUnmount() {
@@ -50,10 +57,6 @@ class OrderQuantityTrend extends Component {
 
         window.onresize = null;
     }
-
-    getAuth = async () => {
-        setHide(this.myChart, { type: "bar" });
-    };
 
     initResize = () => {
         if (!window.onresize) {
