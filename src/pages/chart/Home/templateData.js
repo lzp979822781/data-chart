@@ -50,7 +50,8 @@ function genQuatityBar(field) {
 
 function genLegendIcon(field) {
     const res = {
-        data: [{ name: "今日", icon: iconObj[field] }, { name: "618", icon: iconObj.legend618 }],
+        // data: [{ name: "今日", icon: iconObj[field] }, { name: "618", icon: iconObj.legend618 }],
+        data: [{ name: "今日", icon: iconObj[field] }],
     };
 
     return res;

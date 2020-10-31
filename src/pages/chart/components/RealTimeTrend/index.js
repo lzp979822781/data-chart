@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import echarts from "echarts";
 import moment from "moment";
 import classnames from "classnames";
-import { setHide } from "../../Home/templateData";
+import { setHide, legend618 } from "../../Home/templateData";
 import { post } from "../../services";
 
 const titleStyle = {
@@ -279,17 +279,23 @@ class RealTimeTrend extends Component {
         const xArr = this.formatData(this.getAxisData(data, "date"), format);
         const yArr = this.getAxisData(data, dataField);
         const yoyData = this.getYoyData(data, "yoyTotal");
+        const [hasYoy] = this.getYoyData(data, "hasYoy");
         // const yoyData = yArr.map(item => item * 2);
-        this.setOption(xArr, yArr, [{ data: yoyData }]);
+        this.setOption(xArr, yArr, [{ data: yoyData }], hasYoy);
     };
 
-    setOption = (xArr, yArr, yoyData) => {
+    setOption = (xArr, yArr, yoyData, hasYoy) => {
+        const { data } = this.getLegendConfig();
+
         if (this.myChart) {
             const updateData = {
                 xAxis: {
                     data: xArr,
                 },
                 series: [{ data: yArr }, ...yoyData],
+                legend: {
+                    data: hasYoy ? data.concat({ name: "618", icon: legend618 }) : data,
+                },
             };
             this.myChart.setOption(updateData);
         }
