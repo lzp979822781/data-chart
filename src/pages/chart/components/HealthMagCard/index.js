@@ -115,7 +115,7 @@ class HealthMagCard extends Component {
             <div className = {containerCls}>
                 <span className = {styles[`${PREFIX}-title`]}>{title}</span>
                 <div className = {styles[`${PREFIX}-pv`]}>{pvTitle}</div>
-                <FormatNum data = {rightCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-pv-num`]} hasAuth = {hasDataAuth} />
+                <FormatNum data = {rightCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-pv-num`]} />
                 <span className = {styles[`${PREFIX}-order`]}>今日累计下单量</span>
                 <FormatNum data = {orderCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-order-num`]} hasAuth = {hasDataAuth} />
                 {this.renderAmount()}

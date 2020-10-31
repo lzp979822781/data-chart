@@ -90,7 +90,7 @@ class HealthAppCard extends Component {
     };
 
     renderPV = () => {
-        const { pvData, pvTitle, hasDataAuth } = this.props;
+        const { pvData, pvTitle } = this.props;
         const data = this.formatData(pvData);
         return (
             <div className = {styles["health-app-pv"]}>
@@ -104,7 +104,7 @@ class HealthAppCard extends Component {
                         });
                         return (
                             <span className = {cls} key = {index}>
-                                {hasDataAuth ? item : "*"}
+                                {item}
                             </span>
                         );
                     })}

@@ -128,7 +128,7 @@ class HealthMagCard extends Component {
     };
 
     render() {
-        const { title, pvTitle, className, hasDataAuth } = this.props;
+        const { title, pvTitle, className } = this.props;
         const { totalOrderCount } = this.state;
 
         const containerCls = classnames(styles[`${PREFIX}`], className);
@@ -137,7 +137,7 @@ class HealthMagCard extends Component {
             <div className = {containerCls}>
                 <span className = {styles[`${PREFIX}-title`]}>{title}</span>
                 <div className = {styles[`${PREFIX}-pv`]}>{pvTitle}</div>
-                <FormatNum data = {totalOrderCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-pv-num`]} hasAuth = {hasDataAuth} />
+                <FormatNum data = {totalOrderCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-pv-num`]} />
                 {this.renderChildCard()}
                 {/* <FormatNum
                     data = {orderCount}

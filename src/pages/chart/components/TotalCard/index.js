@@ -114,7 +114,7 @@ class TotalCard extends Component {
             <div className = {containerCls}>
                 <span className = {styles["total-card-title"]}>{title}</span>
                 <div className = {styles["total-card-pv"]}>{pvTitle}</div>
-                <FormatNum data = {pvData} numFormat = {[0, "", ", "]} className = {styles["total-card-pv-num"]} hasAuth = {hasDataAuth} />
+                <FormatNum data = {pvData} numFormat = {[0, "", ", "]} className = {styles["total-card-pv-num"]} />
                 <span className = {styles["total-card-order"]}>今日累计下单量</span>
                 <FormatNum className = {styles["total-card-order-num"]} data = {orderCount} numFormat = {[0, "", ", "]} hasAuth = {hasDataAuth} />
                 {this.renderAmount(code)}
