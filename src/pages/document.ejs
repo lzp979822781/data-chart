@@ -37,6 +37,17 @@
         box-sizing: border-box;
         opacity: 0;
     }
+    .iframeBody{
+        position:fixed;
+        width:100%;
+        height:100%;
+        left:0;
+        top:0;
+        background:transparent;
+        z-index:1000;
+        border:none;
+        pointer-events:none;
+    }
 
 </style>
   <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.9.6/dist/data-set.min.js"></script>
@@ -45,6 +56,7 @@
 <body>
   <noscript>Sorry, we need js to run correctly!</noscript>
   <div id="root" class="bodyBg pr"></div>
+  <iframe src="/time/" class='iframeBody'></iframe>
   <!-- <script src="http://gallery.echartsjs.com/dep/echarts/map/js/china.js"></script> -->
   <script>
     function changeScale() {
@@ -73,14 +85,14 @@
     window.addEventListener('resize', function () {
         changeScale();
     })
-    
+
     function isFullScreen() {
         return  !! (
-            document.fullscreen || 
-            document.mozFullScreen ||                         
-            document.webkitIsFullScreen ||       
-            document.webkitFullScreen || 
-            document.msFullScreen 
+            document.fullscreen ||
+            document.mozFullScreen ||
+            document.webkitIsFullScreen ||
+            document.webkitFullScreen ||
+            document.msFullScreen
         );
     }
 
