@@ -249,7 +249,7 @@ class OrderQuantityTrend extends Component {
         }
 
         if (this && this.callTimeout) {
-            // this.callTimeout();
+            this.callTimeout();
         }
     };
 
