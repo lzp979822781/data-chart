@@ -42,6 +42,7 @@ class Home extends Component {
         this.getPvData();
         this.onTabClick(0)(); // 自动切换
         this.getAuth();
+        this.addKeybordEvent();
     }
 
     componentWillUnmount() {
@@ -49,7 +50,29 @@ class Home extends Component {
             clearTimeout(this.timeout);
         }
         this.clearAllTimeout([this.timeout, this.tabTimeout]);
+        document.onkeydown = null;
     }
+
+    addKeybordEvent = () => {
+        document.onkeydown = ev => {
+            const { keyCode } = ev || window.event;
+            if (keyCode) {
+                const callback = this.keyFunc(keyCode);
+                if (callback) {
+                    callback();
+                }
+            }
+        };
+    };
+
+    keyFunc = keyCode => {
+        const that = this;
+        const funcObj = {
+            37: that.onIconClick,
+            39: that.onIconClick,
+        };
+        return funcObj[keyCode];
+    };
 
     getAuth = async () => {
         const { data: { authCode } = {} } = await post({ url: "Auth", data: {} });
