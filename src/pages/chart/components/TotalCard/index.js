@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 // import authArr from '@/utils/auth';
+import { connect } from "dva";
 import classnames from "classnames";
+import eyeSrc from "@/assets/image/eye.png";
+import eyeCloseSrc from "@/assets/image/eye-close.png";
 import { post } from "../../services";
 import FormatNum from "../FormatNum";
 // import { hasDataAuth } from "../../Home/templateData";
@@ -15,9 +18,15 @@ const defaultProps = {
     hasDataAuth: true,
 };
 
+let dispatch;
+
+@connect(({ home }) => ({
+    ...home,
+}))
 class TotalCard extends Component {
     constructor(props) {
         super(props);
+        ({ dispatch } = props);
         this.state = {
             orderSumMoney: 0,
         };
@@ -48,6 +57,16 @@ class TotalCard extends Component {
             data: {},
         };
         return data;
+    };
+
+    callModel = (type, data, callback) => {
+        if (dispatch) {
+            dispatch({
+                type: `home/${type}`,
+                payload: data,
+                callback,
+            });
+        }
     };
 
     getData = async () => {
@@ -104,6 +123,17 @@ class TotalCard extends Component {
         return <div className = {styles["total-card-money"]}>{`￥${showVal}`}</div>;
     };
 
+    renderEye = () => {
+        const { showIcon, close } = this.props;
+        if (!showIcon) return null;
+
+        return (
+            <div className = {styles["total-card-title-content"]}>
+                <img className = {styles["total-card-title-content-image"]} src = {close ? eyeCloseSrc : eyeSrc} alt = "" />
+            </div>
+        );
+    };
+
     render() {
         const { title, pvData, pvTitle, className, hasDataAuth } = this.props;
         const { orderCount, code } = this.state;
@@ -112,7 +142,10 @@ class TotalCard extends Component {
 
         return (
             <div className = {containerCls}>
-                <span className = {styles["total-card-title"]}>{title}</span>
+                <div className = {styles["total-card-title"]}>
+                    {title}
+                    {this.renderEye()}
+                </div>
                 <div className = {styles["total-card-pv"]}>{pvTitle}</div>
                 <FormatNum data = {pvData} numFormat = {[0, "", ", "]} className = {styles["total-card-pv-num"]} />
                 <span className = {styles["total-card-order"]}>今日累计下单量</span>

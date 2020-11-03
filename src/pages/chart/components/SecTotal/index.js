@@ -68,10 +68,10 @@ class SecTotal extends Component {
 
         return (
             <div className = {this.getContainerCls()}>
-                <HealthMagCard {...this.getProps("healthManage")} className = {styles[`${clsPrefix}-card`]} hasDataAuth = {hasDataAuth} />
-                <TotalCard {...this.getProps("yjc")} className = {styles[`${clsPrefix}-card`]} hasDataAuth = {hasDataAuth} />
-                <FeijiaYunCard {...this.getProps("feiJiaYun")} className = {styles[`${clsPrefix}-card`]} hasDataAuth = {hasDataAuth} />
-                <TotalCard {...this.getProps("medicineErp")} className = {styles[`${clsPrefix}-card`]} hasDataAuth = {hasDataAuth} />
+                <HealthMagCard {...this.getProps("healthManage")} className = {styles[`${clsPrefix}-card`]} hasDataAuth = {hasDataAuth} systemName = "healthMag" />
+                <TotalCard {...this.getProps("yjc")} className = {styles[`${clsPrefix}-card`]} hasDataAuth = {hasDataAuth} systemName = "yjc" />
+                <FeijiaYunCard {...this.getProps("feiJiaYun")} className = {styles[`${clsPrefix}-card`]} hasDataAuth = {hasDataAuth} systemName = "feiJiaYun" />
+                <TotalCard {...this.getProps("medicineErp")} className = {styles[`${clsPrefix}-card`]} hasDataAuth = {hasDataAuth} systemName = "selfErp" />
             </div>
         );
     }
