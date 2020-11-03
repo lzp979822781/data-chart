@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 // import authArr from '@/utils/auth';
+import { connect } from "dva";
 import classnames from "classnames";
 import { post } from "../../services";
 import FormatNum from "../FormatNum";
@@ -16,6 +17,9 @@ const defaultProps = {
     hasDataAuth: true,
 };
 
+@connect(({ home }) => ({
+    ...home,
+}))
 class HealthMagCard extends Component {
     constructor(props) {
         super(props);

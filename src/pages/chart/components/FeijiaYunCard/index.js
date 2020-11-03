@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 // import authArr from '@/utils/auth';
+import { connect } from "dva";
 import classnames from "classnames";
 import { post } from "../../services";
 import FormatNum from "../FormatNum";
@@ -16,7 +17,10 @@ const defaultProps = {
     hasDataAuth: true,
 };
 
-class HealthMagCard extends Component {
+@connect(({ home }) => ({
+    ...home,
+}))
+class FeijiaYunCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -150,6 +154,6 @@ class HealthMagCard extends Component {
     }
 }
 
-HealthMagCard.defaultProps = defaultProps;
+FeijiaYunCard.defaultProps = defaultProps;
 
-export default HealthMagCard;
+export default FeijiaYunCard;

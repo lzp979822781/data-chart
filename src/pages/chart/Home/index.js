@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "dva";
 import classnames from "classnames";
 import titleDecorate from "@/assets/titleDecorate.svg";
 import rightTitleIcon from "@/assets/svg/rightTitleIcon.svg";
@@ -26,6 +27,9 @@ import styles from "./index.less";
 const leftImg = "https://img12.360buyimg.com/imagetools/jfs/t1/155282/21/3631/56164/5f97d5f2Ece4c71d2/bb0145e0aa66fe6e.png";
 const rightImg = "https://img10.360buyimg.com/imagetools/jfs/t1/145936/32/12023/55985/5f97d5e7Ecf2c68e1/5de70e901202a506.png";
 
+@connect(({ home }) => ({
+    ...home,
+}))
 class Home extends Component {
     constructor(props) {
         super(props);

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "dva";
 import classnames from "classnames";
 import SecTotal from "../SecTotal";
 import TrendContainer from "../TrendContainer";
@@ -11,6 +12,9 @@ const defaultProps = {
     hasDataAuth: true,
 };
 
+@connect(({ home }) => ({
+    ...home,
+}))
 class SecContainer extends Component {
     constructor(props) {
         super(props);

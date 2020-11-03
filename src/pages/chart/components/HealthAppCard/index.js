@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { Component } from "react";
+import { connect } from "dva";
 import classnames from "classnames";
 import { formatMoney } from "@/utils/utils";
 import { post } from "../../services";
@@ -13,6 +14,9 @@ const defaultProps = {
     hasDataAuth: true,
 };
 
+@connect(({ home }) => ({
+    ...home,
+}))
 class HealthAppCard extends Component {
     constructor(props) {
         super(props);

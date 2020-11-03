@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "dva";
 import classnames from "classnames";
 import TotalCard from "../TotalCard";
 import HealthMagCard from "../HealthMagCard";
@@ -34,6 +35,9 @@ const defaultProps = {
     hasDataAuth: true,
 };
 
+@connect(({ home }) => ({
+    ...home,
+}))
 class SecTotal extends Component {
     constructor(props) {
         super(props);

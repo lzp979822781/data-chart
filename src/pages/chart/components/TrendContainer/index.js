@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "dva";
 import classnames from "classnames";
 import RealTimeTrend from "../RealTimeTrend";
 import OrderQuantityTrend from "../OrderQuantityTrend";
@@ -12,6 +13,9 @@ const defaultProps = {
     hasDataAuth: true,
 };
 
+@connect(({ home }) => ({
+    ...home,
+}))
 class TrendContainer extends Component {
     constructor(props) {
         super(props);

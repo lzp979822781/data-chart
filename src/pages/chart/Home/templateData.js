@@ -373,3 +373,8 @@ function setShow(chartContext, param = {}) {
 }
 
 export { setHide, setShow };
+
+// eslint-disable-next-line no-unused-vars
+function getAuth(systemName, res, eyeState) {}
+
+export { getAuth };
