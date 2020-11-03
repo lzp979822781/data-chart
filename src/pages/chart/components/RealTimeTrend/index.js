@@ -13,7 +13,7 @@ const titleStyle = {
 const defaultProps = {
     title: "大药房下单量实时趋势",
     reqTimeRange: 15,
-    format: "HH:mm",
+    format: "YYYY-MM-DD HH:mm",
     interval: 5000,
     hasDataAuth: true,
 };
@@ -151,8 +151,9 @@ class RealTimeTrend extends Component {
                         fontFamily: "SFProText-Light",
                     },
                     formatter: value => {
-                        const year = moment().format("YYYY/MM/DD");
-                        return `${value}\n${year}`;
+                        const time = moment(value).format("HH:mm");
+                        const year = moment(value).format("YYYY/MM/DD");
+                        return `${time}\n${year}`;
                     },
                     interval: 3,
                 },
