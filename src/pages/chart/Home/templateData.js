@@ -11,7 +11,7 @@ const yoyLine = {
 
 const yoyArea = {
     normal: {
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: "#FFF" }, { offset: 0.4, color: "rgba(255,255,255, .2)" }, { offset: 1, color: "rgba(255,255,255, .1)" }]),
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: "#FFF" }, { offset: 0.4, color: "rgba(255,255,255, .2)" }, { offset: 1, color: "rgba(255,255,255, 0)" }]),
     },
 };
 
