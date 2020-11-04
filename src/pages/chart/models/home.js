@@ -30,6 +30,8 @@ export default {
 
         // 药店管家
         selfErp: { close: true },
+
+        showAll: false,
     },
 
     effects: {
@@ -47,6 +49,24 @@ export default {
                 type: "updateState",
                 payload: {
                     [systemName]: updateData,
+                },
+            });
+        },
+
+        *openAll(param, { put }) {
+            yield put({
+                type: "updateState",
+                payload: {
+                    minprograme: { close: false },
+                    healthApp: { close: false },
+                    drugStore: { close: false },
+                    internetHospital: { close: false },
+                    urgent: { close: false },
+                    healthMag: { close: false },
+                    yjc: { close: false },
+                    feiJiaYun: { close: false },
+                    selfErp: { close: false },
+                    showAll: true,
                 },
             });
         },

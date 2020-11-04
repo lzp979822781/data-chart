@@ -20,6 +20,7 @@ import {
     genQuatityBar,
     genAreaStyle,
     genRealLineStyle,
+    isSuperAdmin,
 } from "./templateData";
 import { post } from "../services";
 import styles from "./index.less";
@@ -27,12 +28,15 @@ import styles from "./index.less";
 const leftImg = "https://img12.360buyimg.com/imagetools/jfs/t1/155282/21/3631/56164/5f97d5f2Ece4c71d2/bb0145e0aa66fe6e.png";
 const rightImg = "https://img10.360buyimg.com/imagetools/jfs/t1/145936/32/12023/55985/5f97d5e7Ecf2c68e1/5de70e901202a506.png";
 
+let dispatch;
+
 @connect(({ home }) => ({
     ...home,
 }))
 class Home extends Component {
     constructor(props) {
         super(props);
+        ({ dispatch } = props);
         this.state = {
             pvObj: {},
             tabIndex: 0,
@@ -54,7 +58,7 @@ class Home extends Component {
         if (this.timeout) {
             clearTimeout(this.timeout);
         }
-        this.clearAllTimeout([this.timeout, this.tabTimeout]);
+        this.clearAllTimeout([this.timeout, this.tabTimeout, this.authTimeout]);
         document.onkeydown = null;
     }
 
@@ -93,9 +97,18 @@ class Home extends Component {
         return funcObj[keyCode];
     };
 
+    /**
+     * authCode为历史遗留的权限字段
+     * dataAuthCodeAdmin 为是否超级管理员字段
+     * 如果是超管的话，展示所有的数据并且隐藏所有的查看图标
+     * 每个TotalCard均需具体判断每个系统的按钮展示情况
+     */
     getAuth = async () => {
-        const { data: { authCode } = {} } = await post({ url: "Auth", data: {} });
+        const { data: { authCode, dataAuthCodeAdmin } = {} } = await post({ url: "Auth", data: {} });
         this.setState({ hasAuth: authCode !== "9002" });
+        if (isSuperAdmin(dataAuthCodeAdmin)) {
+            this.callModel("openAll");
+        }
     };
 
     callTimeout = () => {
@@ -151,7 +164,9 @@ class Home extends Component {
      * @returns
      */
     renderBigDrugStore = () => {
-        const { hasAuth } = this.state;
+        const {
+            drugStore: { close },
+        } = this.props;
         return (
             <div className = {styles["home-chart-right-drugStore"]}>
                 <RealTimeTrend
@@ -165,7 +180,7 @@ class Home extends Component {
                     areaStyle = {genAreaStyle("drugSingle")}
                     gridConfig = {comGrid}
                     labelConfig = {labelConfig}
-                    hasDataAuth = {hasAuth}
+                    hasDataAuth = {!close}
                 />
                 <OrderQuantityTrend
                     title = "大药房大促期间下单量趋势"
@@ -178,7 +193,7 @@ class Home extends Component {
                     itemStyle = {drugQuantityBar}
                     className = {styles["home-chart-right-drugStore-bar"]}
                     labelConfig = {labelConfig}
-                    hasDataAuth = {hasAuth}
+                    hasDataAuth = {!close}
                 />
             </div>
         );
@@ -188,7 +203,9 @@ class Home extends Component {
      * 互联网医院
      */
     renderInterHospital = () => {
-        const { hasAuth } = this.state;
+        const {
+            internetHospital: { close },
+        } = this.props;
         return (
             <div className = {styles["home-chart-right-hospital"]}>
                 <RealTimeTrend
@@ -201,7 +218,7 @@ class Home extends Component {
                     lineStyle = {genRealLineStyle("hospitalSingle")}
                     areaStyle = {genAreaStyle("hospitalSingle")}
                     gridConfig = {comGrid}
-                    hasDataAuth = {hasAuth}
+                    hasDataAuth = {!close}
                 />
                 <OrderQuantityTrend
                     title = "互联网大促期间问诊下单量趋势"
@@ -214,7 +231,7 @@ class Home extends Component {
                     itemStyle = {genQuatityBar("hospitalSingle")}
                     className = {styles["home-chart-right-drugStore-bar"]}
                     labelConfig = {labelConfig}
-                    hasDataAuth = {hasAuth}
+                    hasDataAuth = {!close}
                 />
             </div>
         );
@@ -224,7 +241,9 @@ class Home extends Component {
      * 药急送
      */
     renderDrugUrgent = () => {
-        const { hasAuth } = this.state;
+        const {
+            urgent: { close },
+        } = this.props;
         return (
             <div className = {styles["home-chart-right-urgent"]}>
                 <RealTimeTrend
@@ -237,7 +256,7 @@ class Home extends Component {
                     lineStyle = {genRealLineStyle("ergentSingle")}
                     areaStyle = {genAreaStyle("ergentSingle")}
                     gridConfig = {comGrid}
-                    hasDataAuth = {hasAuth}
+                    hasDataAuth = {!close}
                 />
                 <OrderQuantityTrend
                     title = "药急送大促期间下单量趋势"
@@ -250,7 +269,7 @@ class Home extends Component {
                     itemStyle = {genQuatityBar("ergentSingle")}
                     className = {styles["home-chart-right-drugStore-bar"]}
                     labelConfig = {labelConfig}
-                    hasDataAuth = {hasAuth}
+                    hasDataAuth = {!close}
                 />
             </div>
         );
@@ -338,8 +357,10 @@ class Home extends Component {
     renderHealthApp = () => {
         const {
             pvObj: { healthApp },
-            hasAuth,
         } = this.state;
+        const {
+            healthApp: { close },
+        } = this.props;
 
         const cls = classnames(styles["home-chart-left-content"]);
 
@@ -352,7 +373,8 @@ class Home extends Component {
                     onClick = {this.onChangeTab}
                     className = {styles["home-chart-app-card"]}
                     pvTitle = "今日累计首页请求量"
-                    hasDataAuth = {hasAuth}
+                    hasDataAuth = {!close}
+                    systemName = "healthApp"
                 />
                 <div className = {styles["home-chart-app-container"]}>
                     <RealTimeTrend
@@ -365,7 +387,7 @@ class Home extends Component {
                         lineStyle = {genRealLineStyle("appSingle")}
                         areaStyle = {genAreaStyle("appSingle")}
                         style = {{ height: "280px" }}
-                        hasDataAuth = {hasAuth}
+                        hasDataAuth = {!close}
                     />
                     <OrderQuantityTrend
                         title = "大促期间下单量趋势"
@@ -377,7 +399,7 @@ class Home extends Component {
                         itemStyle = {genQuatityBar("appSingle")}
                         legendConfig = {appQuatitylegend}
                         style = {{ height: "318px", marginTop: "8px" }}
-                        hasDataAuth = {hasAuth}
+                        hasDataAuth = {!close}
                     />
                 </div>
             </div>
@@ -387,8 +409,10 @@ class Home extends Component {
     renderMiniPrograme = () => {
         const {
             pvObj: { healthAppLets },
-            hasAuth,
         } = this.state;
+        const {
+            minprograme: { close },
+        } = this.props;
 
         const cls = classnames(styles["home-chart-left-content"]);
 
@@ -401,7 +425,8 @@ class Home extends Component {
                     onClick = {this.onChangeTab}
                     className = {styles["home-chart-app-card"]}
                     pvTitle = "今日累计商详请求量"
-                    hasDataAuth = {hasAuth}
+                    hasDataAuth = {!close}
+                    systemName = "minprograme"
                 />
                 <div className = {styles["home-chart-app-container"]}>
                     <RealTimeTrend
@@ -414,7 +439,7 @@ class Home extends Component {
                         lineStyle = {genRealLineStyle("appSingle")}
                         areaStyle = {genAreaStyle("appSingle")}
                         style = {{ height: "280px" }}
-                        hasDataAuth = {hasAuth}
+                        hasDataAuth = {!close}
                     />
                     <OrderQuantityTrend
                         title = "大促期间下单量趋势"
@@ -426,7 +451,7 @@ class Home extends Component {
                         itemStyle = {genQuatityBar("appSingle")}
                         legendConfig = {appQuatitylegend}
                         style = {{ marginTop: "8px" }}
-                        hasDataAuth = {hasAuth}
+                        hasDataAuth = {!close}
                     />
                 </div>
             </div>
@@ -503,6 +528,16 @@ class Home extends Component {
                 <img className = {rightCls} src = {rightImg} alt = "" onClick = {this.onIconClick} />
             </>
         );
+    };
+
+    callModel = (type, data, callback) => {
+        if (dispatch) {
+            dispatch({
+                type: `home/${type}`,
+                payload: data,
+                callback,
+            });
+        }
     };
 
     render() {

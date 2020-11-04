@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import echarts from "echarts";
 import moment from "moment";
 import classnames from "classnames";
-import { setHide, legend618 } from "../../Home/templateData";
+import { setHide, setShow, legend618 } from "../../Home/templateData";
 import { post } from "../../services";
 
 const titleStyle = {
@@ -41,13 +41,18 @@ class RealTimeTrend extends Component {
         this.initMap();
         this.initResize();
         this.getData();
+        setHide(this.myChart);
     }
 
     componentWillReceiveProps(nextProps) {
         const { hasDataAuth: currentAuth } = this.props;
         const { hasDataAuth: nextAuth } = nextProps;
-        if (!nextAuth && nextAuth !== currentAuth) {
-            setHide(this.myChart);
+        if (nextAuth !== currentAuth) {
+            if (!nextAuth) {
+                setHide(this.myChart);
+            } else {
+                setShow(this.myChart);
+            }
         }
     }
 

@@ -32,7 +32,9 @@ class TrendContainer extends Component {
      * 健管平台
      */
     renderHealthMagTrend = () => {
-        const { hasDataAuth } = this.props;
+        const {
+            healthMag: { close },
+        } = this.props;
         return (
             <div className = {styles[`${PREFIX}-content`]}>
                 <RealTimeTrend
@@ -47,7 +49,7 @@ class TrendContainer extends Component {
                     gridConfig = {comGrid}
                     labelConfig = {labelConfig}
                     dataField = "rightCount"
-                    hasDataAuth = {hasDataAuth}
+                    hasDataAuth = {!close}
                 />
                 <OrderQuantityTrend
                     title = "健管平台大促期间权益量趋势"
@@ -61,7 +63,7 @@ class TrendContainer extends Component {
                     className = {styles[`${PREFIX}-content-bar`]}
                     labelConfig = {labelConfig}
                     dataField = "rightCount"
-                    hasDataAuth = {hasDataAuth}
+                    hasDataAuth = {!close}
                 />
             </div>
         );
@@ -71,7 +73,9 @@ class TrendContainer extends Component {
      * 药京采实时趋势图
      */
     renderYjc = () => {
-        const { hasDataAuth } = this.props;
+        const {
+            yjc: { close },
+        } = this.props;
         return (
             <div className = {styles[`${PREFIX}-content`]}>
                 <RealTimeTrend
@@ -85,7 +89,7 @@ class TrendContainer extends Component {
                     areaStyle = {genAreaStyle("drugSingle")}
                     gridConfig = {comGrid}
                     labelConfig = {labelConfig}
-                    hasDataAuth = {hasDataAuth}
+                    hasDataAuth = {!close}
                 />
                 <OrderQuantityTrend
                     title = "药京采大促期间下单量趋势"
@@ -98,7 +102,7 @@ class TrendContainer extends Component {
                     itemStyle = {drugQuantityBar}
                     className = {styles[`${PREFIX}-content-bar`]}
                     labelConfig = {labelConfig}
-                    hasDataAuth = {hasDataAuth}
+                    hasDataAuth = {!close}
                 />
             </div>
         );
@@ -109,7 +113,9 @@ class TrendContainer extends Component {
      * @returns
      */
     renderCloud = () => {
-        const { hasDataAuth } = this.props;
+        const {
+            feiJiaYun: { close },
+        } = this.props;
         return (
             <div className = {styles[`${PREFIX}-content`]}>
                 <RealTimeTrend
@@ -122,7 +128,7 @@ class TrendContainer extends Component {
                     lineStyle = {genRealLineStyle("hospitalSingle")}
                     areaStyle = {genAreaStyle("hospitalSingle")}
                     gridConfig = {comGrid}
-                    hasDataAuth = {hasDataAuth}
+                    hasDataAuth = {!close}
                 />
                 <OrderQuantityTrend
                     title = "菲加云大促期间下单量趋势"
@@ -136,7 +142,7 @@ class TrendContainer extends Component {
                     className = {styles[`${PREFIX}-content-bar`]}
                     labelConfig = {labelConfig}
                     interval = {15000}
-                    hasDataAuth = {hasDataAuth}
+                    hasDataAuth = {!close}
                 />
             </div>
         );
@@ -147,8 +153,9 @@ class TrendContainer extends Component {
      * @returns
      */
     renderErp = () => {
-        const { hasDataAuth } = this.props;
-
+        const {
+            selfErp: { close },
+        } = this.props;
         return (
             <div className = {styles[`${PREFIX}-content`]}>
                 <RealTimeTrend
@@ -161,7 +168,7 @@ class TrendContainer extends Component {
                     lineStyle = {genRealLineStyle("ergentSingle")}
                     areaStyle = {genAreaStyle("ergentSingle")}
                     gridConfig = {comGrid}
-                    hasDataAuth = {hasDataAuth}
+                    hasDataAuth = {!close}
                 />
                 <OrderQuantityTrend
                     title = "药店管家大促期间下单量趋势"
@@ -174,7 +181,7 @@ class TrendContainer extends Component {
                     itemStyle = {genQuatityBar("ergentSingle")}
                     className = {styles[`${PREFIX}-content-bar`]}
                     labelConfig = {labelConfig}
-                    hasDataAuth = {hasDataAuth}
+                    hasDataAuth = {!close}
                 />
             </div>
         );

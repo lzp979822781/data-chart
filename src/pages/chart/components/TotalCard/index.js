@@ -6,7 +6,7 @@ import eyeSrc from "@/assets/image/eye.png";
 import eyeCloseSrc from "@/assets/image/eye-close.png";
 import { post } from "../../services";
 import FormatNum from "../FormatNum";
-// import { hasDataAuth } from "../../Home/templateData";
+import { isShowIcon, comIconClick, getShowState, isSuperAdmin, callComModel } from "../../Home/templateData";
 
 import styles from "./index.less";
 
@@ -18,17 +18,15 @@ const defaultProps = {
     hasDataAuth: true,
 };
 
-let dispatch;
-
 @connect(({ home }) => ({
     ...home,
 }))
 class TotalCard extends Component {
     constructor(props) {
         super(props);
-        ({ dispatch } = props);
         this.state = {
             orderSumMoney: 0,
+            dataAuthCode: "9003",
         };
     }
 
@@ -59,16 +57,6 @@ class TotalCard extends Component {
         return data;
     };
 
-    callModel = (type, data, callback) => {
-        if (dispatch) {
-            dispatch({
-                type: `home/${type}`,
-                payload: data,
-                callback,
-            });
-        }
-    };
-
     getData = async () => {
         const { success, data, code } = await post(this.getReqParam());
         if (success) {
@@ -85,12 +73,28 @@ class TotalCard extends Component {
      * @param {*} data
      */
     handleData = data => {
-        const { orderCount, orderSumMoney = 0, code } = data;
+        const { orderCount, orderSumMoney = 0, dataAuthCode } = data;
         this.setState({
             orderCount,
             orderSumMoney: orderSumMoney || 0,
-            code,
         });
+
+        this.handleAuthCode(dataAuthCode);
+    };
+
+    handleAuthCode = nextCode => {
+        const { dataAuthCode: currentCode } = this.state;
+        const close = getShowState(this);
+        if (close && isSuperAdmin(nextCode)) {
+            callComModel(this, { close: false });
+        }
+        if (nextCode !== currentCode) {
+            if (!close && !isSuperAdmin(nextCode)) {
+                callComModel(this, { close: true });
+            }
+        }
+
+        this.setState({ dataAuthCode: nextCode });
     };
 
     getAuth = async () => {
@@ -123,20 +127,27 @@ class TotalCard extends Component {
         return <div className = {styles["total-card-money"]}>{`￥${showVal}`}</div>;
     };
 
+    onIconClick = () => {
+        comIconClick(this);
+    };
+
     renderEye = () => {
-        const { showIcon, close } = this.props;
-        if (!showIcon) return null;
+        const { dataAuthCode } = this.state;
+        const close = getShowState(this);
+        if (!isShowIcon(dataAuthCode)) return null;
+        const iconSrc = close ? eyeCloseSrc : eyeSrc;
 
         return (
             <div className = {styles["total-card-title-content"]}>
-                <img className = {styles["total-card-title-content-image"]} src = {close ? eyeCloseSrc : eyeSrc} alt = "" />
+                <img className = {styles["total-card-title-content-image"]} src = {iconSrc} alt = "" onClick = {this.onIconClick} />
             </div>
         );
     };
 
     render() {
-        const { title, pvData, pvTitle, className, hasDataAuth } = this.props;
-        const { orderCount, code } = this.state;
+        const { title, pvData, pvTitle, className } = this.props;
+        const { orderCount } = this.state;
+        const close = getShowState(this);
 
         const containerCls = classnames(styles["total-card"], className);
 
@@ -149,8 +160,8 @@ class TotalCard extends Component {
                 <div className = {styles["total-card-pv"]}>{pvTitle}</div>
                 <FormatNum data = {pvData} numFormat = {[0, "", ", "]} className = {styles["total-card-pv-num"]} />
                 <span className = {styles["total-card-order"]}>今日累计下单量</span>
-                <FormatNum className = {styles["total-card-order-num"]} data = {orderCount} numFormat = {[0, "", ", "]} hasAuth = {hasDataAuth} />
-                {this.renderAmount(code)}
+                <FormatNum className = {styles["total-card-order-num"]} data = {orderCount} numFormat = {[0, "", ", "]} hasAuth = {!close} />
+                {this.renderAmount()}
             </div>
         );
     }

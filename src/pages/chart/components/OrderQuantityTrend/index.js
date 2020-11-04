@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import echarts from "echarts";
 import moment from "moment";
-import { setHide } from "../../Home/templateData";
+import { setHide, setShow } from "../../Home/templateData";
 import { post } from "../../services";
 
 const defaultProps = {
@@ -36,13 +36,18 @@ class OrderQuantityTrend extends Component {
         this.initMap();
         this.initResize();
         this.getData();
+        setHide(this.myChart, { type: "bar" });
     }
 
     componentWillReceiveProps(nextProps) {
         const { hasDataAuth: currentAuth } = this.props;
         const { hasDataAuth: nextAuth } = nextProps;
-        if (!nextAuth && nextAuth !== currentAuth) {
-            setHide(this.myChart, { type: "bar" });
+        if (nextAuth !== currentAuth) {
+            if (!nextAuth) {
+                setHide(this.myChart, { type: "bar" });
+            } else {
+                setShow(this.myChart, { type: "bar" });
+            }
         }
     }
 

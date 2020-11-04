@@ -50,7 +50,18 @@
     &-pv {
         &-title {
             padding-top: 30px;
-            .font(22px, #fff, 'PingFangSC-Regular')
+            .font(22px, #fff, 'PingFangSC-Regular');
+            .flex(row, flex-start, center);
+            &-content {
+                flex: 1;
+                .flex(row, flex-end, center);
+                &-image {
+                    width: 28px;
+                    height: 28px;
+                    cursor: pointer;
+                    margin-right: 4px;
+                }
+            }
         }
 
         &-num {

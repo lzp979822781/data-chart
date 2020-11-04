@@ -3,7 +3,10 @@ import React, { Component } from "react";
 import { connect } from "dva";
 import classnames from "classnames";
 import { formatMoney } from "@/utils/utils";
+import eyeSrc from "@/assets/image/eye.png";
+import eyeCloseSrc from "@/assets/image/eye-close.png";
 import { post } from "../../services";
+import { isShowIcon, comIconClick, getShowState, isSuperAdmin, callComModel } from "../../Home/templateData";
 
 import styles from "./index.less";
 
@@ -76,10 +79,26 @@ class HealthAppCard extends Component {
      * @param {*} data
      */
     handleData = data => {
-        const { orderCount } = data;
+        const { orderCount, dataAuthCode } = data;
         this.setState({
             orderCount,
         });
+        this.handleAuthCode(dataAuthCode);
+    };
+
+    handleAuthCode = nextCode => {
+        const { dataAuthCode: currentCode } = this.state;
+        const close = getShowState(this);
+        if (close && isSuperAdmin(nextCode)) {
+            callComModel(this, { close: false });
+        }
+        if (nextCode !== currentCode) {
+            if (!close && !isSuperAdmin(nextCode)) {
+                callComModel(this, { close: true });
+            }
+        }
+
+        this.setState({ dataAuthCode: nextCode });
     };
 
     formatData = data => {
@@ -93,12 +112,28 @@ class HealthAppCard extends Component {
         return !isNaN(parseFloatVal) && typeof parseFloatVal === "number";
     };
 
+    renderEye = () => {
+        const { dataAuthCode } = this.state;
+        const close = getShowState(this);
+        if (!isShowIcon(dataAuthCode)) return null;
+        const iconSrc = close ? eyeCloseSrc : eyeSrc;
+
+        return (
+            <div className = {styles["health-app-pv-title-content"]}>
+                <img className = {styles["health-app-pv-title-content-image"]} src = {iconSrc} alt = "" onClick = {this.onIconClick} />
+            </div>
+        );
+    };
+
     renderPV = () => {
         const { pvData, pvTitle } = this.props;
         const data = this.formatData(pvData);
         return (
             <div className = {styles["health-app-pv"]}>
-                <div className = {styles["health-app-pv-title"]}>{pvTitle}</div>
+                <div className = {styles["health-app-pv-title"]}>
+                    {pvTitle}
+                    {this.renderEye()}
+                </div>
                 <div className = {styles["health-app-pv-container"]}>
                     {`${data}`.split("").map((item, index) => {
                         const isNumber = this.isNum(item);
@@ -196,6 +231,21 @@ class HealthAppCard extends Component {
             </div>
         </div>
     );
+
+    onIconClick = () => {
+        comIconClick(this);
+    };
+
+    callModel = (type, data, callback) => {
+        const { dispatch } = this.props;
+        if (dispatch) {
+            dispatch({
+                type: `home/${type}`,
+                payload: data,
+                callback,
+            });
+        }
+    };
 
     render() {
         const { className } = this.props;

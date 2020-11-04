@@ -378,3 +378,60 @@ export { setHide, setShow };
 function getAuth(systemName, res, eyeState) {}
 
 export { getAuth };
+
+function isShowIcon(code) {
+    return code === "9003";
+}
+
+function isSuperAdmin(code) {
+    return code === "9999";
+}
+
+export { isShowIcon, isSuperAdmin };
+
+// 因为所有的开启或者关闭图标的逻辑都是相同的，所以提取出来
+/**
+ * 根据close字段判断是隐藏还是展示数据
+ * @returns
+ */
+function getShowState(context) {
+    if (!context) return true;
+    const { systemName } = context.props;
+    const {
+        [systemName]: { close },
+    } = context.props;
+    return close;
+}
+
+const callModel = context => (type, data, callback) => {
+    if (!context) return;
+    const { dispatch } = context.props;
+    if (dispatch) {
+        dispatch({
+            type: `home/${type}`,
+            payload: data,
+            callback,
+        });
+    }
+};
+
+function comIconClick(context) {
+    if (!context) return;
+    const close = getShowState(context);
+    const { systemName } = context.props;
+    callModel(context)("changeState", {
+        systemName,
+        close: !close,
+    });
+}
+
+function callComModel(context, data = {}) {
+    if (!context) return;
+    const { systemName } = context.props;
+    callModel(context)("changeState", {
+        systemName,
+        ...data,
+    });
+}
+
+export { comIconClick, getShowState, callComModel };

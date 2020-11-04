@@ -2,8 +2,12 @@ import React, { Component } from "react";
 // import authArr from '@/utils/auth';
 import { connect } from "dva";
 import classnames from "classnames";
+import eyeSrc from "@/assets/image/eye.png";
+import eyeCloseSrc from "@/assets/image/eye-close.png";
 import { post } from "../../services";
 import FormatNum from "../FormatNum";
+
+import { isShowIcon, comIconClick, getShowState, isSuperAdmin, callComModel } from "../../Home/templateData";
 
 import styles from "./index.less";
 
@@ -71,13 +75,30 @@ class FeijiaYunCard extends Component {
      * @param {*} data
      */
     handleData = data => {
-        const { singleOrderCount, chainOrderCount, totalOrderCount, orderSumMoney = 0 } = data;
+        const { singleOrderCount, chainOrderCount, totalOrderCount, orderSumMoney = 0, dataAuthCode } = data;
         this.setState({
             singleOrderCount,
             orderSumMoney: orderSumMoney || 0,
             chainOrderCount,
             totalOrderCount,
         });
+
+        this.handleAuthCode(dataAuthCode);
+    };
+
+    handleAuthCode = nextCode => {
+        const { dataAuthCode: currentCode } = this.state;
+        const close = getShowState(this);
+        if (close && isSuperAdmin(nextCode)) {
+            callComModel(this, { close: false });
+        }
+        if (nextCode !== currentCode) {
+            if (!close && !isSuperAdmin(nextCode)) {
+                callComModel(this, { close: true });
+            }
+        }
+
+        this.setState({ dataAuthCode: nextCode });
     };
 
     getAuth = async () => {
@@ -111,11 +132,11 @@ class FeijiaYunCard extends Component {
     };
 
     renderItem = (title, amount) => {
-        const { hasDataAuth } = this.props;
+        const close = getShowState(this);
         return (
             <div className = {styles[`${PREFIX}-child-card-amout-container`]}>
                 <div className = {styles[`${PREFIX}-child-card-amout-container-title`]}>{title}</div>
-                <FormatNum data = {amount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-child-card-amout-container-content`]} hasAuth = {hasDataAuth} />
+                <FormatNum data = {amount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-child-card-amout-container-content`]} hasAuth = {!close} />
             </div>
         );
     };
@@ -131,17 +152,37 @@ class FeijiaYunCard extends Component {
         );
     };
 
+    onIconClick = () => {
+        comIconClick(this);
+    };
+
+    renderEye = () => {
+        const { dataAuthCode } = this.state;
+        const close = getShowState(this);
+        const iconSrc = close ? eyeCloseSrc : eyeSrc;
+        if (!isShowIcon(dataAuthCode)) return null;
+
+        return (
+            <div className = {styles[`${PREFIX}-title-content`]}>
+                <img className = {styles[`${PREFIX}-title-content-image`]} src = {iconSrc} alt = "" onClick = {this.onIconClick} />
+            </div>
+        );
+    };
+
     render() {
         const { title, pvTitle, className } = this.props;
         const { totalOrderCount } = this.state;
-
+        const close = getShowState(this);
         const containerCls = classnames(styles[`${PREFIX}`], className);
 
         return (
             <div className = {containerCls}>
-                <span className = {styles[`${PREFIX}-title`]}>{title}</span>
+                <div className = {styles[`${PREFIX}-title`]}>
+                    {title}
+                    {this.renderEye()}
+                </div>
                 <div className = {styles[`${PREFIX}-pv`]}>{pvTitle}</div>
-                <FormatNum data = {totalOrderCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-pv-num`]} />
+                <FormatNum data = {totalOrderCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-pv-num`]} hasAuth = {!close} />
                 {this.renderChildCard()}
                 {/* <FormatNum
                     data = {orderCount}

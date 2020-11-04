@@ -2,8 +2,12 @@ import React, { Component } from "react";
 // import authArr from '@/utils/auth';
 import { connect } from "dva";
 import classnames from "classnames";
+import eyeSrc from "@/assets/image/eye.png";
+import eyeCloseSrc from "@/assets/image/eye-close.png";
 import { post } from "../../services";
 import FormatNum from "../FormatNum";
+
+import { isShowIcon, comIconClick, getShowState, isSuperAdmin, callComModel } from "../../Home/templateData";
 
 import styles from "./index.less";
 
@@ -71,12 +75,28 @@ class HealthMagCard extends Component {
      * @param {*} data
      */
     handleData = data => {
-        const { orderCount, rightCount, orderSumMoney = 0 } = data;
+        const { orderCount, rightCount, orderSumMoney = 0, dataAuthCode } = data;
         this.setState({
             orderCount,
             orderSumMoney: orderSumMoney || 0,
             rightCount,
         });
+        this.handleAuthCode(dataAuthCode);
+    };
+
+    handleAuthCode = nextCode => {
+        const { dataAuthCode: currentCode } = this.state;
+        const close = getShowState(this);
+        if (close && isSuperAdmin(nextCode)) {
+            callComModel(this, { close: false });
+        }
+        if (nextCode !== currentCode) {
+            if (!close && !isSuperAdmin(nextCode)) {
+                callComModel(this, { close: true });
+            }
+        }
+
+        this.setState({ dataAuthCode: nextCode });
     };
 
     getAuth = async () => {
@@ -109,19 +129,39 @@ class HealthMagCard extends Component {
         return <div className = {styles[`${PREFIX}-money`]}>{`￥${showVal}`}</div>;
     };
 
-    render() {
-        const { title, pvTitle, className, hasDataAuth } = this.props;
-        const { orderCount, rightCount } = this.state;
+    onIconClick = () => {
+        comIconClick(this);
+    };
 
+    renderEye = () => {
+        const { dataAuthCode } = this.state;
+        const close = getShowState(this);
+        const iconSrc = close ? eyeCloseSrc : eyeSrc;
+        if (!isShowIcon(dataAuthCode)) return null;
+
+        return (
+            <div className = {styles[`${PREFIX}-title-content`]}>
+                <img className = {styles[`${PREFIX}-title-content-image`]} src = {iconSrc} alt = "" onClick = {this.onIconClick} />
+            </div>
+        );
+    };
+
+    render() {
+        const { title, pvTitle, className } = this.props;
+        const { orderCount, rightCount } = this.state;
+        const close = getShowState(this);
         const containerCls = classnames(styles[`${PREFIX}`], className);
 
         return (
             <div className = {containerCls}>
-                <span className = {styles[`${PREFIX}-title`]}>{title}</span>
+                <div className = {styles[`${PREFIX}-title`]}>
+                    {title}
+                    {this.renderEye()}
+                </div>
                 <div className = {styles[`${PREFIX}-pv`]}>{pvTitle}</div>
                 <FormatNum data = {rightCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-pv-num`]} />
                 <span className = {styles[`${PREFIX}-order`]}>今日累计下单量</span>
-                <FormatNum data = {orderCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-order-num`]} hasAuth = {hasDataAuth} />
+                <FormatNum data = {orderCount} numFormat = {[0, "", ", "]} className = {styles[`${PREFIX}-order-num`]} hasAuth = {!close} />
                 {this.renderAmount()}
             </div>
         );
