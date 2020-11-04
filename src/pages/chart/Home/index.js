@@ -91,8 +91,13 @@ class Home extends Component {
     keyFunc = keyCode => {
         const that = this;
         const funcObj = {
+            // 左右键
             37: that.onIconClick,
             39: that.onIconClick,
+
+            // 上下键
+            38: that.onIconClick,
+            40: that.onIconClick,
         };
         return funcObj[keyCode];
     };

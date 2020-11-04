@@ -132,7 +132,9 @@
     }
 
 
-    window.addEventListener("dblclick", function(){
+    window.addEventListener("dblclick", function(e){
+        const { target: { localName } } = e;
+        if(localName.toLowerCase() === 'img') return;
         if(isFullScreen()) {
             exitScreen();
         } else {
