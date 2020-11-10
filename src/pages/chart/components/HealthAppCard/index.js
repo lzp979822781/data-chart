@@ -3,10 +3,8 @@ import React, { Component } from "react";
 import { connect } from "dva";
 import classnames from "classnames";
 import { formatMoney } from "@/utils/utils";
-import eyeSrc from "@/assets/image/eye.png";
-import eyeCloseSrc from "@/assets/image/eye-close.png";
 import { post } from "../../services";
-import { isShowIcon, comIconClick, getShowState, isSuperAdmin, callComModel } from "../../Home/templateData";
+import { isShowIcon, comIconClick, getShowState, isSuperAdmin, callComModel, getShowStateSrc } from "../../Home/templateData";
 
 import styles from "./index.less";
 
@@ -116,7 +114,7 @@ class HealthAppCard extends Component {
         const { dataAuthCode } = this.state;
         const close = getShowState(this);
         if (!isShowIcon(dataAuthCode)) return null;
-        const iconSrc = close ? eyeCloseSrc : eyeSrc;
+        const iconSrc = getShowStateSrc(close);
 
         return (
             <div className = {styles["health-app-pv-title-content"]}>

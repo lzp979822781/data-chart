@@ -2,12 +2,10 @@ import React, { Component } from "react";
 // import authArr from '@/utils/auth';
 import { connect } from "dva";
 import classnames from "classnames";
-import eyeSrc from "@/assets/image/eye.png";
-import eyeCloseSrc from "@/assets/image/eye-close.png";
 import { post } from "../../services";
 import FormatNum from "../FormatNum";
 
-import { isShowIcon, comIconClick, getShowState, isSuperAdmin, callComModel } from "../../Home/templateData";
+import { isShowIcon, comIconClick, getShowState, isSuperAdmin, callComModel, getShowStateSrc } from "../../Home/templateData";
 
 import styles from "./index.less";
 
@@ -159,7 +157,7 @@ class FeijiaYunCard extends Component {
     renderEye = () => {
         const { dataAuthCode } = this.state;
         const close = getShowState(this);
-        const iconSrc = close ? eyeCloseSrc : eyeSrc;
+        const iconSrc = getShowStateSrc(close);
         if (!isShowIcon(dataAuthCode)) return null;
 
         return (

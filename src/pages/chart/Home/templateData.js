@@ -1,5 +1,7 @@
 import echarts from "echarts";
 import { notification } from "antd";
+import eyeSrc from "@/assets/image/eye.png";
+import eyeCloseSrc from "@/assets/image/eye-close.png";
 
 const legend618 = "image:////img12.360buyimg.com/imagetools/jfs/t1/150970/5/4389/463/5f9631bbEb9947d21/0fed63bca6bebc8d.png";
 
@@ -435,3 +437,9 @@ function callComModel(context, data = {}) {
 }
 
 export { comIconClick, getShowState, callComModel };
+
+function getShowStateSrc(close) {
+    return close ? eyeSrc : eyeCloseSrc;
+}
+
+export { getShowStateSrc };
