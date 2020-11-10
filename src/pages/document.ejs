@@ -131,10 +131,10 @@
         );
     }
 
-
+    const forbidEle = ['canvas', 'img'];
     window.addEventListener("dblclick", function(e){
         const { target: { localName } } = e;
-        if(localName.toLowerCase() === 'img') return;
+        if( forbidEle.includes(localName.toLowerCase())) return;
         if(isFullScreen()) {
             exitScreen();
         } else {

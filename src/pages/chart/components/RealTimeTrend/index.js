@@ -202,7 +202,7 @@ class RealTimeTrend extends Component {
                     label: Object.assign(
                         {},
                         {
-                            show: true, // 是否展示折线上的坐标值
+                            show: false, // 是否展示折线上的坐标值
                             position: "top",
                             color: "#fff",
                             /* rotate: 60,
@@ -231,7 +231,7 @@ class RealTimeTrend extends Component {
                 label: Object.assign(
                     {},
                     {
-                        show: true, // 隐藏
+                        show: false, // 隐藏
                         position: "top",
                         color: "#fff",
                     },

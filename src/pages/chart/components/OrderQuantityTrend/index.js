@@ -180,7 +180,7 @@ class OrderQuantityTrend extends Component {
                     label: Object.assign(
                         {},
                         {
-                            show: true,
+                            show: false,
                             position: "top",
                             color: "#fff",
                         },
