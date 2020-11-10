@@ -439,7 +439,7 @@ function callComModel(context, data = {}) {
 export { comIconClick, getShowState, callComModel };
 
 function getShowStateSrc(close) {
-    return close ? eyeSrc : eyeCloseSrc;
+    return close ? eyeCloseSrc : eyeSrc;
 }
 
 export { getShowStateSrc };
