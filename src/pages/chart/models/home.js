@@ -58,7 +58,7 @@ export default {
                 type: "updateState",
                 payload: {
                     minprograme: { close: false },
-                    healthApp: { close: false },
+                    healthApp: { close: true },
                     drugStore: { close: false },
                     internetHospital: { close: false },
                     urgent: { close: false },

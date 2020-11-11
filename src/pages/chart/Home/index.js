@@ -316,6 +316,8 @@ class Home extends Component {
         this.clearAllTimeout([this.tabTimeout]);
         const { location: { query: { change, interval = 60000 } = {} } = {} } = this.props;
         this.setState({ tabIndex }, () => {
+            // 切换tab签时重置默认状态,因为切换小程序tab签时，默认会重新渲染设置图标为隐藏,此时会覆盖掉9999打开状态
+            this.resetState(tabIndex);
             if (change) {
                 this.tabTimeout = setTimeout(() => {
                     this.switchTab(tabIndex);
@@ -323,6 +325,15 @@ class Home extends Component {
             } else {
                 this.clearAllTimeout([this.tabTimeout]);
             }
+        });
+    };
+
+    // 解决tab切换时候趋势图状态,切换时将隐藏的tab close设为true
+    resetState = nextTabIndex => {
+        const systemName = nextTabIndex === 0 ? "healthApp" : "minprograme";
+        this.callModel("changeState", {
+            systemName,
+            close: true,
         });
     };
 
