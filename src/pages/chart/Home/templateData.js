@@ -170,7 +170,7 @@ const drugRealLineStyle = {
 };
 
 const drugQuantityGrid = {
-    left: 50,
+    left: 60,
     right: 0,
     top: 75,
 };
